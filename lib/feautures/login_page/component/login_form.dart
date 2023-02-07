@@ -34,7 +34,7 @@ extension loginForm on LoginPage {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Email",
+                translation(context).email,
                 style: typoInterNomal16.copyWith(color: colorTextMedium),
               ),
               const SizedBox(
@@ -49,7 +49,7 @@ extension loginForm on LoginPage {
                 height: 24,
               ),
               Text(
-                "Mật khẩu",
+                translation(context).password,
                 style: typoInterNomal16.copyWith(color: colorTextMedium),
               ),
               const SizedBox(
@@ -84,7 +84,7 @@ extension loginForm on LoginPage {
                       context.read<LoginCubit>().gotoFogot(true);
                     },
                     child: Text(
-                      "Quên mật khẩu",
+                      translation(context).forgot_pass,
                       style: typoInterNomal14.copyWith(color: colorBrandPrimary),
                     ),
                   ),
@@ -96,9 +96,9 @@ extension loginForm on LoginPage {
               AppElevatedButton(
                 state: state.buttonState,
                 onPressed: () {
-                  context.read<LoginCubit>().loginRequest(email.text.trim(), pass.text.trim());
+                  context.read<LoginCubit>().loginRequest(context, email.text.trim(), pass.text.trim());
                 },
-                buttonTitle: "Đăng nhập",
+                buttonTitle: translation(context).login,
               )
             ]));
   }

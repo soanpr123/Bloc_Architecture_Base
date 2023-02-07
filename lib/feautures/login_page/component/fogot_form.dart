@@ -37,7 +37,7 @@ extension ForgotForm on LoginPage {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Email",
+                translation(context).email,
                 style: typoInterNomal16.copyWith(color: colorTextMedium),
               ),
               const SizedBox(
@@ -56,7 +56,7 @@ extension ForgotForm on LoginPage {
                 onPressed: () {
                   context.read<LoginCubit>().forgetRequest(email.text.trim(), context);
                 },
-                buttonTitle: "Xác nhận",
+                buttonTitle: translation(context).confirm,
               ),
               const SizedBox(
                 height: 16,
@@ -69,7 +69,7 @@ extension ForgotForm on LoginPage {
                       context.read<LoginCubit>().gotoFogot(false);
                     },
                     child: Text(
-                      "Quay về trang đăng nhập",
+                      translation(context).back_to_login,
                       style: typoInterNomal14.copyWith(color: colorBrandPrimary),
                     ),
                   ),

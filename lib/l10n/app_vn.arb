@@ -1,3 +1,13 @@
 {
- "login": "Đăng nhập"        
+"@@locale": "vi",
+ "login": "Đăng nhập",
+ "email":"Email",
+"password":"Mật khẩu",
+"forgot_pass":"Quên mật khẩu",
+"back_to_login":"Quay lại trang đăng nhập",
+"confirm":"Xác nhận",
+"email_blank":"Email không được bỏ trống",
+"email_invalid":"Email không đúng định dạng",
+"password_blank":"Mật khẩu không được bỏ trống"
+       
 }

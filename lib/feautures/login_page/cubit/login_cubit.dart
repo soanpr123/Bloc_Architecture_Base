@@ -8,6 +8,7 @@ import 'package:project/component/custom_alert.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/error/exceptions.dart';
 import 'package:project/core/style/text_style.dart';
+import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/app_utils.dart';
 import 'package:project/core/utils/constants.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
@@ -19,19 +20,28 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState(buttonState: AppElevatedButtonState.active));
   final responsitory = getIt.get<InternalAppRepository>();
   final userBox = GetIt.instance<Box>();
-  Future<void> loginRequest(String email, String password) async {
+  Future<void> loginRequest(BuildContext context, String email, String password) async {
     emit(state.coppyWith(buttonState: AppElevatedButtonState.loading, message: ""));
     // await Future.delayed(const Duration(seconds: 15));
     if (email.isEmpty) {
-      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: "Email không được để trống"));
+      emit(state.coppyWith(
+        buttonState: AppElevatedButtonState.active,
+        message: translation(context).email_blank,
+      ));
       return;
     }
     if (checkFormat(regexEmail, email) == false) {
-      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: "Email không đúng định dạng"));
+      emit(state.coppyWith(
+        buttonState: AppElevatedButtonState.active,
+        message: translation(context).email_invalid,
+      ));
       return;
     }
     if (password.isEmpty) {
-      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: "Mật khẩu không được để trống"));
+      emit(state.coppyWith(
+        buttonState: AppElevatedButtonState.active,
+        message: translation(context).password_blank,
+      ));
       return;
     }
     final request = {"email": email, "password": password};
