@@ -6,7 +6,8 @@ class DioClient {
   static Future<Dio> setup({required String baseUrl}) async {
     final options = BaseOptions(
       responseType: ResponseType.json,
-      // contentType: "application/x-www-form-urlencoded",
+      contentType: "application/json",
+      headers: {"Accept": "application/json"},
       validateStatus: (status) {
         return true;
       },

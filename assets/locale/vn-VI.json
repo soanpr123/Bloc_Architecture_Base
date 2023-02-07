@@ -1,0 +1,16 @@
+{
+    "login": {
+        "login": "Đăng nhập",
+        "password": "Mật khẩu",
+        "email": "Email",
+        "forgot_password": "Quên mật khẩu",
+        "back_to_login": "Quay lại trang đăng nhập",
+        "confirm": "Xác nhận"
+    },
+    "error": {
+        "email_blank": "Email không được để trống",
+        "email_invalid": "Email không đúng định dạng",
+        "password_blank": "Mật khẩu không được để trống",
+        "orther_error": "Lỗi không xác định"
+    }
+}

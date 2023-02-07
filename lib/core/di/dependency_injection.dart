@@ -7,7 +7,6 @@ import 'package:project/feautures/internal_app/data/data_source/remote/internal_
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository_Impl.dart';
 import 'package:project/feautures/internal_app/model/login_model.dart';
-import 'package:project/feautures/login_page/cubit/login_cubit.dart';
 
 final getIt = GetIt.instance;
 

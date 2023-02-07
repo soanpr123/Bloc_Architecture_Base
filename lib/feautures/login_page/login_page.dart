@@ -9,8 +9,10 @@ import 'package:project/core/style/resource.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/utils/toast_message.dart';
 import 'package:project/feautures/login_page/component/background-image.dart';
+// import 'package:project/feautures/login_page/component/login_form.dart';
 import 'package:project/feautures/login_page/cubit/login_cubit.dart';
-
+part 'component/login_form.dart';
+part 'component/fogot_form.dart';
 // class LoginPage extends StatelessWidget {
 //   const LoginPage({Key? key}) : super(key: key);
 
@@ -19,11 +21,11 @@ import 'package:project/feautures/login_page/cubit/login_cubit.dart';
 // }
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+  final emailCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final emailCtrl = TextEditingController();
-    final passwordCtrl = TextEditingController();
     return Stack(
       children: [
         const BackgroundImage(),
@@ -51,88 +53,10 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      decoration:
-                          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
-                      // height: MediaQuery.of(context).size.height / 2,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Email",
-                              style: typoInterNomal16.copyWith(color: colorTextMedium),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            AppTextFormField(
-                              controller: emailCtrl,
-                              borderRadius: 10,
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Text(
-                              "Mật khẩu",
-                              style: typoInterNomal16.copyWith(color: colorTextMedium),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            AppTextFormField(
-                              borderRadius: 10,
-                              obscureText: state.showPass,
-                              controller: passwordCtrl,
-                              suffixIcon: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            BlocProvider.of<LoginCubit>(context).showPassword(!state.showPass);
-                                          },
-                                          child: SvgPicture.asset(state.showPass
-                                              ? R.ASSETS_SVG_EYE_LINE_SVG
-                                              : R.ASSETS_SVG_EYE_OFF_LINE_SVG))),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Quên mật khẩu",
-                                  style: typoInterNomal14.copyWith(color: colorBrandPrimary),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            BlocBuilder<LoginCubit, LoginState>(
-                              buildWhen: (pre, current) => pre.buttonState != current.buttonState,
-                              builder: (context, state1) {
-                                return AppElevatedButton(
-                                  state: state1.buttonState,
-                                  onPressed: () {
-                                    context
-                                        .read<LoginCubit>()
-                                        .loginRequest(emailCtrl.text.trim(), passwordCtrl.text.trim());
-                                  },
-                                  buttonTitle: "Đăng nhập",
-                                );
-                              },
-                            ),
-                          ]),
-                    )
+                    if (state.gotoFogot)
+                      buildFogotForm(context, state, emailCtrl)
+                    else
+                      buildLoginForm(context, state, emailCtrl, passwordCtrl)
                   ],
                 );
               },

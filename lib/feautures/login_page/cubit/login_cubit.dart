@@ -1,10 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:project/component/app_elevated_button.dart';
+import 'package:project/component/custom_alert.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/error/exceptions.dart';
+import 'package:project/core/style/text_style.dart';
 import 'package:project/core/utils/app_utils.dart';
 import 'package:project/core/utils/constants.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
@@ -51,5 +54,67 @@ class LoginCubit extends Cubit<LoginState> {
   void showPassword(bool show) {
     // print(state.showPass);
     emit(state.coppyWith(showPass: show, message: "", buttonState: AppElevatedButtonState.active));
+  }
+
+  void gotoFogot(bool show) {
+    // print(state.showPass);
+    emit(state.coppyWith(gotoFogot: show, message: "", buttonState: AppElevatedButtonState.active));
+  }
+
+  Future<void> forgetRequest(String email, BuildContext context) async {
+    emit(state.coppyWith(buttonState: AppElevatedButtonState.loading, message: ""));
+    // await Future.delayed(const Duration(seconds: 15));
+    if (email.isEmpty) {
+      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: "Email không được để trống"));
+      return;
+    }
+    if (checkFormat(regexEmail, email) == false) {
+      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: "Email không đúng định dạng"));
+      return;
+    }
+
+    final request = {
+      "email": email,
+    };
+    try {
+      final response = await responsitory.requestForget(request);
+      // print();
+      if (response.data['status_code'] == 200) {
+        // getIt
+        showDialog(
+            context: (context),
+            builder: (co) {
+              return CustomAlert(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: Column(children: [
+                    Text(
+                      response.data["message"],
+                      textAlign: TextAlign.center,
+                      style: typoInterNomal14,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    AppElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        gotoFogot(false);
+                      },
+                      buttonTitle: "Xác nhận",
+                    )
+                  ]),
+                ),
+              );
+            });
+        emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
+      } else {
+        // print("message in cubit ${response.data["message"]}");
+        emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: response.data["message"]));
+      }
+    } catch (e) {
+      emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: e.toString()));
+      const ServerException();
+    }
   }
 }
