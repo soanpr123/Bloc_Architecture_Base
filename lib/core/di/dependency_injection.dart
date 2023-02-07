@@ -16,7 +16,7 @@ class DependencyInjection {
   static Future init(String environment) async {
     final config = await ConfigService().init(environment);
 
-    final userBox = await Hive.openBox<LoginModel>('users');
+    final userBox = await Hive.openBox('users');
     getIt.registerSingleton(userBox);
     Hive.registerAdapter<LoginModel>(LoginModelAdapter());
     final dioUIAPI = await DioClient.setup(baseUrl: config.value[UIAPI] ?? '');

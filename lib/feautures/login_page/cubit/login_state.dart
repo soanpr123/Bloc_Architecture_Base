@@ -10,7 +10,7 @@ class LoginState extends Equatable {
   const LoginState({
     required this.buttonState,
     this.message = "",
-    this.showPass = false,
+    this.showPass = true,
   });
 
   LoginState coppyWith({AppElevatedButtonState? buttonState, String? message, bool? showPass}) {

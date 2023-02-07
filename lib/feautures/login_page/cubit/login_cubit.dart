@@ -15,7 +15,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState(buttonState: AppElevatedButtonState.active));
   final responsitory = getIt.get<InternalAppRepository>();
-  final userBox = GetIt.instance<Box<LoginModel>>();
+  final userBox = GetIt.instance<Box>();
   Future<void> loginRequest(String email, String password) async {
     emit(state.coppyWith(buttonState: AppElevatedButtonState.loading, message: ""));
     // await Future.delayed(const Duration(seconds: 15));
@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
       final response = await responsitory.loginRequest(request);
       if (response.data != null) {
         // getIt
-        userBox.put("token", response);
+        userBox.put("token", response.data?.accessToken ?? "");
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
       } else {
         print("message in cubit ${response.message}");
@@ -50,6 +50,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   void showPassword(bool show) {
     // print(state.showPass);
-    emit(state.coppyWith(showPass: show));
+    emit(state.coppyWith(showPass: show, message: "", buttonState: AppElevatedButtonState.active));
   }
 }
