@@ -16,10 +16,22 @@ class R {
   /// ![preview](file://D:\amai\internal-app\assets\png\logo.png)
   static const String ASSETS_PNG_LOGO_PNG = 'assets/png/logo.png';
 
+  /// ![preview](file://D:\amai\internal-app\assets\png\logo_splash.png)
+  static const String ASSETS_PNG_LOGO_SPLASH_PNG = 'assets/png/logo_splash.png';
+
   /// ![preview](file://D:\amai\internal-app\assets\svg\eye-line.svg)
   static const String ASSETS_SVG_EYE_LINE_SVG = 'assets/svg/eye-line.svg';
 
   /// ![preview](file://D:\amai\internal-app\assets\svg\eye-off-line.svg)
   static const String ASSETS_SVG_EYE_OFF_LINE_SVG =
       'assets/svg/eye-off-line.svg';
+
+  /// ![preview](file://D:\amai\internal-app\assets\svg\ic_home.svg)
+  static const String ASSETS_SVG_IC_HOME_SVG = 'assets/svg/ic_home.svg';
+
+  /// ![preview](file://D:\amai\internal-app\assets\svg\ic_profile.svg)
+  static const String ASSETS_SVG_IC_PROFILE_SVG = 'assets/svg/ic_profile.svg';
+
+  /// ![preview](file://D:\amai\internal-app\assets\svg\ic_store.svg)
+  static const String ASSETS_SVG_IC_STORE_SVG = 'assets/svg/ic_store.svg';
 }

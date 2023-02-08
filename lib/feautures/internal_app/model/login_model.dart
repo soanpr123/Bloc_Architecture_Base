@@ -28,11 +28,11 @@ class LoginModel {
 @HiveType(typeId: 1)
 class Data {
   @HiveField(0)
-  String? accessToken;
+  String? access_token;
   @HiveField(1)
   String? typeToken;
 
-  Data({this.accessToken, this.typeToken});
+  Data({this.access_token, this.typeToken});
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
   Map<String, dynamic> toJson() => _$DataToJson(this);

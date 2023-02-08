@@ -60,7 +60,7 @@ class DataAdapter extends TypeAdapter<Data> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Data(
-      accessToken: fields[0] as String?,
+      access_token: fields[0] as String?,
       typeToken: fields[1] as String?,
     );
   }
@@ -70,7 +70,7 @@ class DataAdapter extends TypeAdapter<Data> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.accessToken)
+      ..write(obj.access_token)
       ..writeByte(1)
       ..write(obj.typeToken);
   }
@@ -108,11 +108,11 @@ Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
     };
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      accessToken: json['accessToken'] as String?,
+      access_token: json['access_token'] as String?,
       typeToken: json['typeToken'] as String?,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
+      'access_token': instance.access_token,
       'typeToken': instance.typeToken,
     };

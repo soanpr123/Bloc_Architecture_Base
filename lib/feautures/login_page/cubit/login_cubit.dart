@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:project/component/app_elevated_button.dart';
 import 'package:project/component/custom_alert.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/error/exceptions.dart';
+import 'package:project/core/routers/auth_guard.dart';
+import 'package:project/core/routers/router.gr.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/app_utils.dart';
@@ -20,6 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState(buttonState: AppElevatedButtonState.active));
   final responsitory = getIt.get<InternalAppRepository>();
   final userBox = GetIt.instance<Box>();
+  final tokenBox = GetIt.I<Box<String>>();
   Future<void> loginRequest(BuildContext context, String email, String password) async {
     emit(state.coppyWith(buttonState: AppElevatedButtonState.loading, message: ""));
     // await Future.delayed(const Duration(seconds: 15));
@@ -49,7 +53,12 @@ class LoginCubit extends Cubit<LoginState> {
       final response = await responsitory.loginRequest(request);
       if (response.data != null) {
         // getIt
-        userBox.put("token", response.data?.accessToken ?? "");
+        // print(response.data?.access_token);
+        tokenBox.put("token", response.data?.access_token ?? "");
+        userBox.put("isLogin", true);
+        final isLogin = tokenBox.get('token', defaultValue: "");
+        print("isLogin $isLogin");
+        context.router.replace(MainRoute());
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
       } else {
         print("message in cubit ${response.message}");

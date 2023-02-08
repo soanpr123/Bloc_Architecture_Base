@@ -8,6 +8,9 @@
 "confirm":"Xác nhận",
 "email_blank":"Email không được bỏ trống",
 "email_invalid":"Email không đúng định dạng",
-"password_blank":"Mật khẩu không được bỏ trống"
+"password_blank":"Mật khẩu không được bỏ trống",
+"home":"Trang chủ",
+"store":"Amai quán",
+"me":"Tôi"
        
 }

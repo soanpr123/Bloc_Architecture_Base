@@ -18,3 +18,11 @@ final decorTextField = InputDecoration(
   fillColor: Colors.white,
   filled: true,
 );
+final boxShadow = [
+  BoxShadow(
+    color: Colors.black.withOpacity(0.1),
+    spreadRadius: 0,
+    blurRadius: 10,
+    offset: Offset(0, 0),
+  ),
+];

@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project/component/app_elevated_button.dart';
 import 'package:project/component/app_text_form_field.dart';
 import 'package:project/core/di/dependency_injection.dart';
+import 'package:project/core/routers/auth_guard.dart';
+import 'package:project/core/routers/router.gr.dart';
 import 'package:project/core/style/colors.dart';
 import 'package:project/core/style/resource.dart';
 import 'package:project/core/style/text_style.dart';
