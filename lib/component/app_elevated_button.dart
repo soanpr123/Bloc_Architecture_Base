@@ -10,8 +10,13 @@ class AppElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final AppElevatedButtonState state;
   final TextStyle? style;
-  AppElevatedButton(
-      {this.buttonTitle, this.onPressed, this.mainColor, this.style, this.state = AppElevatedButtonState.active});
+  const AppElevatedButton(
+      {super.key,
+      this.buttonTitle,
+      this.onPressed,
+      this.mainColor,
+      this.style,
+      this.state = AppElevatedButtonState.active});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class AppElevatedButton extends StatelessWidget {
           },
         ),
       ),
-      child: Container(
+      child: SizedBox(
         height: 48,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,13 +58,12 @@ class AppElevatedButton extends StatelessWidget {
             ),
             Text(
               buttonTitle ?? '',
-              style: style == null
-                  ? TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: state == AppElevatedButtonState.active ? Colors.white : Colors.black38,
-                    )
-                  : style,
+              style: style ??
+                  TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: state == AppElevatedButtonState.active ? Colors.white : Colors.black38,
+                  ),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:project/feautures/internal_app/model/login_model.dart';
+import 'package:project/feautures/internal_app/model/profile_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'internal_app_remote.g.dart';
@@ -14,4 +15,16 @@ abstract class INTERNALAPPAPI {
 
   @POST("forgot-password")
   Future<HttpResponse> requestForget(@Body() Map<String, dynamic> request);
+
+  @GET("auth/me")
+  Future<ProfileModel> requestMe();
+
+  @POST("auth/me/name")
+  Future<HttpResponse> updateMeName(@Body() Map<String, dynamic> request);
+
+  @POST("auth/me")
+  Future<HttpResponse> updateMe(@Body() Map<String, dynamic> request);
+
+  @POST("auth/logout")
+  Future<HttpResponse> logOut();
 }

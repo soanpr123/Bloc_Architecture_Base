@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:project/core/routers/router.gr.dart';
+import 'package:project/core/sevices/user_service.dart';
 import 'package:project/core/style/resource.dart';
+import 'package:project/core/utils/constants.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -22,13 +24,14 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> loadShowApp() async {
-    String isLogin = tokenBox.get('token', defaultValue: "").toString();
+    String isLogin = tokenBox.get(StorageBox.currentToken, defaultValue: "").toString();
 
     Future.delayed(const Duration(seconds: 2), () {
+      UserService.instance.setCurrentToken(isLogin);
       if (isLogin.isNotEmpty) {
-        context.router.popAndPush(MainRoute());
+        context.router.replace(const MainRoute());
       } else {
-        context.router.popAndPush(LoginRoute());
+        context.router.replace(LoginRoute());
       }
     });
   }
