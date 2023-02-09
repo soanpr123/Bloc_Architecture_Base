@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/routers/router.gr.dart';
 import 'package:project/core/sevices/user_service.dart';
 import 'package:project/core/style/resource.dart';
 import 'package:project/core/utils/constants.dart';
+import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
+import 'package:project/feautures/profile_page/cubit/profile_cubit.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final tokenBox = GetIt.I<Box<String>>();
+  final responsitory = getIt.get<InternalAppRepository>();
   @override
   void initState() {
     super.initState();
@@ -26,14 +30,25 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> loadShowApp() async {
     String isLogin = tokenBox.get(StorageBox.currentToken, defaultValue: "").toString();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      UserService.instance.setCurrentToken(isLogin);
-      if (isLogin.isNotEmpty) {
+    UserService.instance.setCurrentToken(isLogin);
+    if (isLogin.isNotEmpty) {
+      await getProfile();
+    } else {
+      context.router.replace(LoginRoute());
+    }
+  }
+
+  Future<void> getProfile() async {
+    try {
+      final response = await responsitory.requestMe();
+      if (response.status_code == 200) {
         context.router.replace(const MainRoute());
       } else {
         context.router.replace(LoginRoute());
       }
-    });
+    } on Exception catch (e) {
+      context.router.replace(LoginRoute());
+    }
   }
 
   @override
