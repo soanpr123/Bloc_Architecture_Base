@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/core/style/colors.dart';
 // import 'package:lms_telemor/app/theme/colors.dart';
 
 enum AppElevatedButtonState { active, inactive, loading, reverse }
@@ -19,9 +20,9 @@ class AppElevatedButton extends StatelessWidget {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
-            if (states.contains(MaterialState.pressed)) return mainColor ?? Colors.white;
+            if (states.contains(MaterialState.pressed)) return mainColor ?? colorBrandPrimary;
             if (states.contains(MaterialState.disabled)) return Colors.grey;
-            return mainColor ?? Colors.black;
+            return mainColor ?? colorBrandPrimary;
           },
         ),
         shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
