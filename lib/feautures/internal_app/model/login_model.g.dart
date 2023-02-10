@@ -60,7 +60,7 @@ class DataAdapter extends TypeAdapter<Data> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Data(
-      access_token: fields[0] as String?,
+      accessToken: fields[0] as String?,
       typeToken: fields[1] as String?,
     );
   }
@@ -70,7 +70,7 @@ class DataAdapter extends TypeAdapter<Data> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.access_token)
+      ..write(obj.accessToken)
       ..writeByte(1)
       ..write(obj.typeToken);
   }
@@ -85,34 +85,3 @@ class DataAdapter extends TypeAdapter<Data> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-LoginModel _$LoginModelFromJson(Map<String, dynamic> json) => LoginModel(
-      statusCode: json['statusCode'] as int?,
-      message: json['message'] as String?,
-      errors: json['errors'] as String?,
-      data: json['data'] == null
-          ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
-    <String, dynamic>{
-      'statusCode': instance.statusCode,
-      'message': instance.message,
-      'errors': instance.errors,
-      'data': instance.data,
-    };
-
-Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      access_token: json['access_token'] as String?,
-      typeToken: json['typeToken'] as String?,
-    );
-
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
-      'access_token': instance.access_token,
-      'typeToken': instance.typeToken,
-    };

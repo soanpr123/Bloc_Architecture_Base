@@ -141,6 +141,43 @@ class _INTERNALAPPAPI implements INTERNALAPPAPI {
   }
 
   @override
+  Future<UploadImage> uploadImage(
+    file,
+    type,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        file.path,
+        filename: file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'type',
+      type,
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<UploadImage>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'upload-image',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UploadImage.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<HttpResponse<dynamic>> logOut() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

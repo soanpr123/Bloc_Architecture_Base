@@ -5,7 +5,6 @@ import 'package:project/component/custom_alert.dart';
 import 'package:project/core/style/colors.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
-import 'package:project/feautures/login_page/cubit/login_cubit.dart';
 import 'package:project/feautures/profile_page/cubit/profile_cubit.dart';
 
 class DialogLogout extends StatelessWidget {
@@ -47,8 +46,8 @@ class DialogLogout extends StatelessWidget {
                   builder: (context, state) {
                     return AppElevatedButton(
                       state: state.requestLogout,
-                      onPressed: () {
-                        bloc.logOut(context);
+                      onPressed: () async {
+                        await bloc.logOut(context);
                       },
                       buttonTitle: translation(context).confirm,
                     );

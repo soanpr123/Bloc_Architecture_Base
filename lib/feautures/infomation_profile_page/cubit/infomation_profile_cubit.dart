@@ -17,7 +17,7 @@ class InfomationProfileCubit extends Cubit<InfomationProfileState> {
   }
 
   Future<void> updateMe(String name) async {
-    final request = {"about": name};
+    final request = {"about": name, "avatar": blocProfile.state.profile.incognito?.avatar ?? ""};
 
     emit(state.coppyWith(buttonState: AppElevatedButtonState.loading));
     // await Future.delayed(const Duration(seconds: 2));
