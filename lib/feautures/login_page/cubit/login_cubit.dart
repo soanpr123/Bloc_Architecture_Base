@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,15 @@ import 'package:project/component/app_elevated_button.dart';
 import 'package:project/component/custom_alert.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/error/exceptions.dart';
+// import 'package:project/core/routers/auth_guard.dart';
+import 'package:project/core/routers/router.gr.dart';
+import 'package:project/core/sevices/user_service.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/app_utils.dart';
 import 'package:project/core/utils/constants.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
-import 'package:project/feautures/internal_app/model/login_model.dart';
+// import 'package:project/feautures/internal_app/model/login_model.dart';
 
 part 'login_state.dart';
 
@@ -20,6 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState(buttonState: AppElevatedButtonState.active));
   final responsitory = getIt.get<InternalAppRepository>();
   final userBox = GetIt.instance<Box>();
+  final tokenBox = GetIt.I<Box<String>>();
   Future<void> loginRequest(BuildContext context, String email, String password) async {
     emit(state.coppyWith(buttonState: AppElevatedButtonState.loading, message: ""));
     // await Future.delayed(const Duration(seconds: 15));
@@ -48,11 +53,11 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final response = await responsitory.loginRequest(request);
       if (response.data != null) {
-        // getIt
-        userBox.put("token", response.data?.accessToken ?? "");
+        UserService.instance.setCurrentToken(response.data?.access_token ?? "");
+        // ignore: use_build_context_synchronously
+        context.router.replace(const MainRoute());
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
       } else {
-        print("message in cubit ${response.message}");
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active, message: response.message ?? ""));
       }
     } catch (e) {
@@ -117,6 +122,7 @@ class LoginCubit extends Cubit<LoginState> {
                 ),
               );
             });
+
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
       } else {
         // print("message in cubit ${response.data["message"]}");

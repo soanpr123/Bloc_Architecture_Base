@@ -51,6 +51,14 @@ dependencies:
   flutter_localizations: 
     sdk: flutter
   intl: ^0.17.0
+  salomon_bottom_bar: ^3.3.1
+  cached_network_image: ^3.2.3
+  lottie: ^2.2.0
+  flutter_spinkit: ^5.1.0
+  pull_to_refresh: ^2.0.0
+  flutter_widget_from_html: ^0.10.0
+  url_launcher: ^6.1.9
+ 
 
 dev_dependencies:
   flutter_test:
@@ -77,5 +85,6 @@ flutter:
     - assets/png/
     - assets/svg/
     - assets/locale/
+    - assets/json/
 
   

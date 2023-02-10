@@ -17,3 +17,10 @@ final typoInterNomal16 = GoogleFonts.inter(
   letterSpacing: 1.02,
   color: colorTextDark,
 );
+final typoInterNomal18 = GoogleFonts.inter(
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w700,
+  fontSize: 18,
+  letterSpacing: 1.02,
+  color: colorTextDark,
+);

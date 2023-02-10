@@ -29,34 +29,32 @@ class CustomAlert extends StatelessWidget {
             sigmaX: 0.5,
             sigmaY: 0.5,
           ),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Container(
-                        width: deviceWidth! * 0.9,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Card(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Center(
+                    child: SizedBox(
+                      width: deviceWidth! * 0.9,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Card(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
                             ),
-                            child: child,
                           ),
+                          child: child,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

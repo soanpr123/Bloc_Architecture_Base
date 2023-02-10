@@ -65,7 +65,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       child: TextFormField(
         readOnly: widget.readOnly ?? false,
         focusNode: _focusNode,
