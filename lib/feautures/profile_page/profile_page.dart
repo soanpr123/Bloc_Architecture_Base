@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project/component/app_elevated_button.dart';
 import 'package:project/component/app_netword_image.dart';
 import 'package:project/component/app_text_form_field.dart';
@@ -11,6 +12,8 @@ import 'package:project/core/style/resource.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/app_utils.dart';
+import 'package:project/core/utils/enum/api_request_status.dart';
+import 'package:project/feautures/profile_page/component/bottom_sheet_pick_image.dart';
 import 'package:project/feautures/profile_page/component/dialog_logout.dart';
 import 'package:project/feautures/profile_page/component/icon_text.dart';
 import 'package:project/feautures/profile_page/cubit/profile_cubit.dart';
@@ -29,14 +32,12 @@ class _ProfilePageState extends State<ProfilePage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     bloc.getProfile();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     nameCtrl.dispose();
   }
@@ -63,22 +64,48 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 32,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(50)),
-                          child: AppNetworkImageAvatar(
-                            source: state.profile.avatar ?? "",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                  if (state.apiRequestStatus == APIRequestStatus.loading)
+                    SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(50)),
+                        child: Center(
+                            child: Lottie.asset(R.ASSETS_JSON_LOADING_JSON,
+                                width: 100, height: 100, frameRate: FrameRate.max, repeat: true)),
                       ),
-                    ],
-                  ),
+                    ),
+                  if (state.apiRequestStatus != APIRequestStatus.loading)
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext co) {
+                              return BottomSheetPickImage();
+                            });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Stack(
+                            children: [
+                              SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                  child: AppNetworkImageAvatar(
+                                    source: state.profile.avatar ?? "",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const Positioned(bottom: 0, right: 0, child: Icon(Icons.photo_camera)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   const SizedBox(
                     height: 16,
                   ),

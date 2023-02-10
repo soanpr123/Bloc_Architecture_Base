@@ -2,14 +2,18 @@
 
 // import 'dart:html';
 
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project/component/app_elevated_button.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/routers/router.gr.dart';
 import 'package:project/core/sevices/user_service.dart';
+import 'package:project/core/utils/enum/api_request_status.dart';
 import 'package:project/core/utils/toast_message.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
 import 'package:project/feautures/internal_app/model/profile_model.dart';
@@ -20,6 +24,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit()
       : super(ProfileState(
             profile: DataProfile(),
+            apiRequestStatus: APIRequestStatus.loaded,
             buttonState: AppElevatedButtonState.active,
             requestLogout: AppElevatedButtonState.active));
   final responsitory = getIt.get<InternalAppRepository>();
@@ -75,6 +80,63 @@ class ProfileCubit extends Cubit<ProfileState> {
       }
     } on Exception catch (e) {
       emit(state.coppyWith(requestLogout: AppElevatedButtonState.active));
+    }
+  }
+
+  Future<void> pickAvatarFromCamera() async {
+    final XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      await uploadImage(File(image.path));
+    } else {
+      emit(state.coppyWith(pathAvata: "", apiRequestStatus: APIRequestStatus.error));
+    }
+  }
+
+  Future<void> pickAvatarFromgallery() async {
+    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      await uploadImage(File(image.path));
+    } else {
+      emit(state.coppyWith(pathAvata: "", apiRequestStatus: APIRequestStatus.error));
+    }
+  }
+
+  Future<void> uploadImage(File path) async {
+    emit(state.coppyWith(apiRequestStatus: APIRequestStatus.loading));
+    try {
+      final response = await responsitory.uploadImage(path, "avatar");
+      if (response.status_code == 200) {
+        await updateAvatar(response.data?.thumb ?? "");
+      } else {
+        errorToast(msg: response.message ?? "");
+        emit(state.coppyWith(apiRequestStatus: APIRequestStatus.error, pathAvata: ""));
+      }
+    } on Exception catch (e) {
+      emit(state.coppyWith(apiRequestStatus: APIRequestStatus.connectionError, pathAvata: ""));
+    }
+  }
+
+  Future<void> updateAvatar(String path) async {
+    final request = {"avatar": path};
+
+    try {
+      final response = await responsitory.updateMe(request);
+      if (response.data['status_code'] == 200) {
+        await getProfile();
+        successToast(response.data['message']);
+        emit(state.coppyWith(apiRequestStatus: APIRequestStatus.loaded));
+      } else {
+        errorToast(msg: response.data['message']);
+        emit(state.coppyWith(
+          apiRequestStatus: APIRequestStatus.error,
+        ));
+      }
+    } catch (e) {
+      emit(state.coppyWith(
+        apiRequestStatus: APIRequestStatus.connectionError,
+      ));
     }
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:project/feautures/internal_app/data/data_source/remote/internal_app_remote.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
 import 'package:project/feautures/internal_app/model/login_model.dart';
 import 'package:project/feautures/internal_app/model/profile_model.dart';
+import 'package:project/feautures/internal_app/model/upload_image.dart';
 import 'package:retrofit/dio.dart';
 
 class InternalAppRepositoryImpl extends InternalAppRepository {
@@ -38,5 +41,10 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   Future<HttpResponse> logOut() {
     // TODO: implement logOut
     return _api.logOut();
+  }
+
+  @override
+  Future<UploadImage> uploadImage(File file, String type) {
+    return _api.uploadImage(file, type);
   }
 }
