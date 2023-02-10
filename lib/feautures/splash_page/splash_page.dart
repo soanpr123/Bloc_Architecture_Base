@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:project/core/di/dependency_injection.dart';
@@ -9,7 +8,6 @@ import 'package:project/core/sevices/user_service.dart';
 import 'package:project/core/style/resource.dart';
 import 'package:project/core/utils/constants.dart';
 import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
-import 'package:project/feautures/profile_page/cubit/profile_cubit.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

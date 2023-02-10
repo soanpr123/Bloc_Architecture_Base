@@ -8,7 +8,7 @@ import 'package:project/core/style/resource.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/toast_message.dart';
-import 'package:project/feautures/login_page/component/background-image.dart';
+import 'package:project/feautures/login_page/component/background_image.dart';
 // import 'package:project/feautures/login_page/component/login_form.dart';
 import 'package:project/feautures/login_page/cubit/login_cubit.dart';
 part 'component/login_form.dart';
