@@ -29,7 +29,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final bloc = getIt<ProfileCubit>();
   final nameCtrl = TextEditingController();
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
   @override
   void initState() {
     super.initState();
@@ -52,10 +52,10 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (context, state) {
             nameCtrl.text = state.profile.incognito?.name ?? "";
             return SmartRefresher(
-              controller: _refreshController,
+              controller: refreshController,
               onRefresh: () {
                 bloc.getProfile();
-                _refreshController.refreshCompleted();
+                refreshController.refreshCompleted();
               },
               child: ListView(
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -196,16 +196,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconText(icon: R.ASSETS_SVG_EYE_LINE_SVG, text: formatNumber(state.profile.total_viewed ?? 0)),
-                        IconText(icon: R.ASSETS_SVG_HEART_SVG, text: formatNumber(state.profile.total_likes ?? 0)),
-                        IconText(icon: R.ASSETS_SVG_LOGOAMAI_SVG, text: formatNumber(state.profile.total_amais ?? 0))
+                        IconText(icon: R.ASSETS_SVG_EYE_LINE_SVG, text: formatNumber(state.profile.totalViewed ?? 0)),
+                        IconText(icon: R.ASSETS_SVG_HEART_SVG, text: formatNumber(state.profile.totalLikes ?? 0)),
+                        IconText(icon: R.ASSETS_SVG_LOGOAMAI_SVG, text: formatNumber(state.profile.totalAmais ?? 0))
                       ],
                     ),
                   ),
                   buildButton(translation(context).infomation_profile, onTap: () {
                     context.router.push(InfomationProfileRoute());
                   }),
-                  buildButton(translation(context).change_password, onTap: () {}),
+                  buildButton(translation(context).change_password, onTap: () {
+                    context.router.push(ChangePasswordRoute());
+                  }),
                   buildButton(translation(context).log_out, onTap: () {
                     showDialog(
                         context: (context),

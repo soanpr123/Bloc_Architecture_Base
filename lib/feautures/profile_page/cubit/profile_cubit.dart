@@ -1,7 +1,3 @@
-// import 'dart:html';
-
-// import 'dart:html';
-
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -31,12 +27,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getProfile() async {
     try {
       final response = await responsitory.requestMe();
-      if (response.status_code == 200) {
+      if (response.statusCode == 200) {
         emit(state.coppyWith(profile: response.data));
       } else {
         emit(state.coppyWith(profile: DataProfile()));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.coppyWith(profile: DataProfile()));
     }
   }
@@ -59,7 +55,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         errorToast(msg: response.data['message']);
         emit(state.coppyWith(profile: state.profile, buttonState: AppElevatedButtonState.active));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       //  errorToast(msg:translation(context).orr);
       emit(state.coppyWith(profile: state.profile, buttonState: AppElevatedButtonState.active));
     }
@@ -72,13 +68,13 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (response.data['status_code'] == 200) {
         successToast(response.data['message']);
         UserService.instance.setCurrentToken("");
-        context.router.replace(LoginRoute());
+        if (context.mounted) context.router.replace(LoginRoute());
         emit(state.coppyWith(requestLogout: AppElevatedButtonState.active));
       } else {
         errorToast(msg: response.data['message']);
         emit(state.coppyWith(requestLogout: AppElevatedButtonState.active));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.coppyWith(requestLogout: AppElevatedButtonState.active));
     }
   }
@@ -107,19 +103,19 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.coppyWith(apiRequestStatus: APIRequestStatus.loading));
     try {
       final response = await responsitory.uploadImage(path, "avatar");
-      if (response.status_code == 200) {
+      if (response.statusCode == 200) {
         await updateAvatar(response.data?.thumb ?? "");
       } else {
         errorToast(msg: response.message ?? "");
         emit(state.coppyWith(apiRequestStatus: APIRequestStatus.error, pathAvata: ""));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.coppyWith(apiRequestStatus: APIRequestStatus.connectionError, pathAvata: ""));
     }
   }
 
   Future<void> updateAvatar(String path) async {
-    final request = {"avatar": path};
+    final request = {"avatar": path, "about": state.profile.incognito?.about ?? ""};
 
     try {
       final response = await responsitory.updateMe(request);

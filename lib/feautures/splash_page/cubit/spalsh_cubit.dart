@@ -12,9 +12,8 @@ class SpalshCubit extends Cubit<SpalshState> {
   SpalshCubit() : super(SpalshInitial());
   final tokenBox = GetIt.I<Box<String>>();
   Future<void> loadShowApp(BuildContext context) async {
-    print("load");
     String isLogin = tokenBox.get('token', defaultValue: "").toString();
-    print(isLogin);
+
     if (isLogin.isEmpty) {
       context.router.popAndPush(const MainRoute());
     } else {

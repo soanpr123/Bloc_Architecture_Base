@@ -41,12 +41,12 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> getProfile() async {
     try {
       final response = await responsitory.requestMe();
-      if (response.status_code == 200) {
-        context.router.replace(const MainRoute());
+      if (response.statusCode == 200) {
+        if (context.mounted) context.router.replace(const MainRoute());
       } else {
-        context.router.replace(LoginRoute());
+        if (context.mounted) context.router.replace(LoginRoute());
       }
-    } on Exception catch (e) {
+    } catch (e) {
       context.router.replace(LoginRoute());
     }
   }

@@ -53,7 +53,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final response = await responsitory.loginRequest(request);
       if (response.data != null) {
-        UserService.instance.setCurrentToken(response.data?.access_token ?? "");
+        UserService.instance.setCurrentToken(response.data?.accessToken ?? "");
         // ignore: use_build_context_synchronously
         context.router.replace(const MainRoute());
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));

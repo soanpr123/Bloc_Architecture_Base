@@ -64,7 +64,7 @@ class InfomationProfilePage extends StatelessWidget {
                       ),
                       if (!state.showEdit)
                         Text(
-                          blocProfile.state.profile.incognito?.about ?? "",
+                          blocProfile.state.profile.incognito?.about ?? "Không có giới thiệu",
                           style: typoInterNomal14,
                         )
                       else
@@ -86,7 +86,7 @@ class InfomationProfilePage extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      buildContent(translation(context).position_name, blocProfile.state.profile.position_name ?? ""),
+                      buildContent(translation(context).position_name, blocProfile.state.profile.positionName ?? ""),
                       Row(
                         children: [
                           Column(
@@ -102,13 +102,13 @@ class InfomationProfilePage extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    blocProfile.state.profile.work_status_name ?? "",
+                                    blocProfile.state.profile.workStatusName ?? "",
                                     style: typoInterNomal14.copyWith(color: colorBrandPrimary),
                                   ),
                                   const SizedBox(
                                     width: 4,
                                   ),
-                                  (blocProfile.state.profile.work_status ?? 0) == 2
+                                  (blocProfile.state.profile.workStatus ?? 0) == 2
                                       ? Icon(
                                           Icons.check_circle_sharp,
                                           size: 20,
@@ -125,13 +125,12 @@ class InfomationProfilePage extends StatelessWidget {
                         ],
                       ),
                       buildContent(translation(context).department, blocProfile.state.profile.department ?? ""),
-                      buildContent(
-                          translation(context).join_company_at, blocProfile.state.profile.join_company_at ?? ""),
-                      buildContent(translation(context).up_official_at, blocProfile.state.profile.up_official_at ?? ""),
-                      buildContent(translation(context).citizen_id, blocProfile.state.profile.citizen_id ?? ""),
+                      buildContent(translation(context).join_company_at, blocProfile.state.profile.joinCompanyAt ?? ""),
+                      buildContent(translation(context).up_official_at, blocProfile.state.profile.upOfficialAt ?? ""),
+                      buildContent(translation(context).citizen_id, blocProfile.state.profile.citizenId ?? ""),
                       buildContent(translation(context).phone, blocProfile.state.profile.phone ?? ""),
                       buildContent(translation(context).email, blocProfile.state.profile.email ?? ""),
-                      buildContent(translation(context).personal_email, blocProfile.state.profile.personal_email ?? ""),
+                      buildContent(translation(context).personal_email, blocProfile.state.profile.personalEmail ?? ""),
                       buildContent(translation(context).gender, blocProfile.state.profile.gender ?? ""),
                       buildContent(translation(context).dob, blocProfile.state.profile.dob ?? ""),
                       buildContent(translation(context).bank, blocProfile.state.profile.bank?.bank ?? ""),
@@ -148,10 +147,10 @@ class InfomationProfilePage extends StatelessWidget {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width - 32,
                                 child: Text(
-                                  blocProfile.state.profile.education?.university_name ?? "",
+                                  blocProfile.state.profile.education?.universityName ?? "",
                                   style: typoInterNomal14,
                                 ),
                               ),
@@ -163,7 +162,7 @@ class InfomationProfilePage extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "${translation(context).graded_name}: ${blocProfile.state.profile.education?.graded_name ?? ""} - ${translation(context).gpa}: ${double.parse((blocProfile.state.profile.education?.gpa ?? "0")).toStringAsFixed(2)}",
+                                      "${translation(context).graded_name}: ${blocProfile.state.profile.education?.gradedName ?? ""} - ${translation(context).gpa}: ${double.parse((blocProfile.state.profile.education?.gpa ?? "0")).toStringAsFixed(2)}",
                                       style: typoInterNomal14,
                                     ),
                                   ],
@@ -176,7 +175,7 @@ class InfomationProfilePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      buildContent(translation(context).last_company, blocProfile.state.profile.last_company ?? ""),
+                      buildContent(translation(context).last_company, blocProfile.state.profile.lastCompany ?? ""),
                       Row(
                         children: [
                           Column(
@@ -189,7 +188,7 @@ class InfomationProfilePage extends StatelessWidget {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width - 32,
                                 child: Column(
                                   children: [
@@ -206,10 +205,10 @@ class InfomationProfilePage extends StatelessWidget {
                                         Flexible(
                                           child: GestureDetector(
                                             onTap: () {
-                                              launchUrlString(blocProfile.state.profile.socials?.facebook_url ?? "");
+                                              launchUrlString(blocProfile.state.profile.socials?.facebookUrl ?? "");
                                             },
                                             child: Text(
-                                              blocProfile.state.profile.socials?.facebook_url ?? "",
+                                              blocProfile.state.profile.socials?.facebookUrl ?? "",
                                               style: typoInterNomal14.copyWith(color: colorBrandPrimary),
                                             ),
                                           ),
@@ -232,10 +231,10 @@ class InfomationProfilePage extends StatelessWidget {
                                         Flexible(
                                           child: GestureDetector(
                                             onTap: () {
-                                              launchUrlString(blocProfile.state.profile.socials?.telegram_url ?? "");
+                                              launchUrlString(blocProfile.state.profile.socials?.telegramUrl ?? "");
                                             },
                                             child: Text(
-                                              blocProfile.state.profile.socials?.telegram_url ?? "",
+                                              blocProfile.state.profile.socials?.telegramUrl ?? "",
                                               style: typoInterNomal14.copyWith(color: colorBrandPrimary),
                                             ),
                                           ),
@@ -295,7 +294,6 @@ class InfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(state.buttonState);
     return Column(
       children: [
         AppTextFormField(

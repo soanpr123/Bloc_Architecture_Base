@@ -21,7 +21,7 @@ part of '../login_page.dart';
 //   }
 // }
 
-extension loginForm on LoginPage {
+extension LoginForm on LoginPage {
   Widget buildLoginForm(
       BuildContext context, LoginState state, TextEditingController email, TextEditingController pass) {
     return Container(

@@ -1,11 +1,8 @@
 import 'package:hive/hive.dart';
-import 'package:json_annotation/json_annotation.dart';
+// import 'package:json_annotation/json_annotation.dart';
 part 'login_model.g.dart';
 
 @HiveType(typeId: 0)
-@JsonSerializable(
-  explicitToJson: false,
-)
 class LoginModel {
   @HiveField(0)
   int? statusCode;
@@ -18,22 +15,42 @@ class LoginModel {
 
   LoginModel({this.statusCode, this.message, this.errors, this.data});
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => _$LoginModelFromJson(json);
-  Map<String, dynamic> toJson() => _$LoginModelToJson(this);
+  LoginModel.fromJson(Map<String, dynamic> json) {
+    statusCode = json['status_code'];
+    message = json['message'];
+    errors = json['errors'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status_code'] = statusCode;
+    data['message'] = message;
+    data['errors'] = errors;
+
+    data['data'] = data;
+
+    return data;
+  }
 }
 
-@JsonSerializable(
-  explicitToJson: false,
-)
 @HiveType(typeId: 1)
 class Data {
   @HiveField(0)
-  String? access_token;
+  String? accessToken;
   @HiveField(1)
   String? typeToken;
 
-  Data({this.access_token, this.typeToken});
+  Data({this.accessToken, this.typeToken});
+  Data.fromJson(Map<String, dynamic> json) {
+    accessToken = json['access_token'];
+    typeToken = json['type_token'];
+  }
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access_token'] = accessToken;
+    data['type_token'] = typeToken;
+    return data;
+  }
 }

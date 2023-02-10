@@ -28,7 +28,6 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
 
   @override
   Future<HttpResponse> updateNameMe(Map<String, dynamic> request) {
-    // TODO: implement updateNameMe
     return _api.updateMeName(request);
   }
 
@@ -39,7 +38,6 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
 
   @override
   Future<HttpResponse> logOut() {
-    // TODO: implement logOut
     return _api.logOut();
   }
 

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:project/feautures/internal_app/model/login_model.dart';
 import 'package:project/feautures/internal_app/model/profile_model.dart';
 import 'package:project/feautures/internal_app/model/upload_image.dart';

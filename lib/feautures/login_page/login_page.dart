@@ -35,7 +35,6 @@ class LoginPage extends StatelessWidget {
             create: (context) => LoginCubit(),
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
-                // TODO: implement listener
                 if (state.message != "") {
                   errorToast(msg: state.message);
                 } else {}
