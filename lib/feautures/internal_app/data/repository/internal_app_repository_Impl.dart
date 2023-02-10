@@ -45,4 +45,9 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   Future<UploadImage> uploadImage(File file, String type) {
     return _api.uploadImage(file, type);
   }
+
+  @override
+  Future<HttpResponse> changePass(Map<String, dynamic> request) {
+    return _api.changePass(request);
+  }
 }

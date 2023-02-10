@@ -15,4 +15,5 @@ abstract class InternalAppRepository {
   Future<HttpResponse> updateMe(Map<String, dynamic> request);
   Future<HttpResponse> logOut();
   Future<UploadImage> uploadImage(File file, String type);
+  Future<HttpResponse> changePass( Map<String, dynamic> request);
 }

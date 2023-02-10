@@ -28,6 +28,9 @@ abstract class INTERNALAPPAPI {
   @POST("auth/me")
   Future<HttpResponse> updateMe(@Body() Map<String, dynamic> request);
 
+  @POST("auth/change-password")
+  Future<HttpResponse> changePass(@Body() Map<String, dynamic> request);
+
   @POST("upload-image")
   Future<UploadImage> uploadImage(@Part(name: "image") File file, @Part(name: "type") String type);
 
