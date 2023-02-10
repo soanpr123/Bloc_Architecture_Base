@@ -62,7 +62,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
         emit(state.coppyWith(buttonState: AppElevatedButtonState.active));
       } else {
         if (response.data['data'] != null && response.data['data']['current_password'] != null) {
-          print(response.data['data']['current_password'].join('.'));
+         
           errorToast(msg: response.data['data']['current_password'].join('.'));
         } else {
           errorToast(msg: response.data['message']);

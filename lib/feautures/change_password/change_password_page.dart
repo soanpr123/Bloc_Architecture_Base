@@ -31,7 +31,6 @@ class ChangePasswordPage extends StatelessWidget {
         create: (context) => ChangePasswordCubit(),
         child: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
           builder: (context, state) {
-            print(state.buttonState);
             return Container(
               margin: const EdgeInsets.all(16),
               child: Column(
