@@ -5,6 +5,7 @@ import 'package:project/component/build_body.dart';
 import 'package:project/core/style/colors.dart';
 import 'package:project/core/style/text_style.dart';
 import 'package:project/core/style/transaction.dart';
+import 'package:project/core/utils/app_utils.dart';
 import 'package:project/features/amai_store_page/component/item_store.dart';
 import 'package:project/features/amai_store_page/cubit/amai_store_cubit.dart';
 import 'package:project/features/profile_page/component/dialog.dart';
@@ -18,7 +19,6 @@ class AmaiStorePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: const BackButton(color: Colors.black),
         centerTitle: true,
         elevation: 1,
         title: Text(
@@ -83,7 +83,8 @@ class AmaiStorePage extends StatelessWidget {
                                           state: state,
                                           id: item.id ?? 0,
                                           buttonState: (state.ordered.lunchMenusId ?? 0) != (item.id ?? 0) &&
-                                                  state.ordered.lunchMenusId != null
+                                                      state.ordered.lunchMenusId != null ||
+                                                  checkTime() == true
                                               ? AppElevatedButtonState.inactive
                                               : AppElevatedButtonState.active,
                                           onPressed: () async {
@@ -137,7 +138,8 @@ class AmaiStorePage extends StatelessWidget {
                                           id: item.id ?? 0,
                                           state: state,
                                           buttonState: (state.ordered.lunchMenusId ?? 0) != (item.id ?? 0) &&
-                                                  state.ordered.lunchMenusId != null
+                                                      state.ordered.lunchMenusId != null ||
+                                                  checkTime() == true
                                               ? AppElevatedButtonState.inactive
                                               : AppElevatedButtonState.active,
                                           onPressed: () async {
