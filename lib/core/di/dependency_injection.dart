@@ -3,12 +3,12 @@ import 'package:hive/hive.dart';
 import 'package:project/core/network/dio_client.dart';
 import 'package:project/core/sevices/config_service.dart';
 import 'package:project/core/utils/constants.dart';
-import 'package:project/feautures/internal_app/data/data_source/remote/internal_app_remote.dart';
-import 'package:project/feautures/internal_app/data/repository/internal_app_repository.dart';
-import 'package:project/feautures/internal_app/data/repository/internal_app_repository_Impl.dart';
-import 'package:project/feautures/internal_app/model/login_model.dart';
-import 'package:project/feautures/profile_page/cubit/profile_cubit.dart';
-// import 'package:project/feautures/splash_page/cubit/spalsh_cubit.dart';
+import 'package:project/features/internal_app/data/data_source/remote/internal_app_remote.dart';
+import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
+import 'package:project/features/internal_app/data/repository/internal_app_repository_Impl.dart';
+import 'package:project/features/internal_app/model/login_model.dart';
+import 'package:project/features/profile_page/cubit/profile_cubit.dart';
+// import 'package:project/features/splash_page/cubit/spalsh_cubit.dart';
 
 final getIt = GetIt.instance;
 

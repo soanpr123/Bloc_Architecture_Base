@@ -10,126 +10,112 @@
 //
 // ignore_for_file: type=lint
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:auto_route/empty_router_widgets.dart' as _i4;
-import 'package:flutter/material.dart' as _i11;
+part of 'router.dart';
 
-import '../../feautures/amai_store_page/amai_store_page.dart' as _i6;
-import '../../feautures/change_password/change_password_page.dart' as _i9;
-import '../../feautures/home_page/home_page.dart' as _i5;
-import '../../feautures/infomation_profile_page/infomation_profile_page.dart'
-    as _i8;
-import '../../feautures/login_page/login_page.dart' as _i2;
-import '../../feautures/main_page/main_page.dart' as _i3;
-import '../../feautures/profile_page/profile_page.dart' as _i7;
-import '../../feautures/splash_page/splash_page.dart' as _i1;
-
-class Routers extends _i10.RootStackRouter {
-  Routers([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+class _$AppRouter extends RootStackRouter {
+  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
 
   @override
-  final Map<String, _i10.PageFactory> pagesMap = {
+  final Map<String, PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.SplashPage(),
+        child: const SplashPage(),
       );
     },
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.LoginPage(key: args.key),
+        child: LoginPage(key: args.key),
       );
     },
     MainRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.MainPage(),
+        child: const MainPage(),
       );
     },
     HomePageRouter.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmptyRouterPage(),
+        child: const EmptyRouterPage(),
       );
     },
     AmaiPageRouter.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmptyRouterPage(),
+        child: const EmptyRouterPage(),
       );
     },
     ProfilePageRouter.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmptyRouterPage(),
+        child: const EmptyRouterPage(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.HomePage(),
+        child: HomePage(),
       );
     },
     AmaiStoreRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.AmaiStorePage(),
+        child: const AmaiStorePage(),
       );
     },
     ProfileRoute.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.ProfilePage(),
+        child: const ProfilePage(),
       );
     },
     InfomationProfileRoute.name: (routeData) {
       final args = routeData.argsAs<InfomationProfileRouteArgs>(
           orElse: () => const InfomationProfileRouteArgs());
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i8.InfomationProfilePage(key: args.key),
+        child: InfomationProfilePage(key: args.key),
       );
     },
     ChangePasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ChangePasswordRouteArgs>(
           orElse: () => const ChangePasswordRouteArgs());
-      return _i10.MaterialPageX<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i9.ChangePasswordPage(key: args.key),
+        child: ChangePasswordPage(key: args.key),
       );
     },
   };
 
   @override
-  List<_i10.RouteConfig> get routes => [
-        _i10.RouteConfig(
+  List<RouteConfig> get routes => [
+        RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i10.RouteConfig(
+        RouteConfig(
           LoginRoute.name,
           path: '/login',
         ),
-        _i10.RouteConfig(
+        RouteConfig(
           MainRoute.name,
           path: '/main',
           children: [
-            _i10.RouteConfig(
+            RouteConfig(
               HomePageRouter.name,
               path: 'home',
               parent: MainRoute.name,
               children: [
-                _i10.RouteConfig(
+                RouteConfig(
                   HomeRoute.name,
                   path: '',
                   parent: HomePageRouter.name,
                 ),
-                _i10.RouteConfig(
+                RouteConfig(
                   '*#redirect',
                   path: '*',
                   parent: HomePageRouter.name,
@@ -138,17 +124,17 @@ class Routers extends _i10.RootStackRouter {
                 ),
               ],
             ),
-            _i10.RouteConfig(
+            RouteConfig(
               AmaiPageRouter.name,
               path: 'amaiStore',
               parent: MainRoute.name,
               children: [
-                _i10.RouteConfig(
+                RouteConfig(
                   AmaiStoreRoute.name,
                   path: '',
                   parent: AmaiPageRouter.name,
                 ),
-                _i10.RouteConfig(
+                RouteConfig(
                   '*#redirect',
                   path: '*',
                   parent: AmaiPageRouter.name,
@@ -157,27 +143,27 @@ class Routers extends _i10.RootStackRouter {
                 ),
               ],
             ),
-            _i10.RouteConfig(
+            RouteConfig(
               ProfilePageRouter.name,
               path: 'profile',
               parent: MainRoute.name,
               children: [
-                _i10.RouteConfig(
+                RouteConfig(
                   ProfileRoute.name,
                   path: '',
                   parent: ProfilePageRouter.name,
                 ),
-                _i10.RouteConfig(
+                RouteConfig(
                   InfomationProfileRoute.name,
                   path: 'info',
                   parent: ProfilePageRouter.name,
                 ),
-                _i10.RouteConfig(
+                RouteConfig(
                   ChangePasswordRoute.name,
                   path: 'chane_pass',
                   parent: ProfilePageRouter.name,
                 ),
-                _i10.RouteConfig(
+                RouteConfig(
                   '*#redirect',
                   path: '*',
                   parent: ProfilePageRouter.name,
@@ -192,8 +178,8 @@ class Routers extends _i10.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.SplashPage]
-class SplashRoute extends _i10.PageRouteInfo<void> {
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -204,9 +190,9 @@ class SplashRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.LoginPage]
-class LoginRoute extends _i10.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i11.Key? key})
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({Key? key})
       : super(
           LoginRoute.name,
           path: '/login',
@@ -219,7 +205,7 @@ class LoginRoute extends _i10.PageRouteInfo<LoginRouteArgs> {
 class LoginRouteArgs {
   const LoginRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final Key? key;
 
   @override
   String toString() {
@@ -228,9 +214,9 @@ class LoginRouteArgs {
 }
 
 /// generated route for
-/// [_i3.MainPage]
-class MainRoute extends _i10.PageRouteInfo<void> {
-  const MainRoute({List<_i10.PageRouteInfo>? children})
+/// [MainPage]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
       : super(
           MainRoute.name,
           path: '/main',
@@ -241,9 +227,9 @@ class MainRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class HomePageRouter extends _i10.PageRouteInfo<void> {
-  const HomePageRouter({List<_i10.PageRouteInfo>? children})
+/// [EmptyRouterPage]
+class HomePageRouter extends PageRouteInfo<void> {
+  const HomePageRouter({List<PageRouteInfo>? children})
       : super(
           HomePageRouter.name,
           path: 'home',
@@ -254,9 +240,9 @@ class HomePageRouter extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class AmaiPageRouter extends _i10.PageRouteInfo<void> {
-  const AmaiPageRouter({List<_i10.PageRouteInfo>? children})
+/// [EmptyRouterPage]
+class AmaiPageRouter extends PageRouteInfo<void> {
+  const AmaiPageRouter({List<PageRouteInfo>? children})
       : super(
           AmaiPageRouter.name,
           path: 'amaiStore',
@@ -267,9 +253,9 @@ class AmaiPageRouter extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class ProfilePageRouter extends _i10.PageRouteInfo<void> {
-  const ProfilePageRouter({List<_i10.PageRouteInfo>? children})
+/// [EmptyRouterPage]
+class ProfilePageRouter extends PageRouteInfo<void> {
+  const ProfilePageRouter({List<PageRouteInfo>? children})
       : super(
           ProfilePageRouter.name,
           path: 'profile',
@@ -280,8 +266,8 @@ class ProfilePageRouter extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.HomePage]
-class HomeRoute extends _i10.PageRouteInfo<void> {
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -292,8 +278,8 @@ class HomeRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.AmaiStorePage]
-class AmaiStoreRoute extends _i10.PageRouteInfo<void> {
+/// [AmaiStorePage]
+class AmaiStoreRoute extends PageRouteInfo<void> {
   const AmaiStoreRoute()
       : super(
           AmaiStoreRoute.name,
@@ -304,8 +290,8 @@ class AmaiStoreRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.ProfilePage]
-class ProfileRoute extends _i10.PageRouteInfo<void> {
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute()
       : super(
           ProfileRoute.name,
@@ -316,10 +302,9 @@ class ProfileRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.InfomationProfilePage]
-class InfomationProfileRoute
-    extends _i10.PageRouteInfo<InfomationProfileRouteArgs> {
-  InfomationProfileRoute({_i11.Key? key})
+/// [InfomationProfilePage]
+class InfomationProfileRoute extends PageRouteInfo<InfomationProfileRouteArgs> {
+  InfomationProfileRoute({Key? key})
       : super(
           InfomationProfileRoute.name,
           path: 'info',
@@ -332,7 +317,7 @@ class InfomationProfileRoute
 class InfomationProfileRouteArgs {
   const InfomationProfileRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final Key? key;
 
   @override
   String toString() {
@@ -341,9 +326,9 @@ class InfomationProfileRouteArgs {
 }
 
 /// generated route for
-/// [_i9.ChangePasswordPage]
-class ChangePasswordRoute extends _i10.PageRouteInfo<ChangePasswordRouteArgs> {
-  ChangePasswordRoute({_i11.Key? key})
+/// [ChangePasswordPage]
+class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
+  ChangePasswordRoute({Key? key})
       : super(
           ChangePasswordRoute.name,
           path: 'chane_pass',
@@ -356,7 +341,7 @@ class ChangePasswordRoute extends _i10.PageRouteInfo<ChangePasswordRouteArgs> {
 class ChangePasswordRouteArgs {
   const ChangePasswordRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final Key? key;
 
   @override
   String toString() {
