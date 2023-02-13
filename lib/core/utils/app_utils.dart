@@ -13,3 +13,8 @@ String formatNumber(int number) {
 
   return '${n.toStringAsFixed(1)}$suffix';
 }
+
+bool isPasswordValid(String password) {
+  RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])[a-zA-Z0-9!@#\$%\^&\*]{8,32}$");
+  return pattern.hasMatch(password);
+}

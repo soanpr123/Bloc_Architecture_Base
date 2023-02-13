@@ -7,8 +7,15 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\json\loading.json)
   static const String ASSETS_JSON_LOADING_JSON = 'assets/json/loading.json';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\json\no_connect.json)
+  static const String ASSETS_JSON_NO_CONNECT_JSON =
+      'assets/json/no_connect.json';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\json\no_image.json)
   static const String ASSETS_JSON_NO_IMAGE_JSON = 'assets/json/no_image.json';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\json\nodata.json)
+  static const String ASSETS_JSON_NODATA_JSON = 'assets/json/nodata.json';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\locale\en-US.json)
   static const String ASSETS_LOCALE_EN_US_JSON = 'assets/locale/en-US.json';
@@ -52,4 +59,8 @@ class R {
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\svg\no_avatar.svg)
   static const String ASSETS_SVG_NO_AVATAR_SVG = 'assets/svg/no_avatar.svg';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\svg\store_nodata.svg)
+  static const String ASSETS_SVG_STORE_NODATA_SVG =
+      'assets/svg/store_nodata.svg';
 }

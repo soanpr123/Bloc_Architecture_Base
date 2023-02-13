@@ -44,5 +44,12 @@
 "gallery":"Bộ sưu tập",
 "current_pass":"Mật khẩu hiện tại",
 "new_pass":"Mật khẩu mới",
-"confirm_new_pass":"Nhập lại mật khẩu mới"
+"confirm_new_pass":"Nhập lại mật khẩu mới",
+"same_pass_invalid":"Mật khẩu và mật khẩu nhập lại không khớp, vui lòng kiểm tra lại!",
+"password_invalid": "Mật khẩu cần chứa 8-32 ký tự, in hoa/thường, số và ký tự đặc biệt.",
+"no_data_store":"Chờ một xíu nhé! Chúng tôi đang nấu cơm cho bạn.",
+"reload":"Tải lại",
+"internet_error":"Mạng không ổn định",
+"no_data":"Không có dữ liệu",
+"error_other":"Lỗi không xác định"
 }
