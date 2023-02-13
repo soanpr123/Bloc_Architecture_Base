@@ -4,6 +4,7 @@ import 'package:project/features/internal_app/data/data_source/remote/internal_a
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
+import 'package:project/features/internal_app/model/orderd_model.dart';
 import 'package:project/features/internal_app/model/profile_model.dart';
 import 'package:project/features/internal_app/model/upload_image.dart';
 import 'package:retrofit/dio.dart';
@@ -55,5 +56,25 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   @override
   Future<OrderMenu> requestOrderMenu() {
     return _api.requestOrderMenu();
+  }
+
+  @override
+  Future<HttpResponse> deleteStore() {
+    return _api.deleteStore();
+  }
+
+  @override
+  Future<HttpResponse> orderStore(Map<String, dynamic> id) {
+    return _api.orderStore(id);
+  }
+
+  @override
+  Future<OrderedModel> ordered() {
+    return _api.ordered();
+  }
+
+  @override
+  Future<HttpResponse> updateStore(int id) {
+    return _api.updateStore(id);
   }
 }

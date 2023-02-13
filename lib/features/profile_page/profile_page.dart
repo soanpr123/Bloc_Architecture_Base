@@ -14,7 +14,7 @@ import 'package:project/core/style/transaction.dart';
 import 'package:project/core/utils/app_utils.dart';
 import 'package:project/core/utils/enum/api_request_status.dart';
 import 'package:project/features/profile_page/component/bottom_sheet_pick_image.dart';
-import 'package:project/features/profile_page/component/dialog_logout.dart';
+import 'package:project/features/profile_page/component/dialog.dart';
 import 'package:project/features/profile_page/component/icon_text.dart';
 import 'package:project/features/profile_page/cubit/profile_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
