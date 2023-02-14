@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
+import 'package:project/features/internal_app/model/orderd_model.dart';
 import 'package:project/features/internal_app/model/profile_model.dart';
 import 'package:project/features/internal_app/model/upload_image.dart';
 import 'package:retrofit/retrofit.dart';
@@ -42,4 +43,16 @@ abstract class INTERNALAPPAPI {
 
   @GET("order-lunch/menu")
   Future<OrderMenu> requestOrderMenu();
+
+  @POST("order-lunch")
+  Future<HttpResponse> orderStore(@Body() Map<String, dynamic> id);
+
+  @GET("order-lunch/ordered")
+  Future<OrderedModel> ordered();
+
+  @POST("order-lunch/update")
+  Future<HttpResponse> updateStore(@Body() int id);
+
+  @POST("order-lunch/delete")
+  Future<HttpResponse> deleteStore();
 }

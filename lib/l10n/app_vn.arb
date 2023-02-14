@@ -52,5 +52,9 @@
 "reload":"Tải lại",
 "internet_error":"Mạng không ổn định",
 "no_data":"Không có dữ liệu",
-"error_other":"Lỗi không xác định"
+"error_other":"Lỗi không xác định",
+"order_now":"Đặt ngay",
+"cancel_order":"Hủy/Đặt lại",
+"confirm_order":"Bạn có chắc muốn đặt {name}?"
+
 }

@@ -62,9 +62,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     AmaiStoreRoute.name: (routeData) {
+      final args = routeData.argsAs<AmaiStoreRouteArgs>(
+          orElse: () => const AmaiStoreRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const AmaiStorePage(),
+        child: AmaiStorePage(key: args.key),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -279,14 +281,26 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AmaiStorePage]
-class AmaiStoreRoute extends PageRouteInfo<void> {
-  const AmaiStoreRoute()
+class AmaiStoreRoute extends PageRouteInfo<AmaiStoreRouteArgs> {
+  AmaiStoreRoute({Key? key})
       : super(
           AmaiStoreRoute.name,
           path: '',
+          args: AmaiStoreRouteArgs(key: key),
         );
 
   static const String name = 'AmaiStoreRoute';
+}
+
+class AmaiStoreRouteArgs {
+  const AmaiStoreRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AmaiStoreRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
