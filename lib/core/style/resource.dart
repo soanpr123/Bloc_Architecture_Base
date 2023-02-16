@@ -17,6 +17,9 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\json\nodata.json)
   static const String ASSETS_JSON_NODATA_JSON = 'assets/json/nodata.json';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\json\qrcode.json)
+  static const String ASSETS_JSON_QRCODE_JSON = 'assets/json/qrcode.json';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\locale\en-US.json)
   static const String ASSETS_LOCALE_EN_US_JSON = 'assets/locale/en-US.json';
 
@@ -26,11 +29,36 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\bg.png)
   static const String ASSETS_PNG_BG_PNG = 'assets/png/bg.png';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_home_btb.png)
+  static const String ASSETS_PNG_IC_HOME_BTB_PNG = 'assets/png/ic_home_btb.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_notification_btb.png)
+  static const String ASSETS_PNG_IC_NOTIFICATION_BTB_PNG =
+      'assets/png/ic_notification_btb.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_shopping_btbar.png)
+  static const String ASSETS_PNG_IC_SHOPPING_BTBAR_PNG =
+      'assets/png/ic_shopping_btbar.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_user_btb.png)
+  static const String ASSETS_PNG_IC_USER_BTB_PNG = 'assets/png/ic_user_btb.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\img_bg.png)
+  static const String ASSETS_PNG_IMG_BG_PNG = 'assets/png/img_bg.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\img_logo_black.png)
+  static const String ASSETS_PNG_IMG_LOGO_BLACK_PNG =
+      'assets/png/img_logo_black.png';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\logo.png)
   static const String ASSETS_PNG_LOGO_PNG = 'assets/png/logo.png';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\logo_splash.png)
   static const String ASSETS_PNG_LOGO_SPLASH_PNG = 'assets/png/logo_splash.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\logo_splash_white.png)
+  static const String ASSETS_PNG_LOGO_SPLASH_WHITE_PNG =
+      'assets/png/logo_splash_white.png';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\no_avatar.png)
   static const String ASSETS_PNG_NO_AVATAR_PNG = 'assets/png/no_avatar.png';
