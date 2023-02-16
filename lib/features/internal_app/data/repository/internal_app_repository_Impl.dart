@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:project/features/internal_app/data/data_source/remote/internal_app_remote.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
+import 'package:project/features/internal_app/model/announcement_detail_model.dart';
+import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
+import 'package:project/features/internal_app/model/notification_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
 import 'package:project/features/internal_app/model/orderd_model.dart';
 import 'package:project/features/internal_app/model/profile_model.dart';
@@ -59,6 +62,10 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   }
 
   @override
+  Future<AnnouncementModel> requestAnnouncement(int page, int perPage) {
+    return _api.requestAnnouncement(page, perPage);
+  }
+
   Future<HttpResponse> deleteStore() {
     return _api.deleteStore();
   }
@@ -76,5 +83,30 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   @override
   Future<HttpResponse> updateStore(int id) {
     return _api.updateStore(id);
+  }
+
+  @override
+  Future<HttpResponse> checkUsertReadAnnouncement(String slugs) {
+    return _api.checkUsertReadAnnouncement(slugs);
+  }
+
+  @override
+  Future<AnnouncementDetail> requestReadAnnouncement(String slugs) {
+    return _api.requestReadAnnouncement(slugs);
+  }
+
+  @override
+  Future<HttpResponse> getTotalUnread() {
+    return _api.getTotalUnread();
+  }
+
+  @override
+  Future<NotificationModel> requestNotification(int page, int perPage) {
+    return _api.requestNotification(page, perPage);
+  }
+
+  @override
+  Future<NotificationModel> requestNotificationUnread(int page, int perPage) {
+    return _api.requestNotificationUnread(page, perPage);
   }
 }

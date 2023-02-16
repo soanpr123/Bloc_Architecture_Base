@@ -57,7 +57,7 @@ class CustomBottomNavigation extends StatelessWidget {
       shape: const CircularNotchedRectangle(),
       notchMargin: 4,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
