@@ -26,43 +26,45 @@ class LoginPage extends StatelessWidget {
   final passwordCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const BackgroundImage(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: BlocProvider(
-            create: (context) => LoginCubit(),
-            child: BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
-                if (state.message != "") {
-                  errorToast(msg: state.message);
-                } else {}
-              },
-              builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      R.ASSETS_PNG_LOGO_PNG,
-                      fit: BoxFit.contain,
-                      width: 250,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    if (state.gotoFogot)
-                      buildFogotForm(context, state, emailCtrl)
-                    else
-                      buildLoginForm(context, state, emailCtrl, passwordCtrl)
-                  ],
-                );
-              },
-            ),
-          ),
-        )
-      ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: BlocProvider(
+        create: (context) => LoginCubit(),
+        child: BlocConsumer<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state.message != "") {
+              errorToast(msg: state.message);
+            } else {}
+          },
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  R.ASSETS_PNG_IMG_LOGO_BLACK_PNG,
+                  fit: BoxFit.contain,
+                  width: 250,
+                ),
+                const SizedBox(
+                  height: 72,
+                ),
+                Text(
+                  "Đăng nhập",
+                  style: typoInterNomal18.copyWith(fontSize: 24, color: colorTextDark),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                if (state.gotoFogot)
+                  buildFogotForm(context, state, emailCtrl)
+                else
+                  buildLoginForm(context, state, emailCtrl, passwordCtrl)
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

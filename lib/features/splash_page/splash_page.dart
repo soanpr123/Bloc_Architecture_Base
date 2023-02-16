@@ -5,7 +5,9 @@ import 'package:hive/hive.dart';
 import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/routers/router.dart';
 import 'package:project/core/sevices/user_service.dart';
+import 'package:project/core/style/colors.dart';
 import 'package:project/core/style/resource.dart';
+import 'package:project/core/style/text_style.dart';
 import 'package:project/core/utils/constants.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
 
@@ -53,8 +55,52 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Image.asset(R.ASSETS_PNG_LOGO_SPLASH_PNG),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: colorGradientBrandPrimary, begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              top: 50,
+              bottom: 0,
+              child: Container(
+                color: Colors.transparent,
+                child: Center(
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.asset(
+                      R.ASSETS_PNG_IMG_BG_PNG,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              left: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(R.ASSETS_PNG_LOGO_SPLASH_WHITE_PNG),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Nurturing Innovation",
+                    style: typoInterNomal18.copyWith(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

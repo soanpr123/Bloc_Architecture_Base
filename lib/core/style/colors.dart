@@ -9,3 +9,8 @@ Color colorTextMedium = HexColor("4B5563");
 Color colorSupportDanger = HexColor("EF4444");
 Color colorBrandSecondary = HexColor("9CA3AF");
 Color colorGray600 = HexColor('4B5563');
+Color colorGray400 = HexColor('9CA3AF');
+const colorGradientBrandPrimary = [
+  Color(0xff007D35),
+  Color(0xff47b475),
+];
