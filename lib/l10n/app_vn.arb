@@ -54,10 +54,13 @@
 "internet_error":"Mạng không ổn định",
 "no_data":"Không có dữ liệu",
 "error_other":"Lỗi không xác định",
+"tite_banner":"Kênh thông tin nội bộ Amaisoft",
+"content_banner":"Nơi chia sẻ, giao lưu cung cấp thông tin nội bộ, thông báo quan trọng, chính sách và hơn thế nữa cho toàn bộ công nhân viên chức công ty Amaisoft.",
+"notifycation_local":"Thông báo nội bộ",
 "order_now":"Đặt ngay",
 "cancel_order":"Hủy/Đặt lại",
 "confirm_order":"Bạn có chắc muốn đặt {name}?",
-"tite_banner":"Kênh thông tin nội bộ Amaisoft",
-"content_banner":"Nơi chia sẻ, giao lưu cung cấp thông tin nội bộ, thông báo quan trọng, chính sách và hơn thế nữa cho toàn bộ công nhân viên chức công ty Amaisoft.",
-"notifycation_local":"Thông báo nội bộ"
+"more":"Xem thêm",
+"notification":"Thông báo"
+
 }

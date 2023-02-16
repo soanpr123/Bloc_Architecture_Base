@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project/component/app_netword_image.dart';
 import 'package:project/component/build_body.dart';
 import 'package:project/core/di/dependency_injection.dart';
+import 'package:project/core/routers/router.dart';
 import 'package:project/core/style/app_style.dart';
 import 'package:project/core/style/colors.dart';
 import 'package:project/core/style/resource.dart';
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    bloc.requestTotalUnread();
     bloc.getProfile();
     bloc.requestNotifycationLocal();
   }
@@ -76,41 +79,46 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<HomePageCubit, HomePageState>(
             bloc: bloc,
             builder: (context, state) {
-              return Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                          color: colorBrandPrimary, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          R.ASSETS_SVG_IC_NOTIFICATION_SVG,
-                          width: 20,
-                          height: 20,
-                          color: Colors.white,
+              return GestureDetector(
+                onTap: () {
+                  context.router.push(NotificationRoute());
+                },
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            color: colorBrandPrimary, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            R.ASSETS_SVG_IC_NOTIFICATION_SVG,
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 16),
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                          color: colorSupportDanger, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                      child: Center(
-                          child: Text(
-                        "99",
-                        style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
-                      )),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 16),
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                            color: colorSupportDanger, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                        child: Center(
+                            child: Text(
+                          state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
+                          style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
+                        )),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           ),
@@ -171,9 +179,23 @@ class _HomePageState extends State<HomePage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              translation(context).notifycation_local,
-              style: typoInterNomal18.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  translation(context).notifycation_local,
+                  style: typoInterNomal18.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.router.push(const AnnouncementRoute());
+                  },
+                  child: Text(
+                    translation(context).more,
+                    style: typoInterNomal14.copyWith(color: Colors.blue, decoration: TextDecoration.underline),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -182,6 +204,7 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<HomePageCubit, HomePageState>(
             bloc: bloc,
             builder: (context, state) {
+              // print(state.enablePull);
               return BodyBuilder(
                   apiRequestStatus: state.notifyCationLocalStatus,
                   child: Container(
@@ -194,32 +217,37 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: state.announcementData.map((e) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          // height: 50,
-                          width: 250,
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          decoration: BoxDecoration(
-                              boxShadow: boxShadow,
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.all(Radius.circular(5))),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  e.title ?? "",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: typoInterNomal16.copyWith(fontSize: 16),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(e.createdAt ?? ""),
-                                  ],
-                                )
-                              ]),
+                        return GestureDetector(
+                          onTap: () {
+                            context.router.push(AnnouncementDetailRoute(slug: e.slug, useCase: "home"));
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            // height: 50,
+                            width: 250,
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            decoration: BoxDecoration(
+                                boxShadow: boxShadow,
+                                color: Colors.white,
+                                borderRadius: const BorderRadius.all(Radius.circular(5))),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.title ?? "",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: typoInterNomal16.copyWith(fontSize: 16),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(e.createdAt ?? ""),
+                                    ],
+                                  )
+                                ]),
+                          ),
                         );
                       }).toList(),
                     ),
