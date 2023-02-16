@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:project/core/network/dio_client.dart';
 import 'package:project/core/sevices/config_service.dart';
 import 'package:project/core/utils/constants.dart';
+import 'package:project/features/home_page/cubit/home_page_cubit.dart';
 import 'package:project/features/internal_app/data/data_source/remote/internal_app_remote.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository_Impl.dart';
@@ -29,5 +30,7 @@ class DependencyInjection {
 
     getIt.registerLazySingleton<InternalAppRepository>(() => InternalAppRepositoryImpl(internalAppApi));
     getIt.registerSingleton(ProfileCubit());
+
+    getIt.registerSingleton(HomePageCubit());
   }
 }

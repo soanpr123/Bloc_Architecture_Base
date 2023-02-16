@@ -58,7 +58,7 @@ class _$AppRouter extends RootStackRouter {
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: HomePage(),
+        child: const HomePage(),
       );
     },
     AmaiStoreRoute.name: (routeData) {

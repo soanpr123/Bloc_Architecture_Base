@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:project/features/internal_app/data/data_source/remote/internal_app_remote.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
+import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
 import 'package:project/features/internal_app/model/orderd_model.dart';
@@ -76,5 +77,10 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   @override
   Future<HttpResponse> updateStore(int id) {
     return _api.updateStore(id);
+  }
+
+  @override
+  Future<AnnouncementModel> requestAnnouncement(int page, int perPage) {
+    return _api.requestAnnouncement(page, perPage);
   }
 }

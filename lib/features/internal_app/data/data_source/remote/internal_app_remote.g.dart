@@ -276,12 +276,17 @@ class _INTERNALAPPAPI implements INTERNALAPPAPI {
 
   @override
   Future<OrderedModel> ordered() async {
+  Future<AnnouncementModel> requestAnnouncement(
+    page,
+    perPage,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<OrderedModel>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AnnouncementModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -289,6 +294,7 @@ class _INTERNALAPPAPI implements INTERNALAPPAPI {
             .compose(
               _dio.options,
               'order-lunch/ordered',
+              'announcements?orders[0][key]=updated_at&orders[0][dir]=asc&page=${page}&per_page=${perPage}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -343,6 +349,10 @@ class _INTERNALAPPAPI implements INTERNALAPPAPI {
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
+  }
+
+    final value = AnnouncementModel.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

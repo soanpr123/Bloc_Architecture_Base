@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
 import 'package:project/features/internal_app/model/orderd_model.dart';
@@ -55,4 +56,8 @@ abstract class INTERNALAPPAPI {
 
   @POST("order-lunch/delete")
   Future<HttpResponse> deleteStore();
+  
+  // API Announcement//
+  @GET("announcements?orders[0][key]=updated_at&orders[0][dir]=asc&page={page}&per_page={per_page}")
+  Future<AnnouncementModel> requestAnnouncement(@Path("page") int page, @Path("per_page") int perPage);
 }

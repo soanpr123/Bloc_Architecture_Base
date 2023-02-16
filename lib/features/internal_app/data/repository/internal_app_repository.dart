@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
 import 'package:project/features/internal_app/model/orderd_model.dart';
@@ -26,4 +27,5 @@ abstract class InternalAppRepository {
   Future<HttpResponse> updateStore(int id);
 
   Future<HttpResponse> deleteStore();
+  Future<AnnouncementModel> requestAnnouncement(int page, int perPage);
 }
