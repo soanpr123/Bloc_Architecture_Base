@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: const [HomePageRouter(), AmaiPageRouter(), ProfilePageRouter(), ProfilePageRouter()],
+      routes: const [HomePageRouter(), HistoryRouter(), NotifiCationRouter(), ProfilePageRouter()],
       floatingActionButton: FloatingActionButton(
         shape: const StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
         backgroundColor: colorBrandPrimary,

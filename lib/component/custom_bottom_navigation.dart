@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/core/di/dependency_injection.dart';
 import 'package:project/core/style/colors.dart';
+import 'package:project/core/style/text_style.dart';
+import 'package:project/features/home_page/cubit/home_page_cubit.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   /// A list of tabs to display, ie `Home`, `Likes`, etc
@@ -63,20 +67,51 @@ class CustomBottomNavigation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             for (final item in items)
-              GestureDetector(
-                onTap: () => onTap?.call(items.indexOf(item)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      item.icon,
-                      width: item.iconSize ?? 24,
-                      height: item.iconSize ?? 24,
-                      color: items.indexOf(item) == currentIndex
-                          ? item.selectedColor ?? selectedItemColor ?? theme.primaryColor
-                          : item.unselectedColor ?? unselectedItemColor ?? theme.iconTheme.color,
-                    ),
-                  ],
+              Container(
+                width: 64,
+                height: 64,
+                child: GestureDetector(
+                  onTap: () => onTap?.call(items.indexOf(item)),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          item.icon,
+                          width: item.iconSize ?? 24,
+                          height: item.iconSize ?? 24,
+                          color: items.indexOf(item) == currentIndex
+                              ? item.selectedColor ?? selectedItemColor ?? theme.primaryColor
+                              : item.unselectedColor ?? unselectedItemColor ?? theme.iconTheme.color,
+                        ),
+                      ),
+                      items.indexOf(item) == 2
+                          ? BlocBuilder<HomePageCubit, HomePageState>(
+                              bloc: getIt<HomePageCubit>(),
+                              builder: (context, state) {
+                                return GestureDetector(
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      margin: const EdgeInsets.only(top: 8, right: 8),
+                                      width: 24,
+                                      height: 24,
+                                      decoration: BoxDecoration(
+                                          color: colorSupportDanger,
+                                          borderRadius: const BorderRadius.all(Radius.circular(30))),
+                                      child: Center(
+                                          child: Text(
+                                        state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
+                                        style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
+                                      )),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
                 ),
               )
           ],

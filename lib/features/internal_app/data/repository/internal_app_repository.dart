@@ -38,6 +38,6 @@ abstract class InternalAppRepository {
 
   Future<NotificationModel> requestNotification(int page, int perPage);
 
-  
-  Future<NotificationModel> requestNotificationUnread( int page, int perPage);
+  Future<NotificationModel> requestNotificationUnread(int page, int perPage);
+  Future<HttpResponse> showNotification(String id);
 }

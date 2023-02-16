@@ -76,55 +76,55 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             width: 8,
           ),
-          BlocBuilder<HomePageCubit, HomePageState>(
-            bloc: bloc,
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () {
-                  context.router.push(NotificationRoute());
-                },
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                            color: colorBrandPrimary, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            R.ASSETS_SVG_IC_NOTIFICATION_SVG,
-                            width: 20,
-                            height: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 16),
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                            color: colorSupportDanger, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                        child: Center(
-                            child: Text(
-                          state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
-                          style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
-                        )),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          const SizedBox(
-            width: 16,
-          ),
+          // BlocBuilder<HomePageCubit, HomePageState>(
+          //   bloc: bloc,
+          //   builder: (context, state) {
+          //     return GestureDetector(
+          //       onTap: () {
+          //         context.router.push(NotificationRoute());
+          //       },
+          //       child: Stack(
+          //         children: [
+          //           Align(
+          //             alignment: Alignment.centerRight,
+          //             child: Container(
+          //               width: 32,
+          //               height: 32,
+          //               decoration: BoxDecoration(
+          //                   color: colorBrandPrimary, borderRadius: const BorderRadius.all(Radius.circular(30))),
+          //               child: Center(
+          //                 child: SvgPicture.asset(
+          //                   R.ASSETS_SVG_IC_NOTIFICATION_SVG,
+          //                   width: 20,
+          //                   height: 20,
+          //                   color: Colors.white,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //           Align(
+          //             alignment: Alignment.topLeft,
+          //             child: Container(
+          //               margin: const EdgeInsets.only(left: 16),
+          //               width: 24,
+          //               height: 24,
+          //               decoration: BoxDecoration(
+          //                   color: colorSupportDanger, borderRadius: const BorderRadius.all(Radius.circular(30))),
+          //               child: Center(
+          //                   child: Text(
+          //                 state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
+          //                 style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
+          //               )),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // ),
+          // const SizedBox(
+          //   width: 16,
+          // ),
         ],
         elevation: 1,
         title: Row(
