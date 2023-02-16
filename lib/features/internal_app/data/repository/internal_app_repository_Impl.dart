@@ -109,4 +109,9 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   Future<NotificationModel> requestNotificationUnread(int page, int perPage) {
     return _api.requestNotificationUnread(page, perPage);
   }
+
+  @override
+  Future<HttpResponse> showNotification(String id) {
+    return _api.showNotification(id);
+  }
 }

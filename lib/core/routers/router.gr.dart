@@ -51,13 +51,27 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    AmaiStoreRoute.name: (routeData) {
+      final args = routeData.argsAs<AmaiStoreRouteArgs>(
+          orElse: () => const AmaiStoreRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: AmaiStorePage(key: args.key),
+      );
+    },
     HomePageRouter.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const EmptyRouterPage(),
       );
     },
-    AmaiPageRouter.name: (routeData) {
+    HistoryRouter.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const EmptyRouterPage(),
+      );
+    },
+    NotifiCationRouter.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const EmptyRouterPage(),
@@ -81,20 +95,18 @@ class _$AppRouter extends RootStackRouter {
         child: const AnnouncementPage(),
       );
     },
+    HistoryQrRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HistoryQrPage(),
+      );
+    },
     NotificationRoute.name: (routeData) {
       final args = routeData.argsAs<NotificationRouteArgs>(
           orElse: () => const NotificationRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: NotificationPage(key: args.key),
-      );
-    },
-    AmaiStoreRoute.name: (routeData) {
-      final args = routeData.argsAs<AmaiStoreRouteArgs>(
-          orElse: () => const AmaiStoreRouteArgs());
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: AmaiStorePage(key: args.key),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -151,11 +163,6 @@ class _$AppRouter extends RootStackRouter {
                   parent: HomePageRouter.name,
                 ),
                 RouteConfig(
-                  NotificationRoute.name,
-                  path: 'notifi',
-                  parent: HomePageRouter.name,
-                ),
-                RouteConfig(
                   '*#redirect',
                   path: '*',
                   parent: HomePageRouter.name,
@@ -165,19 +172,38 @@ class _$AppRouter extends RootStackRouter {
               ],
             ),
             RouteConfig(
-              AmaiPageRouter.name,
-              path: 'amaiStore',
+              HistoryRouter.name,
+              path: 'history',
               parent: MainRoute.name,
               children: [
                 RouteConfig(
-                  AmaiStoreRoute.name,
+                  HistoryQrRoute.name,
                   path: '',
-                  parent: AmaiPageRouter.name,
+                  parent: HistoryRouter.name,
                 ),
                 RouteConfig(
                   '*#redirect',
                   path: '*',
-                  parent: AmaiPageRouter.name,
+                  parent: HistoryRouter.name,
+                  redirectTo: '',
+                  fullMatch: true,
+                ),
+              ],
+            ),
+            RouteConfig(
+              NotifiCationRouter.name,
+              path: 'notification',
+              parent: MainRoute.name,
+              children: [
+                RouteConfig(
+                  NotificationRoute.name,
+                  path: '',
+                  parent: NotifiCationRouter.name,
+                ),
+                RouteConfig(
+                  '*#redirect',
+                  path: '*',
+                  parent: NotifiCationRouter.name,
                   redirectTo: '',
                   fullMatch: true,
                 ),
@@ -217,6 +243,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           AnnouncementDetailRoute.name,
           path: '/detalAnnouncementPage/:slugs',
+        ),
+        RouteConfig(
+          AmaiStoreRoute.name,
+          path: '/amai_store',
         ),
       ];
 }
@@ -312,6 +342,30 @@ class AnnouncementDetailRouteArgs {
 }
 
 /// generated route for
+/// [AmaiStorePage]
+class AmaiStoreRoute extends PageRouteInfo<AmaiStoreRouteArgs> {
+  AmaiStoreRoute({Key? key})
+      : super(
+          AmaiStoreRoute.name,
+          path: '/amai_store',
+          args: AmaiStoreRouteArgs(key: key),
+        );
+
+  static const String name = 'AmaiStoreRoute';
+}
+
+class AmaiStoreRouteArgs {
+  const AmaiStoreRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AmaiStoreRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [EmptyRouterPage]
 class HomePageRouter extends PageRouteInfo<void> {
   const HomePageRouter({List<PageRouteInfo>? children})
@@ -326,15 +380,28 @@ class HomePageRouter extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EmptyRouterPage]
-class AmaiPageRouter extends PageRouteInfo<void> {
-  const AmaiPageRouter({List<PageRouteInfo>? children})
+class HistoryRouter extends PageRouteInfo<void> {
+  const HistoryRouter({List<PageRouteInfo>? children})
       : super(
-          AmaiPageRouter.name,
-          path: 'amaiStore',
+          HistoryRouter.name,
+          path: 'history',
           initialChildren: children,
         );
 
-  static const String name = 'AmaiPageRouter';
+  static const String name = 'HistoryRouter';
+}
+
+/// generated route for
+/// [EmptyRouterPage]
+class NotifiCationRouter extends PageRouteInfo<void> {
+  const NotifiCationRouter({List<PageRouteInfo>? children})
+      : super(
+          NotifiCationRouter.name,
+          path: 'notification',
+          initialChildren: children,
+        );
+
+  static const String name = 'NotifiCationRouter';
 }
 
 /// generated route for
@@ -375,12 +442,24 @@ class AnnouncementRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HistoryQrPage]
+class HistoryQrRoute extends PageRouteInfo<void> {
+  const HistoryQrRoute()
+      : super(
+          HistoryQrRoute.name,
+          path: '',
+        );
+
+  static const String name = 'HistoryQrRoute';
+}
+
+/// generated route for
 /// [NotificationPage]
 class NotificationRoute extends PageRouteInfo<NotificationRouteArgs> {
   NotificationRoute({Key? key})
       : super(
           NotificationRoute.name,
-          path: 'notifi',
+          path: '',
           args: NotificationRouteArgs(key: key),
         );
 
@@ -395,30 +474,6 @@ class NotificationRouteArgs {
   @override
   String toString() {
     return 'NotificationRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [AmaiStorePage]
-class AmaiStoreRoute extends PageRouteInfo<AmaiStoreRouteArgs> {
-  AmaiStoreRoute({Key? key})
-      : super(
-          AmaiStoreRoute.name,
-          path: '',
-          args: AmaiStoreRouteArgs(key: key),
-        );
-
-  static const String name = 'AmaiStoreRoute';
-}
-
-class AmaiStoreRouteArgs {
-  const AmaiStoreRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'AmaiStoreRouteArgs{key: $key}';
   }
 }
 

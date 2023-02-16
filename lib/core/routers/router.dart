@@ -5,6 +5,7 @@ import 'package:project/features/amai_store_page/amai_store_page.dart';
 import 'package:project/features/announcement/announcement_page.dart';
 import 'package:project/features/announcement_detail/announcement_detail_page.dart';
 import 'package:project/features/change_password/change_password_page.dart';
+import 'package:project/features/history_qr_page/history_qr_page.dart';
 
 import 'package:project/features/home_page/home_page.dart';
 import 'package:project/features/infomation_profile_page/infomation_profile_page.dart';
@@ -23,11 +24,17 @@ part 'router.gr.dart';
       AutoRoute(page: EmptyRouterPage, path: "home", name: "HomePageRouter", children: [
         AutoRoute(path: '', page: HomePage),
         AutoRoute(path: 'Annon', page: AnnouncementPage),
-        AutoRoute(path: 'notifi', page: NotificationPage),
         RedirectRoute(path: '*', redirectTo: ''),
       ]),
-      AutoRoute(page: EmptyRouterPage, path: "amaiStore", name: "AmaiPageRouter", children: [
-        AutoRoute(path: '', page: AmaiStorePage),
+      AutoRoute(page: EmptyRouterPage, path: "history", name: "HistoryRouter", children: [
+        AutoRoute(
+          path: '',
+          page: HistoryQrPage,
+        ),
+        RedirectRoute(path: '*', redirectTo: ''),
+      ]),
+      AutoRoute(page: EmptyRouterPage, path: "notification", name: "NotifiCationRouter", children: [
+        AutoRoute(path: '', page: NotificationPage),
         RedirectRoute(path: '*', redirectTo: ''),
       ]),
       AutoRoute(page: EmptyRouterPage, path: "profile", name: "ProfilePageRouter", children: [
@@ -38,6 +45,7 @@ part 'router.gr.dart';
       ]),
     ]),
     AutoRoute(page: AnnouncementDetailPage, path: "/detalAnnouncementPage/:slugs"),
+    AutoRoute(page: AmaiStorePage, path: "/amai_store"),
   ],
   replaceInRouteName: 'Page,Route',
 )

@@ -64,7 +64,7 @@ class Notification {
   String? id;
   String? userName;
   String? userAvatar;
-  String? others;
+  dynamic others;
   String? action;
   int? commentId;
   String? type;

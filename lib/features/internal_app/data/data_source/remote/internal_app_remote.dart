@@ -77,4 +77,7 @@ abstract class INTERNALAPPAPI {
 
   @GET("notifications/unread/?page={page}&per_page={perPage}")
   Future<NotificationModel> requestNotificationUnread(@Path("page") int page, @Path("perPage") int perPage);
+
+  @GET("notifications/{id}")
+  Future<HttpResponse> showNotification(@Path("id") String id);
 }
