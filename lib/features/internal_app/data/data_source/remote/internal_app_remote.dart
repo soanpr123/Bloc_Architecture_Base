@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:project/features/internal_app/model/announcement_detail_model.dart';
 import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
+import 'package:project/features/internal_app/model/notification_model.dart';
 import 'package:project/features/internal_app/model/order_menu_model.dart';
 import 'package:project/features/internal_app/model/orderd_model.dart';
 import 'package:project/features/internal_app/model/profile_model.dart';
@@ -45,6 +47,10 @@ abstract class INTERNALAPPAPI {
   @GET("order-lunch/menu")
   Future<OrderMenu> requestOrderMenu();
 
+  // API Announcement//
+  @GET("announcements?orders[0][key]=updated_at&orders[0][dir]=asc&page={page}&per_page={per_page}")
+  Future<AnnouncementModel> requestAnnouncement(@Path("page") int page, @Path("per_page") int perPage);
+
   @POST("order-lunch")
   Future<HttpResponse> orderStore(@Body() Map<String, dynamic> id);
 
@@ -56,8 +62,19 @@ abstract class INTERNALAPPAPI {
 
   @POST("order-lunch/delete")
   Future<HttpResponse> deleteStore();
-  
-  // API Announcement//
-  @GET("announcements?orders[0][key]=updated_at&orders[0][dir]=asc&page={page}&per_page={per_page}")
-  Future<AnnouncementModel> requestAnnouncement(@Path("page") int page, @Path("per_page") int perPage);
+
+  @GET("announcements/{slug}")
+  Future<AnnouncementDetail> requestReadAnnouncement(@Path("slug") String slugs);
+
+  @POST("announcements/{slug}/read-link")
+  Future<HttpResponse> checkUsertReadAnnouncement(@Path("slug") String slugs);
+
+  @GET("notifications/unread/total")
+  Future<HttpResponse> getTotalUnread();
+
+  @GET("notifications/?page={page}&per_page={perPage}")
+  Future<NotificationModel> requestNotification(@Path("page") int page, @Path("perPage") int perPage);
+
+  @GET("notifications/unread/?page={page}&per_page={perPage}")
+  Future<NotificationModel> requestNotificationUnread(@Path("page") int page, @Path("perPage") int perPage);
 }

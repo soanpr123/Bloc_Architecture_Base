@@ -37,6 +37,20 @@ class _$AppRouter extends RootStackRouter {
         child: const MainPage(),
       );
     },
+    AnnouncementDetailRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<AnnouncementDetailRouteArgs>(
+          orElse: () =>
+              AnnouncementDetailRouteArgs(slug: pathParams.optString('slugs')));
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: AnnouncementDetailPage(
+          key: args.key,
+          slug: args.slug,
+          useCase: args.useCase,
+        ),
+      );
+    },
     HomePageRouter.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -59,6 +73,20 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HomePage(),
+      );
+    },
+    AnnouncementRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const AnnouncementPage(),
+      );
+    },
+    NotificationRoute.name: (routeData) {
+      final args = routeData.argsAs<NotificationRouteArgs>(
+          orElse: () => const NotificationRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: NotificationPage(key: args.key),
       );
     },
     AmaiStoreRoute.name: (routeData) {
@@ -115,6 +143,16 @@ class _$AppRouter extends RootStackRouter {
                 RouteConfig(
                   HomeRoute.name,
                   path: '',
+                  parent: HomePageRouter.name,
+                ),
+                RouteConfig(
+                  AnnouncementRoute.name,
+                  path: 'Annon',
+                  parent: HomePageRouter.name,
+                ),
+                RouteConfig(
+                  NotificationRoute.name,
+                  path: 'notifi',
                   parent: HomePageRouter.name,
                 ),
                 RouteConfig(
@@ -176,6 +214,10 @@ class _$AppRouter extends RootStackRouter {
             ),
           ],
         ),
+        RouteConfig(
+          AnnouncementDetailRoute.name,
+          path: '/detalAnnouncementPage/:slugs',
+        ),
       ];
 }
 
@@ -229,6 +271,47 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AnnouncementDetailPage]
+class AnnouncementDetailRoute
+    extends PageRouteInfo<AnnouncementDetailRouteArgs> {
+  AnnouncementDetailRoute({
+    Key? key,
+    String? slug,
+    String? useCase,
+  }) : super(
+          AnnouncementDetailRoute.name,
+          path: '/detalAnnouncementPage/:slugs',
+          args: AnnouncementDetailRouteArgs(
+            key: key,
+            slug: slug,
+            useCase: useCase,
+          ),
+          rawPathParams: {'slugs': slug},
+        );
+
+  static const String name = 'AnnouncementDetailRoute';
+}
+
+class AnnouncementDetailRouteArgs {
+  const AnnouncementDetailRouteArgs({
+    this.key,
+    this.slug,
+    this.useCase,
+  });
+
+  final Key? key;
+
+  final String? slug;
+
+  final String? useCase;
+
+  @override
+  String toString() {
+    return 'AnnouncementDetailRouteArgs{key: $key, slug: $slug, useCase: $useCase}';
+  }
+}
+
+/// generated route for
 /// [EmptyRouterPage]
 class HomePageRouter extends PageRouteInfo<void> {
   const HomePageRouter({List<PageRouteInfo>? children})
@@ -277,6 +360,42 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [AnnouncementPage]
+class AnnouncementRoute extends PageRouteInfo<void> {
+  const AnnouncementRoute()
+      : super(
+          AnnouncementRoute.name,
+          path: 'Annon',
+        );
+
+  static const String name = 'AnnouncementRoute';
+}
+
+/// generated route for
+/// [NotificationPage]
+class NotificationRoute extends PageRouteInfo<NotificationRouteArgs> {
+  NotificationRoute({Key? key})
+      : super(
+          NotificationRoute.name,
+          path: 'notifi',
+          args: NotificationRouteArgs(key: key),
+        );
+
+  static const String name = 'NotificationRoute';
+}
+
+class NotificationRouteArgs {
+  const NotificationRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'NotificationRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

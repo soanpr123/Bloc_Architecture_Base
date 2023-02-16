@@ -58,5 +58,11 @@
 	<string>en</string>
 	<string>vi</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>sms</string>
+  <string>tel</string>
+    <string>https</string>
+</array>
 </dict>
 </plist>
