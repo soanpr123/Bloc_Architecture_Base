@@ -26,6 +26,9 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\bg.png)
   static const String ASSETS_PNG_BG_PNG = 'assets/png/bg.png';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\bg_tech.png)
+  static const String ASSETS_PNG_BG_TECH_PNG = 'assets/png/bg_tech.png';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\logo.png)
   static const String ASSETS_PNG_LOGO_PNG = 'assets/png/logo.png';
 
@@ -48,11 +51,22 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\svg\ic_home.svg)
   static const String ASSETS_SVG_IC_HOME_SVG = 'assets/svg/ic_home.svg';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\svg\ic_logo_white.svg)
+  static const String ASSETS_SVG_IC_LOGO_WHITE_SVG =
+      'assets/svg/ic_logo_white.svg';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\svg\ic_notification.svg)
+  static const String ASSETS_SVG_IC_NOTIFICATION_SVG =
+      'assets/svg/ic_notification.svg';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\svg\ic_profile.svg)
   static const String ASSETS_SVG_IC_PROFILE_SVG = 'assets/svg/ic_profile.svg';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\svg\ic_store.svg)
   static const String ASSETS_SVG_IC_STORE_SVG = 'assets/svg/ic_store.svg';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\svg\logo_home.svg)
+  static const String ASSETS_SVG_LOGO_HOME_SVG = 'assets/svg/logo_home.svg';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\svg\logoamai.svg)
   static const String ASSETS_SVG_LOGOAMAI_SVG = 'assets/svg/logoamai.svg';

@@ -86,7 +86,8 @@ class InfomationProfilePage extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      buildContent(translation(context).position_name, blocProfile.state.profile.positionName ?? ""),
+                      buildContent(
+                          translation(context).position_name, blocProfile.state.profile.positionName ?? "", context),
                       Row(
                         children: [
                           Column(
@@ -124,17 +125,21 @@ class InfomationProfilePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      buildContent(translation(context).department, blocProfile.state.profile.department ?? ""),
-                      buildContent(translation(context).join_company_at, blocProfile.state.profile.joinCompanyAt ?? ""),
-                      buildContent(translation(context).up_official_at, blocProfile.state.profile.upOfficialAt ?? ""),
-                      buildContent(translation(context).citizen_id, blocProfile.state.profile.citizenId ?? ""),
-                      buildContent(translation(context).phone, blocProfile.state.profile.phone ?? ""),
-                      buildContent(translation(context).email, blocProfile.state.profile.email ?? ""),
-                      buildContent(translation(context).personal_email, blocProfile.state.profile.personalEmail ?? ""),
-                      buildContent(translation(context).gender, blocProfile.state.profile.gender ?? ""),
-                      buildContent(translation(context).dob, blocProfile.state.profile.dob ?? ""),
-                      buildContent(translation(context).bank, blocProfile.state.profile.bank?.bank ?? ""),
-                      buildContent(translation(context).address, blocProfile.state.profile.address ?? ""),
+                      buildContent(
+                          translation(context).department, blocProfile.state.profile.department ?? "", context),
+                      buildContent(
+                          translation(context).join_company_at, blocProfile.state.profile.joinCompanyAt ?? "", context),
+                      buildContent(
+                          translation(context).up_official_at, blocProfile.state.profile.upOfficialAt ?? "", context),
+                      buildContent(translation(context).citizen_id, blocProfile.state.profile.citizenId ?? "", context),
+                      buildContent(translation(context).phone, blocProfile.state.profile.phone ?? "", context),
+                      buildContent(translation(context).email, blocProfile.state.profile.email ?? "", context),
+                      buildContent(
+                          translation(context).personal_email, blocProfile.state.profile.personalEmail ?? "", context),
+                      buildContent(translation(context).gender, blocProfile.state.profile.gender ?? "", context),
+                      buildContent(translation(context).dob, blocProfile.state.profile.dob ?? "", context),
+                      buildContent(translation(context).bank, blocProfile.state.profile.bank?.bank ?? "", context),
+                      buildContent(translation(context).address, blocProfile.state.profile.address ?? "", context),
                       Row(
                         children: [
                           Column(
@@ -175,7 +180,8 @@ class InfomationProfilePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      buildContent(translation(context).last_company, blocProfile.state.profile.lastCompany ?? ""),
+                      buildContent(
+                          translation(context).last_company, blocProfile.state.profile.lastCompany ?? "", context),
                       Row(
                         children: [
                           Column(
@@ -260,27 +266,36 @@ class InfomationProfilePage extends StatelessWidget {
         ));
   }
 
-  Widget buildContent(String title, String content) {
+  Widget buildContent(String title, String content, BuildContext context) {
     return Row(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: typoInterNomal16,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              content,
-              style: typoInterNomal14,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
+        Container(
+          width: MediaQuery.of(context).size.width - 32,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: typoInterNomal16,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      content,
+                      style: typoInterNomal14,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+            ],
+          ),
         ),
       ],
     );

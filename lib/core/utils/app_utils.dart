@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+
 bool checkFormat(String regex, String checkedString) {
   return RegExp(regex).hasMatch(checkedString);
 }
@@ -12,6 +14,11 @@ String formatNumber(int number) {
   double n = number / pow(1000, exponent);
 
   return '${n.toStringAsFixed(1)}$suffix';
+}
+
+String fullStringTime(String? stringTime) {
+  final date = DateTime.tryParse(stringTime ?? '');
+  return date != null ? DateFormat('dd/MM/yyyy HH:mm').format(date.toLocal()) : '';
 }
 
 bool isPasswordValid(String password) {
