@@ -92,19 +92,21 @@ class CustomBottomNavigation extends StatelessWidget {
                                 return GestureDetector(
                                   child: Align(
                                     alignment: Alignment.topRight,
-                                    child: Container(
-                                      margin: const EdgeInsets.only(top: 8, right: 8),
-                                      width: 24,
-                                      height: 24,
-                                      decoration: BoxDecoration(
-                                          color: colorSupportDanger,
-                                          borderRadius: const BorderRadius.all(Radius.circular(30))),
-                                      child: Center(
-                                          child: Text(
-                                        state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
-                                        style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
-                                      )),
-                                    ),
+                                    child: state.totalUnread == 0
+                                        ? Container()
+                                        : Container(
+                                            margin: const EdgeInsets.only(top: 8, right: 8),
+                                            width: 24,
+                                            height: 24,
+                                            decoration: BoxDecoration(
+                                                color: colorSupportDanger,
+                                                borderRadius: const BorderRadius.all(Radius.circular(30))),
+                                            child: Center(
+                                                child: Text(
+                                              state.totalUnread >= 99 ? "+99" : "${state.totalUnread}",
+                                              style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
+                                            )),
+                                          ),
                                   ),
                                 );
                               },

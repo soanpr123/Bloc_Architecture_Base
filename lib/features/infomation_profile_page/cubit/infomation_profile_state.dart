@@ -1,4 +1,4 @@
-part of 'infomation_profile_cubit.dart';
+ part of 'infomation_profile_cubit.dart';
 
 class InfomationProfileState extends Equatable {
   final bool showEdit;

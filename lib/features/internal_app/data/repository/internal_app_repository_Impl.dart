@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:project/features/internal_app/data/data_source/remote/internal_app_remote.dart';
 import 'package:project/features/internal_app/data/repository/internal_app_repository.dart';
+import 'package:project/features/internal_app/model/amai_history.dart';
 import 'package:project/features/internal_app/model/announcement_detail_model.dart';
 import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
@@ -113,5 +114,15 @@ class InternalAppRepositoryImpl extends InternalAppRepository {
   @override
   Future<HttpResponse> showNotification(String id) {
     return _api.showNotification(id);
+  }
+
+  @override
+  Future<AmaiHistory> amaiHistory(int page, int perPage) {
+    return _api.amaiHistory(page, perPage);
+  }
+
+  @override
+  Future<HttpResponse> paymentAmai(Map<String, dynamic> request) {
+    return _api.paymentAmai(request);
   }
 }

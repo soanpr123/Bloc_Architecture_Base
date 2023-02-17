@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:project/features/internal_app/model/amai_history.dart';
 import 'package:project/features/internal_app/model/announcement_detail_model.dart';
 import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
@@ -40,4 +41,8 @@ abstract class InternalAppRepository {
 
   Future<NotificationModel> requestNotificationUnread(int page, int perPage);
   Future<HttpResponse> showNotification(String id);
+
+  Future<HttpResponse> paymentAmai(Map<String, dynamic> request);
+
+  Future<AmaiHistory> amaiHistory(int page, int perPage);
 }

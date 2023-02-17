@@ -122,3 +122,32 @@ class DialogConfirmOrder extends StatelessWidget {
     );
   }
 }
+
+class DialogConfirm extends StatelessWidget {
+  const DialogConfirm({Key? key, required this.title, required this.onTap}) : super(key: key);
+  final String title;
+  final VoidCallback? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return CustomAlert(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Column(children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: typoInterNomal16,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          AppElevatedButton(
+            mainColor: colorBrandPrimary,
+            onPressed: onTap,
+            buttonTitle: translation(context).confirm,
+          ),
+        ]),
+      ),
+    );
+  }
+}

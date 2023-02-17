@@ -60,6 +60,16 @@
 "cancel_order":"Hủy/Đặt lại",
 "confirm_order":"Bạn có chắc muốn đặt {name}?",
 "more":"Xem thêm",
-"notification":"Thông báo"
+"notification":"Thông báo",
+"amai_point":"Điểm Amai: {ponit}",
+"function":"Chức năng",
+"err_qr":"Mã bạn quét không khớp với hệ thống. vui lòng thử mã khác.",
+"qr_title":"Quét mã QR để thanh toán",
+"payment":"Thanh toán",
+"payment_succs":"Thanh toán thành công. quay lại trang chủ",
+"amai_noti":"Số lượng Amai trong tài khoản của bạn không đủ để thanh toán. Hãy chăm viết bài hơn để nhận Amai nhé!",
+"amai_invalid":"Không đủ Amai",
+"back_to_home":"Quay lại trang chủ"
+
 
 }
