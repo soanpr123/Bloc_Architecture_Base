@@ -5,6 +5,7 @@ import 'package:project/core/utils/enum/api_request_status.dart';
 import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/profile_model.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:weather/weather.dart';
 
 import '../../internal_app/data/repository/internal_app_repository.dart';
 
@@ -16,6 +17,12 @@ class HomePageCubit extends Cubit<HomePageState> {
             profile: DataProfile(), notifyCationLocalStatus: APIRequestStatus.nodata, announcementData: []));
   final responsitory = getIt.get<InternalAppRepository>();
   final List<AnnouncementData> listData = [];
+
+  Future queryWeather(WeatherFactory ws) async {
+    Weather weather = await ws.currentWeatherByCityName("HaNoi");
+    emit(state.coppyWith(temp: (weather.temperature?.celsius ?? 0).ceilToDouble()));
+  }
+
   Future<void> getProfile() async {
     try {
       final response = await responsitory.requestMe();

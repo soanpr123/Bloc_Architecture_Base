@@ -35,6 +35,10 @@ class R {
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_home_btb.png)
   static const String ASSETS_PNG_IC_HOME_BTB_PNG = 'assets/png/ic_home_btb.png';
 
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_icon_store.png)
+  static const String ASSETS_PNG_IC_ICON_STORE_PNG =
+      'assets/png/ic_icon_store.png';
+
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\ic_notification_btb.png)
   static const String ASSETS_PNG_IC_NOTIFICATION_BTB_PNG =
       'assets/png/ic_notification_btb.png';
@@ -48,6 +52,10 @@ class R {
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\img_bg.png)
   static const String ASSETS_PNG_IMG_BG_PNG = 'assets/png/img_bg.png';
+
+  /// ![preview](file://D:\flutter_project\internal-app\assets\png\img_bg_green.png)
+  static const String ASSETS_PNG_IMG_BG_GREEN_PNG =
+      'assets/png/img_bg_green.png';
 
   /// ![preview](file://D:\flutter_project\internal-app\assets\png\img_logo_black.png)
   static const String ASSETS_PNG_IMG_LOGO_BLACK_PNG =

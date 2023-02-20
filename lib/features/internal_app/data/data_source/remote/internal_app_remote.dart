@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:project/features/internal_app/model/amai_history.dart';
 import 'package:project/features/internal_app/model/announcement_detail_model.dart';
 import 'package:project/features/internal_app/model/announcement_model.dart';
 import 'package:project/features/internal_app/model/login_model.dart';
@@ -80,4 +81,10 @@ abstract class INTERNALAPPAPI {
 
   @GET("notifications/{id}")
   Future<HttpResponse> showNotification(@Path("id") String id);
+
+  @POST("transactions")
+  Future<HttpResponse> paymentAmai(@Body() Map<String, dynamic> request);
+
+  @GET("transactions/histories?page={page}&per_page={perPage}")
+  Future<AmaiHistory> amaiHistory(@Path("page") int page, @Path("perPage") int perPage);
 }

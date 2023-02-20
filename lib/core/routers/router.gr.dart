@@ -51,12 +51,18 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    AmaiStoreRoute.name: (routeData) {
-      final args = routeData.argsAs<AmaiStoreRouteArgs>(
-          orElse: () => const AmaiStoreRouteArgs());
+    QrCodeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: AmaiStorePage(key: args.key),
+        child: const QrCodePage(),
+      );
+    },
+    PaymentAmaiRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentAmaiRouteArgs>(
+          orElse: () => const PaymentAmaiRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: PaymentAmaiPage(key: args.key),
       );
     },
     HomePageRouter.name: (routeData) {
@@ -93,6 +99,14 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const AnnouncementPage(),
+      );
+    },
+    AmaiStoreRoute.name: (routeData) {
+      final args = routeData.argsAs<AmaiStoreRouteArgs>(
+          orElse: () => const AmaiStoreRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: AmaiStorePage(key: args.key),
       );
     },
     HistoryQrRoute.name: (routeData) {
@@ -160,6 +174,11 @@ class _$AppRouter extends RootStackRouter {
                 RouteConfig(
                   AnnouncementRoute.name,
                   path: 'Annon',
+                  parent: HomePageRouter.name,
+                ),
+                RouteConfig(
+                  AmaiStoreRoute.name,
+                  path: 'amai_store',
                   parent: HomePageRouter.name,
                 ),
                 RouteConfig(
@@ -245,8 +264,12 @@ class _$AppRouter extends RootStackRouter {
           path: '/detalAnnouncementPage/:slugs',
         ),
         RouteConfig(
-          AmaiStoreRoute.name,
-          path: '/amai_store',
+          QrCodeRoute.name,
+          path: '/qrcodePage',
+        ),
+        RouteConfig(
+          PaymentAmaiRoute.name,
+          path: '/amaiPayment',
         ),
       ];
 }
@@ -342,26 +365,38 @@ class AnnouncementDetailRouteArgs {
 }
 
 /// generated route for
-/// [AmaiStorePage]
-class AmaiStoreRoute extends PageRouteInfo<AmaiStoreRouteArgs> {
-  AmaiStoreRoute({Key? key})
+/// [QrCodePage]
+class QrCodeRoute extends PageRouteInfo<void> {
+  const QrCodeRoute()
       : super(
-          AmaiStoreRoute.name,
-          path: '/amai_store',
-          args: AmaiStoreRouteArgs(key: key),
+          QrCodeRoute.name,
+          path: '/qrcodePage',
         );
 
-  static const String name = 'AmaiStoreRoute';
+  static const String name = 'QrCodeRoute';
 }
 
-class AmaiStoreRouteArgs {
-  const AmaiStoreRouteArgs({this.key});
+/// generated route for
+/// [PaymentAmaiPage]
+class PaymentAmaiRoute extends PageRouteInfo<PaymentAmaiRouteArgs> {
+  PaymentAmaiRoute({Key? key})
+      : super(
+          PaymentAmaiRoute.name,
+          path: '/amaiPayment',
+          args: PaymentAmaiRouteArgs(key: key),
+        );
+
+  static const String name = 'PaymentAmaiRoute';
+}
+
+class PaymentAmaiRouteArgs {
+  const PaymentAmaiRouteArgs({this.key});
 
   final Key? key;
 
   @override
   String toString() {
-    return 'AmaiStoreRouteArgs{key: $key}';
+    return 'PaymentAmaiRouteArgs{key: $key}';
   }
 }
 
@@ -439,6 +474,30 @@ class AnnouncementRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AnnouncementRoute';
+}
+
+/// generated route for
+/// [AmaiStorePage]
+class AmaiStoreRoute extends PageRouteInfo<AmaiStoreRouteArgs> {
+  AmaiStoreRoute({Key? key})
+      : super(
+          AmaiStoreRoute.name,
+          path: 'amai_store',
+          args: AmaiStoreRouteArgs(key: key),
+        );
+
+  static const String name = 'AmaiStoreRoute';
+}
+
+class AmaiStoreRouteArgs {
+  const AmaiStoreRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AmaiStoreRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

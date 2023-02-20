@@ -20,6 +20,7 @@ class AmaiStorePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
+        leading: const BackButton(color: Colors.black),
         elevation: 1,
         title: Text(
           translation(context).store,

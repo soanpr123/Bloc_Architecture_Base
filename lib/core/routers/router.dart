@@ -12,7 +12,9 @@ import 'package:project/features/infomation_profile_page/infomation_profile_page
 import 'package:project/features/login_page/login_page.dart';
 import 'package:project/features/main_page/main_page.dart';
 import 'package:project/features/notification_page/notification_page.dart';
+import 'package:project/features/payment_amai/payment_amai_page.dart';
 import 'package:project/features/profile_page/profile_page.dart';
+import 'package:project/features/qr_code_page/qr_code_page.dart';
 import 'package:project/features/splash_page/splash_page.dart';
 part 'router.gr.dart';
 
@@ -24,6 +26,7 @@ part 'router.gr.dart';
       AutoRoute(page: EmptyRouterPage, path: "home", name: "HomePageRouter", children: [
         AutoRoute(path: '', page: HomePage),
         AutoRoute(path: 'Annon', page: AnnouncementPage),
+        AutoRoute(page: AmaiStorePage, path: "amai_store"),
         RedirectRoute(path: '*', redirectTo: ''),
       ]),
       AutoRoute(page: EmptyRouterPage, path: "history", name: "HistoryRouter", children: [
@@ -45,7 +48,9 @@ part 'router.gr.dart';
       ]),
     ]),
     AutoRoute(page: AnnouncementDetailPage, path: "/detalAnnouncementPage/:slugs"),
-    AutoRoute(page: AmaiStorePage, path: "/amai_store"),
+    AutoRoute(page: QrCodePage, path: "/qrcodePage"),
+    AutoRoute(page: PaymentAmaiPage, path: "/amaiPayment"),
+    // AutoRoute(page: AmaiStorePage, path: "/amai_store"),
   ],
   replaceInRouteName: 'Page,Route',
 )

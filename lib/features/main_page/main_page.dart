@@ -30,7 +30,9 @@ class MainPage extends StatelessWidget {
             repeat: true,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          context.router.push(const QrCodeRoute());
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBuilder: (_, tabsRouter) {
