@@ -8,7 +8,6 @@
 .buildlog/
 .history
 .svn/
-migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -28,9 +27,14 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
+pubspec.lock
 .pub-cache/
 .pub/
 /build/
+**/coverage
+
+# Web related
+lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -42,3 +46,23 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# generated file
+*.g.dart
+*.graphql.dart
+*.gr.dart
+*.freezed.dart
+*.config.dart
+*.gen.dart
+*.mocks.dart
+resources/lib/src/generated
+app/lib/ui/res/generated
+data/lib/src/repository/model/generated
+
+tools/*/*.jar
+tools/gen_text_styles/output/
+.vscode/settings.json
+env/
+.fvm/
+*.mdb
+pubspec_overrides.yaml
