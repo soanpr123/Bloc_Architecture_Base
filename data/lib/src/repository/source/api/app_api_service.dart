@@ -8,6 +8,7 @@ import 'package:shared/shared.dart';
 import '../../../../../data.dart';
 import '../../model/amai_order_data.dart';
 import '../../model/amai_store_data.dart';
+import '../../model/announcement_detail_data.dart';
 import '../../model/history_amai_data.dart';
 import '../../model/profile_data.dart';
 import '../../model/upload_image_data.dart';
@@ -248,6 +249,14 @@ class AppApiService {
     return await _authAppServerApiClient.request(
       method: RestMethod.post,
       path: 'order-lunch/delete',
+    );
+  }
+
+  Future<DataResponse<AnnouncementDetailData>> getAnnouncementDetail(String slungs) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'announcements/$slungs',
+      decoder: AnnouncementDetailData.fromJson,
     );
   }
 }

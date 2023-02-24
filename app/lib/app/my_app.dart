@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,11 +22,11 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
 
   @override
   bool get isAppWidget => true;
-@override
+  @override
   void initState() {
     super.initState();
-   
   }
+
   @override
   Widget buildPage(BuildContext context) {
     return ScreenUtilInit(
@@ -34,6 +35,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
         useInheritedMediaQuery: true,
         builder: (context, child) {
           final MediaQueryData data = MediaQuery.of(context);
+          DevicePreview.appBuilder(context, child);
 
           return MediaQuery(
             data: data.copyWith(textScaleFactor: 1.0),
@@ -49,7 +51,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
         debugShowCheckedModeBanner: false,
         localeResolutionCallback: (Locale? locale, Iterable<Locale> supportedLocales) =>
             supportedLocales.contains(locale) ? locale : const Locale(LocaleConstants.defaultLocale),
-        locale: const Locale('vi'),
+        locale: DevicePreview.locale(context),
         supportedLocales: S.delegate.supportedLocales,
         localizationsDelegates: const [
           S.delegate,

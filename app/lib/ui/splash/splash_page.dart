@@ -22,8 +22,8 @@ class _SplashPageState extends BasePageState<SplashPage, SplashBloc> {
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        // width:DeviceConst,
+        // height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: colorGradientBrandPrimary,

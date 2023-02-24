@@ -169,12 +169,11 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                       const SizedBox(
                                         width: 8,
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          SizedBox(
-                                            width: DeviceConstants.designDeviceWidth - Dimens.d120.responsive(),
-                                            child: Row(
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Row(
                                               children: [
                                                 Flexible(
                                                   child: HtmlWidget(
@@ -190,17 +189,17 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Dimens.d8.responsive(),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Text(item.createdAt ?? ''),
-                                            ],
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: Dimens.d8.responsive(),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(item.createdAt ?? ''),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ]),
                                   ),
@@ -212,7 +211,6 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                 );
               },
             ),
-          
             BlocBuilder<NotificationBloc, NotificationState>(
               buildWhen: (previous, current) =>
                   previous.notifiUnread != current.notifiUnread ||
@@ -275,12 +273,11 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                       const SizedBox(
                                         width: 8,
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          SizedBox(
-                                            width: DeviceConstants.designDeviceWidth - Dimens.d120.responsive(),
-                                            child: Row(
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Row(
                                               children: [
                                                 Flexible(
                                                   child: HtmlWidget(
@@ -296,17 +293,17 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Dimens.d8.responsive(),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Text(item.createdAt ?? ''),
-                                            ],
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: Dimens.d8.responsive(),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(item.createdAt ?? ''),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ]),
                                   ),

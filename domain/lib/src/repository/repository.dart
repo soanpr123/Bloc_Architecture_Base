@@ -83,4 +83,9 @@ abstract class Repository {
     required int page,
     required int? limit,
   });
+
+  Future<AnnouncementDetail> getAnnouncementsDetail({
+    required String slungs,
+    
+  });
 }

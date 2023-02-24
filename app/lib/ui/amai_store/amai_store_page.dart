@@ -72,6 +72,9 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                     style: typoInterNomal14.copyWith(fontWeight: FontWeight.w600, fontStyle: FontStyle.italic),
                   ),
                 ),
+                SizedBox(
+                  height: Dimens.d16.responsive(),
+                ),
                 state.amaiOrder.id != -1 && state.amaiOrder.id != null
                     ? Container(
                         margin: EdgeInsets.symmetric(
@@ -156,7 +159,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                       )
                     : Container(),
                 SizedBox(
-                  height: Dimens.d32.responsive(),
+                  height: Dimens.d16.responsive(),
                 ),
                 RefreshIndicator(
                   onRefresh: () async {
@@ -239,7 +242,6 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                       vertical: Dimens.d12.responsive(),
                                                     ),
                                                     height: Dimens.d143.responsive(),
-                                                    width: DeviceConstants.designDeviceWidth,
                                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
@@ -257,63 +259,44 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(Dimens.d8),
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: DeviceConstants.designDeviceWidth -
-                                                                    Dimens.d173.responsive(),
-                                                                child: Column(
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding: EdgeInsets.all(Dimens.d8.responsive()),
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Column(
                                                                   children: [
-                                                                    SizedBox(
-                                                                      width: DeviceConstants.designDeviceWidth,
-                                                                      child: Row(
-                                                                        children: [
-                                                                          Flexible(
-                                                                            child: Text(
-                                                                              'Thực đơn ${item.orderNo}',
-                                                                              style: typoInterNomal16,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          'Thực đơn ${item.orderNo}',
+                                                                          style: typoInterNomal16,
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                     SizedBox(
                                                                       height: Dimens.d4.responsive(),
                                                                     ),
-                                                                    Row(
-                                                                      children: [
-                                                                        Flexible(
-                                                                          child: Text(
-                                                                            item.name ?? '',
-                                                                            style: typoInterNomal14,
-                                                                          ),
-                                                                        ),
-                                                                      ],
+                                                                    Text(
+                                                                      item.name ?? '',
+                                                                      style: typoInterNomal14,
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: DeviceConstants.designDeviceWidth -
-                                                                    Dimens.d173.responsive(),
-                                                                child: Row(
+                                                                Row(
                                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                                   children: [
-                                                                    Flexible(
-                                                                      child: Text(
-                                                                        SymbolConstants.amountStore,
-                                                                        style: typoInterNomal14.copyWith(
-                                                                            color: colorSupportDanger),
-                                                                      ),
+                                                                    Text(
+                                                                      SymbolConstants.amountStore,
+                                                                      style: typoInterNomal14.copyWith(
+                                                                          color: colorSupportDanger),
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -416,50 +399,33 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(Dimens.d8),
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: DeviceConstants.designDeviceWidth -
-                                                                    Dimens.d173.responsive(),
-                                                                child: Column(
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding: EdgeInsets.all(Dimens.d8.responsive()),
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Column(
                                                                   children: [
-                                                                    SizedBox(
-                                                                      width: DeviceConstants.designDeviceWidth,
-                                                                      child: Row(
-                                                                        children: [
-                                                                          Flexible(
-                                                                            child: Text(
-                                                                              item.name ?? '',
-                                                                              style: typoInterNomal16,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
+                                                                    Text(
+                                                                      item.name ?? '',
+                                                                      style: typoInterNomal14,
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: DeviceConstants.designDeviceWidth -
-                                                                    Dimens.d173.responsive(),
-                                                                child: Row(
+                                                                Row(
                                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                                   children: [
-                                                                    Flexible(
-                                                                      child: Text(
-                                                                        SymbolConstants.amountStore,
-                                                                        style: typoInterNomal14.copyWith(
-                                                                            color: colorSupportDanger),
-                                                                      ),
+                                                                    Text(
+                                                                      SymbolConstants.amountStore,
+                                                                      style: typoInterNomal14.copyWith(
+                                                                          color: colorSupportDanger),
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
