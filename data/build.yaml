@@ -1,0 +1,17 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      
+    builders:
+      artemis:
+        options:
+          generate_helpers: true
+
+          schema_mapping:
+           
+          
+          scalar_mapping:
+            # - graphql_type: DateTime
+            #   dart_type: DateTime
+            #   use_custom_parser: true

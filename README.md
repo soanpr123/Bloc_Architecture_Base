@@ -1,16 +1,44 @@
-# project
 
-A new Flutter project.
+
+#Clean Architecture
+
+Flutter project using clean architecture and bloc pattern.
+
+![Architecture](images/project_architecture.png?raw=true)
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Requirements
 
-A few resources to get you started if this is your first Flutter project:
+- Dart: 2.19.1
+- Flutter SDK: 3.7.1
+- Melos: 2.8.0
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Install
+
+- WARN: If you already installed `melos`and `make` comands, you could omit this step.
+
+- Install melos:
+    - Run `dart pub global activate melos 2.8.0`
+
+- Export paths:
+    - Add to `.zshrc` or `.bashrc` file
+```    
+export PATH="$PATH:<path to flutter>/flutter/bin"
+export PATH="$PATH:<path to flutter>/flutter/bin/cache/dart-sdk/bin"
+export PATH="$PATH:~/.pub-cache/bin"
+export PATH="$PATH:~/.gem/gems/lefthook-0.7.7/bin"
+```
+    - Save file `.zshrc`
+    - Run `source ~/.zshrc`
+
+### Config and run app
+
+- cd to root folder of project
+- Run `make gen_env`
+- Run `make sync`
+- Run & Enjoy!
+
+
