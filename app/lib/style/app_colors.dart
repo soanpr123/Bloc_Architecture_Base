@@ -16,6 +16,7 @@ Color colorGray600 = HexColor('4B5563');
 Color colorGray800 = HexColor('1F2937');
 Color colorGray400 = HexColor('9CA3AF');
 Color colorUiBorder = HexColor('E2E8F0');
+Color colorUiBg05 = HexColor('F1F5F9');
 const colorGradientBrandPrimary = [
   Color(0xff007D35),
   Color(0xff47b475),

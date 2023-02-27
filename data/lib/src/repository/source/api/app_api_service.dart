@@ -112,18 +112,17 @@ class AppApiService {
     );
   }
 
-  Future<void> resetPassword({
-    required String token,
-    required String email,
+  Future<DataResponse<dynamic>> resetPassword({
+    required String pass,
+    required String newpass,
     required String password,
   }) async {
-    await _noneAuthAppServerApiClient.request(
+    return await _authAppServerApiClient.request(
       method: RestMethod.post,
-      path: '/v1/auth/reset-password',
+      path: 'auth/change-password',
       body: {
-        'token': token,
-        'email': email,
-        'password': password,
+        'current_password': pass,
+        'password': newpass,
         'password_confirmation': password,
       },
     );

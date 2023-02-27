@@ -91,18 +91,6 @@ class RepositoryImpl implements Repository {
     return _baseResponseDataMapper.mapToEntity(out);
   }
 
-  @override
-  Future<void> resetPassword({
-    required String token,
-    required String email,
-    required String password,
-    required String confirmPassword,
-  }) =>
-      _appApiService.resetPassword(
-        token: token,
-        email: email,
-        password: password,
-      );
 
   @override
   Future<void> register({
@@ -281,5 +269,12 @@ class RepositoryImpl implements Repository {
     final response = await _appApiService.getAnnouncementDetail(slungs);
 
     return _announcementDataMapper.mapToEntity(response.data);
+  }
+  
+  @override
+  Future<BaseEntryData> resetPassword({required String currentPass, required String newPass, required String confirmPassword}) async{
+   final ouput = await _appApiService.resetPassword(pass: currentPass,newpass: newPass,password: confirmPassword);
+
+    return _baseResponseDataMapper.mapToEntity(ouput);
   }
 }

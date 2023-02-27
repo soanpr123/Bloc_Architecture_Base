@@ -5,6 +5,12 @@ class ValidationUtils {
     return password.isNotEmpty;
   }
 
+  static bool isPasswordValidExp(String password) {
+    final pattern = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])[a-zA-Z0-9!@#\$%\^&\*]{8,32}$');
+
+    return pattern.hasMatch(password);
+  }
+
   /// Check if a string is empty phone number.
   /// Return true if it is not empty.
   static bool isEmptyPhoneNumber(String phoneNumber) {

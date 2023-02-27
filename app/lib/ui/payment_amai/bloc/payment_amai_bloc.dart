@@ -23,7 +23,7 @@ class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
       action: () async {
         final output = await _paymentUseCase.execute(const PaymentInput());
         if (output.data['status_code'] == 200) {
-          appBloc.add(const AppInitiated());
+          
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: true));
         } else {
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: false));

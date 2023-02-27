@@ -3,47 +3,46 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 import '../../../domain.dart';
+import 'base/future/base_future_use_case_response.dart';
 
 part 'reset_password_use_case.freezed.dart';
 
 @Injectable()
-class ResetPasswordUseCase extends BaseFutureUseCase<ResetPasswordInput, ResetPasswordOutput> {
+class ResetPasswordUseCase extends BaseFutureResUseCase<ResetPasswordInput, BaseEntryData> {
   const ResetPasswordUseCase(this._repository);
 
   final Repository _repository;
 
   @protected
   @override
-  Future<ResetPasswordOutput> buildUseCase(ResetPasswordInput input) async {
-    if (!ValidationUtils.isValidPassword(input.password)) {
+  Future<BaseEntryData> buildUseCase(ResetPasswordInput input) async {
+    if (!ValidationUtils.isValidPassword(input.password) || !ValidationUtils.isPasswordValidExp(input.password)) {
       throw const ValidationException(ValidationExceptionKind.invalidPassword);
     }
-    if (!ValidationUtils.isValidPassword(input.confirmPassword)) {
+    if (!ValidationUtils.isValidPassword(input.confirmPassword) ||
+        !ValidationUtils.isPasswordValidExp(input.confirmPassword)) {
       throw const ValidationException(ValidationExceptionKind.invalidPassword);
     }
-    if (input.password != input.confirmPassword) {
-      throw const ValidationException(ValidationExceptionKind.passwordsAreNotMatch);
-    }
-    if (!ValidationUtils.isValidEmail(input.email)) {
+
+    if (!ValidationUtils.isValidPassword(input.newPass) || !ValidationUtils.isPasswordValidExp(input.newPass)) {
       throw const ValidationException(ValidationExceptionKind.invalidEmail);
     }
+    if (input.newPass != input.confirmPassword) {
+      throw const ValidationException(ValidationExceptionKind.passwordsAreNotMatch);
+    }
 
-    await _repository.resetPassword(
-      token: input.token,
-      email: input.email,
-      password: input.password,
+    return await _repository.resetPassword(
+      currentPass: input.password,
+      newPass: input.newPass,
       confirmPassword: input.confirmPassword,
     );
-
-    return const ResetPasswordOutput();
   }
 }
 
 @freezed
 class ResetPasswordInput extends BaseInput with _$ResetPasswordInput {
   const factory ResetPasswordInput({
-    required String token,
-    required String email,
+    required String newPass,
     required String password,
     required String confirmPassword,
   }) = _ResetPasswordInput;

@@ -87,6 +87,7 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
           // print(item.title);
           listDataNoti.add(item);
         }
+  
         if ((output.currentPage) == (output.totalPage)) {
           emit(state.copyWith(
             history: listDataNoti,

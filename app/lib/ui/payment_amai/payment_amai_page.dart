@@ -5,7 +5,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 import '../../app.dart';
-import '../../shared_view/app_text_button.dart';
+
 
 class PaymentAmaiPage extends StatefulWidget {
   const PaymentAmaiPage({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
     return WillPopScope(
       onWillPop: () {
         navigator.popUntilRoot(useRootNavigator: true);
-     
+
         return Future.value(false);
       },
       child: CommonScaffold(
@@ -212,19 +212,12 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
-                                          child: Container(
-                                            height: Dimens.d45.responsive(),
-                                            decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius.all(Radius.circular(Dimens.d5)),
-                                              border: Border.all(color: colorBrandPrimary, width: 1),
-                                            ),
-                                            child: AppTextButton(
-                                              onPressed: () {
-                                                navigator.popUntilRoot(useRootNavigator: true);
-                                              },
-                                              color: colorBrandPrimary,
-                                              buttonTitle: S.current.cancel,
-                                            ),
+                                          child: AppElevatedButton(
+                                            onPressed: () {
+                                              navigator.popUntilRoot(useRootNavigator: true);
+                                            },
+                                            mainColor: colorBrandSecondary,
+                                            buttonTitle: S.current.cancel,
                                           ),
                                         ),
                                         SizedBox(

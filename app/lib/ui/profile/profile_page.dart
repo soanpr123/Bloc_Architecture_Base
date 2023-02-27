@@ -214,7 +214,9 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                 buildButton(S.current.infomation_profile, onTap: () {
                   navigator.push(const AppRouteInfo.infomationProfile());
                 }),
-                buildButton(S.current.change_password, onTap: () {}),
+                buildButton(S.current.change_password, onTap: () {
+                  navigator.push(const AppRouteInfo.changePassWord());
+                }),
                 buildButton(S.current.log_out, onTap: () {
                   navigator.showDialog(AppPopupInfo.confirm(
                     message: S.current.tell_me_logout,
@@ -232,13 +234,19 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
   }
 
   Widget buildButton(String title, {GestureTapCallback? onTap}) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: onTap,
-            child: Row(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: boxShadow,
+          color: Colors.white,
+        ),
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -247,15 +255,12 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                 ),
                 const Icon(
                   Icons.arrow_forward_ios,
-                  size: 20,
+                  size: 15,
                 ),
               ],
             ),
-          ),
-          const Divider(
-            color: Colors.black38,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

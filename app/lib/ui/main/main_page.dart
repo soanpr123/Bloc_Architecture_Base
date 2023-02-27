@@ -41,9 +41,10 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
             repeat: true,
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
           // context.router.push(const QrCodeRoute());?
-          navigator.push(const AppRouteInfo.qrCode());
+          await navigator.push(const AppRouteInfo.qrCode());
+          appBloc.add(const AppInitiated());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -63,7 +64,13 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
                 vertical: 16,
               ),
               currentIndex: tabsRouter.activeIndex,
-              onTap: tabsRouter.setActiveIndex,
+              onTap: (i) {
+                if (i == tabsRouter.activeIndex) {
+                  navigator.popUntilRoot();
+                } else {
+                  tabsRouter.setActiveIndex(i);
+                }
+              },
               items: [
                 CustomBottomBarItem(
                   selectedColor: colorBrandPrimary,
