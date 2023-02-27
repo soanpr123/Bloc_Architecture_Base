@@ -97,6 +97,9 @@ build_app:
 	@melos run build_app
 build_domain:
 	@melos run build_domain
+build_domain_data:
+	@melos run build_domain
+	@melos run build_data
 build_data:
 	@melos run build_data
 build_shared:

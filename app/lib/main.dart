@@ -1,7 +1,9 @@
 import 'dart:async';
 
 
+import 'package:device_preview/device_preview.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -31,7 +33,12 @@ Future<LoadInitialResourceOutput> _loadInitialResource() async {
 
 Future<void> _runMyApp() async {
   final initialResource = await _loadInitialResource();
-  runApp( MyApp(initialResource: initialResource,));
+  runApp( DevicePreview(
+    availableLocales: [
+      const Locale('vi'),
+    ],
+    enabled:  !kReleaseMode,
+    builder: (context) =>MyApp(initialResource: initialResource,),));
 }
 
 void _reportError(Object error, StackTrace stackTrace) {

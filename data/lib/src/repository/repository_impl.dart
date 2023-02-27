@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartx/dartx.dart';
-import 'package:data/src/repository/mapper/list_data_history_mapper.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data.dart';
+import 'mapper/Announcement_detail_mapper.dart';
 import 'mapper/base_response_mapper.dart';
-import 'mapper/data_history_mapper.dart';
 import 'mapper/data_list_store_mapper.dart';
+import 'mapper/list_data_history_mapper.dart';
 import 'mapper/order_data_mapper.dart';
 import 'mapper/upload_image_mapper.dart';
 
@@ -29,6 +29,7 @@ class RepositoryImpl implements Repository {
     this._amaiListStoreMapper,
     this._amaiOrderDataMapper,
     this._historyDataMapper,
+    this._announcementDataMapper,
   );
 
   final AppApiService _appApiService;
@@ -36,6 +37,7 @@ class RepositoryImpl implements Repository {
   final TokenDataMapper _tokenDataMapper;
   final BaseResponseDataMapper _baseResponseDataMapper;
   // final AppDatabase _appDatabase;
+  final AnnouncementDataMapper _announcementDataMapper;
   final NotificationDataMapper _notificationDataMapper;
   final HistoryListDataMapper _historyDataMapper;
   final PreferenceUserDataMapper _preferenceUserDataMapper;
@@ -272,5 +274,12 @@ class RepositoryImpl implements Repository {
     final response = await _appApiService.getHistoryData(page: page, limit: limit);
 
     return _historyDataMapper.mapToEntity(response.data);
+  }
+
+  @override
+  Future<AnnouncementDetail> getAnnouncementsDetail({required String slungs}) async {
+    final response = await _appApiService.getAnnouncementDetail(slungs);
+
+    return _announcementDataMapper.mapToEntity(response.data);
   }
 }
