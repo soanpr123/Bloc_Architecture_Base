@@ -21,9 +21,9 @@ class QrCodeBloc extends BaseBloc<QrCodeEvent, QrCodeState> {
   }
 
   FutureOr<void> _onQrcodePageInitiated(QrcodePageInitiated event, Emitter<QrCodeState> emit) async {
-    final status = await PermissionConstants.checkPermissionCamera();
+   
     // ignore: unrelated_type_equality_checks
-    if (status == CameraPermission.permisionApeect) {
+   
       event.controller.scannedDataStream.listen((scanData) {
         if (scanData.code == SymbolConstants.codePayment) {
           // AppRouter().push(PaymentAmaiRoute());
@@ -39,7 +39,7 @@ class QrCodeBloc extends BaseBloc<QrCodeEvent, QrCodeState> {
           errorToast(msg: S.current.err_qr);
         }
       });
-    } else {}
+ 
 
     // await _getTotal(emit: emit);
   }

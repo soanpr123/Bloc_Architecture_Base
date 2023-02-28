@@ -147,7 +147,7 @@ class ProfileBloc extends BaseBloc<ProfileEvent, ProfileState> {
     return runBlocCatching(
       action: () async {
         final out = await _updateMeUseCase
-            .execute(UpdateMeInput(avt: avt, about: commonBloc.state.users.incognito?.about ?? ''));
+            .execute(UpdateMeInput(avt: avt, about: appBloc.state.users.incognito?.about ?? ''));
 
         if (out.data['status_code'] == 200) {
           successToast(out.data['message']);

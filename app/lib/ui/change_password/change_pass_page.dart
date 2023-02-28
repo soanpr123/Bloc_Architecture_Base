@@ -73,11 +73,18 @@ class _ChangePassPageState extends BasePageState<ChangePassPage, ChangePassBloc>
                     ),
                   ],
                 ),
-                AppElevatedButton(
-                  onPressed: () {
-                    bloc.add(const ChangePassPress());
-                  },
-                  buttonTitle: S.current.confirm,
+                Column(
+                  children: [
+                    AppElevatedButton(
+                      onPressed: () {
+                        bloc.add(const ChangePassPress());
+                      },
+                      buttonTitle: S.current.confirm,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).padding.bottom + Dimens.d20.responsive(),
+                    ),
+                  ],
                 ),
               ],
             ),
