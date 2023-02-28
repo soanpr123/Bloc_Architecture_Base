@@ -14,5 +14,6 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.qrCode() = _QrCode;
   const factory AppRouteInfo.paymentAmai() = _Payment;
   const factory AppRouteInfo.paymentResult() = _PaymentResult;
+  const factory AppRouteInfo.changePassWord() = _ChangePassWord;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

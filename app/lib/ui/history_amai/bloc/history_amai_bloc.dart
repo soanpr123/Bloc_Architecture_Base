@@ -82,24 +82,15 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getHistoryUseCase.execute(GetHistoryUseCaseInput(page: pages));
-        // emit(state.copyWith(history: output));
-        for (var item in output.notification) {
-          // print(item.title);
-          listDataNoti.add(item);
-        }
-        if ((output.currentPage) == (output.totalPage)) {
+       
+  
+        
           emit(state.copyWith(
-            history: listDataNoti,
-            page: output.currentPage,
+            history: output,
+            page:1,
             enablePullNotifi: false,
           ));
-        } else {
-          emit(state.copyWith(
-            history: listDataNoti,
-            page: output.currentPage,
-            enablePullNotifi: true,
-          ));
-        }
+       
       },
       doOnError: (e) async {
         emit(state.copyWith(

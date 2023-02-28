@@ -60,6 +60,7 @@ const mainScreenRouter = CustomRoute<dynamic>(
       children: [
         AutoRoute<dynamic>(page: ProfilePage, initial: true),
         AutoRoute<dynamic>(page: InfomationProfilePage, initial: true),
+        AutoRoute<dynamic>(page: ChangePassPage, initial: true),
       ],
     ),
   ],

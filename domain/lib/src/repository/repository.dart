@@ -19,10 +19,9 @@ abstract class Repository {
 
   Future<BaseEntryData> logout();
 
-  Future<void> resetPassword({
-    required String token,
-    required String email,
-    required String password,
+  Future<BaseEntryData> resetPassword({
+    required String currentPass,
+    required String newPass,
     required String confirmPassword,
   });
 
@@ -79,13 +78,12 @@ abstract class Repository {
 
   Future<BaseEntryData> deleteOrderStore();
 
-  Future<HistoryAmaiList> getHistory({
+  Future<List<HistoryAmai>> getHistory({
     required int page,
     required int? limit,
   });
 
   Future<AnnouncementDetail> getAnnouncementsDetail({
     required String slungs,
-    
   });
 }

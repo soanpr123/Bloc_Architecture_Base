@@ -112,18 +112,17 @@ class AppApiService {
     );
   }
 
-  Future<void> resetPassword({
-    required String token,
-    required String email,
+  Future<DataResponse<dynamic>> resetPassword({
+    required String pass,
+    required String newpass,
     required String password,
   }) async {
-    await _noneAuthAppServerApiClient.request(
+    return await _authAppServerApiClient.request(
       method: RestMethod.post,
-      path: '/v1/auth/reset-password',
+      path: 'auth/change-password',
       body: {
-        'token': token,
-        'email': email,
-        'password': password,
+        'current_password': pass,
+        'password': newpass,
         'password_confirmation': password,
       },
     );
@@ -185,7 +184,7 @@ class AppApiService {
     );
   }
 
-  Future<DataResponse<HistoryAmaiData>> getHistoryData({
+  Future<DataListResponse<Data2HistoryAmai>> getHistoryData({
     required int page,
     required int? limit,
   }) {
@@ -196,8 +195,8 @@ class AppApiService {
         'page': page,
         'per_page': limit,
       },
-      // successResponseMapperType: SuccessResponseMapperType.jsonArray,
-      decoder: HistoryAmaiData.fromJson,
+      successResponseMapperType: SuccessResponseMapperType.dataJsonArray,
+      decoder: Data2HistoryAmai.fromJson,
     );
   }
 

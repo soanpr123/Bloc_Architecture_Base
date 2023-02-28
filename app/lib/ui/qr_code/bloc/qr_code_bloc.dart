@@ -21,21 +21,26 @@ class QrCodeBloc extends BaseBloc<QrCodeEvent, QrCodeState> {
   }
 
   FutureOr<void> _onQrcodePageInitiated(QrcodePageInitiated event, Emitter<QrCodeState> emit) async {
-    // await _getTotal(emit: emit);
-    event.controller.scannedDataStream.listen((scanData) {
-      if (scanData.code == SymbolConstants.codePayment) {
-        // AppRouter().push(PaymentAmaiRoute());
-        navigator.push(const AppRouteInfo.paymentAmai());
-        if (Platform.isAndroid) {
-          event.controller.pauseCamera();
-        } else if (Platform.isIOS) {
-          event.controller.resumeCamera();
+   
+    // ignore: unrelated_type_equality_checks
+   
+      event.controller.scannedDataStream.listen((scanData) {
+        if (scanData.code == SymbolConstants.codePayment) {
+          // AppRouter().push(PaymentAmaiRoute());
+          navigator.push(const AppRouteInfo.paymentAmai());
+          if (Platform.isAndroid) {
+            event.controller.pauseCamera();
+          } else if (Platform.isIOS) {
+            event.controller.resumeCamera();
+          }
+          event.controller.dispose();
+        } else {
+          navigator.pop();
+          errorToast(msg: S.current.err_qr);
         }
-        event.controller.dispose();
-      } else {
-        navigator.pop();
-        errorToast(msg: S.current.err_qr);
-      }
-    });
+      });
+ 
+
+    // await _getTotal(emit: emit);
   }
 }

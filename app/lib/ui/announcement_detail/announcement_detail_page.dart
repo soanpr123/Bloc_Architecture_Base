@@ -34,12 +34,14 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
       body: BlocBuilder<AnouncementDetailBloc, AnouncementDetailState>(
         buildWhen: (previous, current) => previous.announcementDetail != current.announcementDetail,
         builder: (context, state) {
-          return Markdown(
-            data: state.announcementDetail.content ?? '',
-            selectable: true,
-            onTapLink: (text, href, title) {
-              IntentUtils.openBrowserURL(url: href ?? '', inApp: false);
-            },
+          return SafeArea(
+            child: Markdown(
+              data: state.announcementDetail.content ?? '',
+              selectable: true,
+              onTapLink: (text, href, title) {
+                IntentUtils.openBrowserURL(url: href ?? '', inApp: false);
+              },
+            ),
           );
         },
       ),

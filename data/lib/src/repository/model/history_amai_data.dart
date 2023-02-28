@@ -18,10 +18,9 @@ class Data2HistoryAmai with _$Data2HistoryAmai {
 class HistoryAmaiData with _$HistoryAmaiData {
   const factory HistoryAmaiData({
     List<Data2HistoryAmai>? data,
-    @JsonKey(name: 'per_page') int? perPage,
-    @JsonKey(name: 'total_page') int? totalPage,
-    @JsonKey(name: 'current_page') int? currentPage,
-    int? total,
+    @JsonKey(name: 'status_code') int? perPage,
+    String? message,
+    dynamic errors,
   }) = _HistoryAmaiData;
 
   factory HistoryAmaiData.fromJson(Map<String, dynamic> json) => _$HistoryAmaiDataFromJson(json);

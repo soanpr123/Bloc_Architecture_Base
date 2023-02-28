@@ -12,3 +12,18 @@ abstract class InfomationProfilePageEvent extends BaseBlocEvent {
 class InfomationProfilePageInitiated extends InfomationProfilePageEvent with _$InfomationProfilePageInitiated {
   const factory InfomationProfilePageInitiated() = _InfomationProfilePageInitiated;
 }
+
+@freezed
+class InfomationProfilePageTextfieldInput extends InfomationProfilePageEvent
+    with _$InfomationProfilePageTextfieldInput {
+  const factory InfomationProfilePageTextfieldInput({
+    required String text,
+  }) = _InfomationProfilePageTextfieldInput;
+}
+
+@freezed
+class InfomationProfileShowEditInput extends InfomationProfilePageEvent with _$InfomationProfileShowEditInput {
+  const factory InfomationProfileShowEditInput({
+    required bool show,
+  }) = _InfomationProfileShowEditInput;
+}
