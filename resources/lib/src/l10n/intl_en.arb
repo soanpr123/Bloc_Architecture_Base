@@ -87,7 +87,8 @@
   "amai_congaru":"Chúc bạn bữa trưa ngon miệng!",
   "amai_cance":"Hủy / Thay đổi",
   "history_amai":"Lịch sử thanh toán",
-  "amai_curr":"-{pint} Amai"
+  "amai_curr":"-{pint} Amai",
+  "tell_me_permission":"Bạn vui lòng cho phép ứng dụng truy cập camera để thực hiện tính năng này"
 
 
 }

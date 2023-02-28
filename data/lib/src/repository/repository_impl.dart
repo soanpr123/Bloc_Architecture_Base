@@ -4,10 +4,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartx/dartx.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../data.dart';
 import 'mapper/Announcement_detail_mapper.dart';
 import 'mapper/base_response_mapper.dart';
+import 'mapper/data_history_mapper.dart';
 import 'mapper/data_list_store_mapper.dart';
 import 'mapper/list_data_history_mapper.dart';
 import 'mapper/order_data_mapper.dart';
@@ -39,7 +41,7 @@ class RepositoryImpl implements Repository {
   // final AppDatabase _appDatabase;
   final AnnouncementDataMapper _announcementDataMapper;
   final NotificationDataMapper _notificationDataMapper;
-  final HistoryListDataMapper _historyDataMapper;
+  final HistoryDataMapper _historyDataMapper;
   final PreferenceUserDataMapper _preferenceUserDataMapper;
   final UserDataMapper _userDataMapper;
   final AmaiListStoreMapper _amaiListStoreMapper;
@@ -90,7 +92,6 @@ class RepositoryImpl implements Repository {
     // ignore: newline-before-return
     return _baseResponseDataMapper.mapToEntity(out);
   }
-
 
   @override
   Future<void> register({
@@ -258,10 +259,10 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<HistoryAmaiList> getHistory({required int page, required int? limit}) async {
+  Future<List<HistoryAmai>> getHistory({required int page, required int? limit}) async {
     final response = await _appApiService.getHistoryData(page: page, limit: limit);
 
-    return _historyDataMapper.mapToEntity(response.data);
+    return _historyDataMapper.mapToListEntity(response.data);
   }
 
   @override
@@ -270,10 +271,11 @@ class RepositoryImpl implements Repository {
 
     return _announcementDataMapper.mapToEntity(response.data);
   }
-  
+
   @override
-  Future<BaseEntryData> resetPassword({required String currentPass, required String newPass, required String confirmPassword}) async{
-   final ouput = await _appApiService.resetPassword(pass: currentPass,newpass: newPass,password: confirmPassword);
+  Future<BaseEntryData> resetPassword(
+      {required String currentPass, required String newPass, required String confirmPassword}) async {
+    final ouput = await _appApiService.resetPassword(pass: currentPass, newpass: newPass, password: confirmPassword);
 
     return _baseResponseDataMapper.mapToEntity(ouput);
   }

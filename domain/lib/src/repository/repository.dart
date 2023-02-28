@@ -78,13 +78,12 @@ abstract class Repository {
 
   Future<BaseEntryData> deleteOrderStore();
 
-  Future<HistoryAmaiList> getHistory({
+  Future<List<HistoryAmai>> getHistory({
     required int page,
     required int? limit,
   });
 
   Future<AnnouncementDetail> getAnnouncementsDetail({
     required String slungs,
-    
   });
 }

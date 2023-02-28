@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grouped_list/grouped_list.dart';
 
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resources/resources.dart';
 
 import '../../app.dart';
@@ -16,7 +15,6 @@ class HistoryAmaiPage extends StatefulWidget {
 }
 
 class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> {
-  final refreshController = RefreshController(initialRefresh: false);
   @override
   void initState() {
     super.initState();
@@ -41,28 +39,28 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
             previous.enablePullNotifi != current.enablePullNotifi ||
             previous.page != current.page,
         builder: (context, state) {
-          return state.isShimmerLoading
-              ? const ListViewLoader()
-              : state.history.isEmpty
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const CommonNoItemsFoundIndicator(),
-                      ],
-                    )
-                  : SmartRefresher(
-                      primary: true,
-                      controller: refreshController,
-                      enablePullUp: state.enablePullNotifi,
-                      enablePullDown: true,
-                      onLoading: () => bloc.add(AmaiHistoryLoadMore(completer: refreshController)),
-                      onRefresh: () => bloc.add(AmaiHistoryPageRefreshed(completer: refreshController)),
-                      child: GroupedListView(
+          return RefreshIndicator(
+            onRefresh: () {
+              bloc.add(const HistoryPageInitiated());
+
+              return Future.value();
+            },
+            child: state.isShimmerLoading
+                ? const ListViewLoader()
+                : state.history.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const CommonNoItemsFoundIndicator(),
+                        ],
+                      )
+                    : GroupedListView(
                         // physics: const NeverScrollableScrollPhysics(),
                         elements: state.history,
-                        physics: const NeverScrollableScrollPhysics(),
+                        // physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        order: GroupedListOrder.DESC,
                         padding: const EdgeInsets.all(0.0),
                         useStickyGroupSeparators: true,
                         groupBy: (element) => element.groub ?? '',
@@ -250,7 +248,7 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                           //       );
                         },
                       ),
-                    );
+          );
         },
       ),
     );

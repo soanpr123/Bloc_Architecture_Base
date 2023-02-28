@@ -16,10 +16,6 @@ class HistoryListDataMapper extends BaseDataMapper<HistoryAmaiData, HistoryAmaiL
   HistoryAmaiList mapToEntity(HistoryAmaiData? data) {
     return HistoryAmaiList(
       notification: _notificationDataMapper.mapToListEntity(data?.data ?? []),
-      perPage: data?.perPage ?? -1,
-      currentPage: data?.currentPage ?? -1,
-      total: data?.total ?? -1,
-      totalPage: data?.totalPage ?? -1,
     );
   }
 }

@@ -184,7 +184,7 @@ class AppApiService {
     );
   }
 
-  Future<DataResponse<HistoryAmaiData>> getHistoryData({
+  Future<DataListResponse<Data2HistoryAmai>> getHistoryData({
     required int page,
     required int? limit,
   }) {
@@ -195,8 +195,8 @@ class AppApiService {
         'page': page,
         'per_page': limit,
       },
-      // successResponseMapperType: SuccessResponseMapperType.jsonArray,
-      decoder: HistoryAmaiData.fromJson,
+      successResponseMapperType: SuccessResponseMapperType.dataJsonArray,
+      decoder: Data2HistoryAmai.fromJson,
     );
   }
 

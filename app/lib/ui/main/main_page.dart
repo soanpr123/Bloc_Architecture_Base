@@ -28,6 +28,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return AutoTabsScaffold(
+      extendBody: true,
       routes: (navigator as AppNavigatorImpl).tabRoutes,
       floatingActionButton: FloatingActionButton(
         shape: const StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
@@ -60,7 +61,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
               selectedItemColor: colorBrandPrimary,
               unselectedItemColor: colorGray400,
               margin: const EdgeInsets.symmetric(
-                horizontal: 20,
+                horizontal: 0,
                 vertical: 16,
               ),
               currentIndex: tabsRouter.activeIndex,
