@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../base/bloc/base_event.dart';
@@ -46,4 +47,16 @@ class NotificationUnreadPageRefreshed extends NotificationEvent with _$Notificat
 @freezed
 class NotificationUnreadLoadMore extends NotificationEvent with _$NotificationUnreadLoadMore {
   const factory NotificationUnreadLoadMore() = _NotificationUnreadLoadMore;
+}
+
+@freezed
+class NotificationonTapTab extends NotificationEvent with _$NotificationonTapTab {
+  const factory NotificationonTapTab({
+    required TabController tabController,
+  }) = _NotificationonTapTab;
+}
+
+@freezed
+class ReadAllNotifiPress extends NotificationEvent with _$ReadAllNotifiPress {
+  const factory ReadAllNotifiPress() = _ReadAllNotifiPress;
 }

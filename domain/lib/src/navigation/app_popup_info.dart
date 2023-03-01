@@ -32,5 +32,12 @@ class AppPopupInfo with _$AppPopupInfo {
     Function? onPress,
     BuildContext? context,
   }) = _DialogConfirm;
+   const factory AppPopupInfo.dialogConfirmComon({
+    String? message,
+    String? title,
+    String? titleButton,
+    Function? onPress,
+    BuildContext? context,
+  }) = _DialogConfirmComon;
   const factory AppPopupInfo.requiredLoginDialog() = _RequiredLoginDialog;
 }

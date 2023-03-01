@@ -60,7 +60,7 @@ class CustomBottomNavigation extends StatelessWidget {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      notchMargin: 4,
+      notchMargin: 1,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 0),
         height: 60,
@@ -72,6 +72,7 @@ class CustomBottomNavigation extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: items.indexOf(item) == 2 ? 32 : 0, right: items.indexOf(item) == 1 ? 32 : 0),
                 child: InkWell(
+                  overlayColor: MaterialStateProperty.all(colorDisabled),
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.d100.responsive()),
                   ),
@@ -102,7 +103,7 @@ class CustomBottomNavigation extends StatelessWidget {
                                   child: total == 0
                                       ? Container()
                                       : Container(
-                                          margin: const EdgeInsets.only(top: 8, right: 8),
+                                          margin: const EdgeInsets.only(top: 0, right: 8),
                                           width: 24,
                                           height: 24,
                                           decoration: BoxDecoration(

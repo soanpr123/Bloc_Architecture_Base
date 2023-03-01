@@ -59,6 +59,7 @@ dependencies:
   collection: ^1.17.0
   grouped_list: ^5.1.2
   device_preview: ^1.1.0
+  animated_snack_bar: ^0.3.0
   # mobile_scanner: ^3.0.0
 
 dev_dependencies:

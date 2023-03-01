@@ -23,7 +23,6 @@ class AppTextStyles {
       _baseTextStyle.merge(TextStyle(
         fontSize: Dimens.d14.responsive(tablet: tablet, ultraTablet: ultraTablet),
         fontWeight: FontWeight.w400,
-       
       ));
 
   static TextStyle s14w400Secondary({
@@ -33,31 +32,31 @@ class AppTextStyles {
       _baseTextStyle.merge(TextStyle(
         fontSize: Dimens.d14.responsive(tablet: tablet, ultraTablet: ultraTablet),
         fontWeight: FontWeight.w400,
-       
       ));
 }
-
-
 
 final typoInterNomal14 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
-  fontSize: 14,
-  letterSpacing: 1.02,
+  fontSize: Dimens.d14.responsive(),
+  letterSpacing: 1,
   color: colorTextDark,
 );
 
 final typoInterNomal16 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
-  fontSize: 16,
-  letterSpacing: 1.02,
+  fontSize: Dimens.d16.responsive(),
+  letterSpacing: 1,
   color: colorTextDark,
+  height: 1.5,
 );
+
 final typoInterNomal18 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
-  fontSize: 18,
-  letterSpacing: 1.02,
+  fontSize: Dimens.d18.responsive(),
+  letterSpacing: 1,
+  height: 1.5,
   color: colorTextDark,
 );

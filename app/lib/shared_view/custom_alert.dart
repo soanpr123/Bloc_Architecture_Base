@@ -42,7 +42,7 @@ class CustomAlert extends StatelessWidget {
                         child: Card(
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
+                              Radius.circular(5),
                             ),
                           ),
                           child: child,

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
+
 import 'package:resources/resources.dart';
 
 import '../../app.dart';
@@ -34,13 +34,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
         shape: const StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
         backgroundColor: colorBrandPrimary,
         child: Container(
-          child: Lottie.asset(
-            width: 32,
-            height: 32,
-            Assets.json.qrcode,
-            frameRate: FrameRate.max,
-            repeat: true,
-          ),
+          child: Assets.svg.icScan.svg(width: Dimens.d32.responsive(), height: Dimens.d32.responsive()),
         ),
         onPressed: () async {
           // context.router.push(const QrCodeRoute());?

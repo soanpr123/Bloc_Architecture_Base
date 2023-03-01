@@ -279,4 +279,11 @@ class RepositoryImpl implements Repository {
 
     return _baseResponseDataMapper.mapToEntity(ouput);
   }
+
+  @override
+  Future<BaseEntryData> readAllNotification() async {
+    final ouput = await _appApiService.readAll();
+
+    return _baseResponseDataMapper.mapToEntity(ouput);
+  }
 }

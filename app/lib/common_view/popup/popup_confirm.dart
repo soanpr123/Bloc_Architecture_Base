@@ -34,13 +34,14 @@ class DialogConfirm extends StatelessWidget {
           ),
           message,
           SizedBox(
-            height: Dimens.d16.responsive(),
+            height: Dimens.d24.responsive(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                width: Dimens.d60.responsive(),
+              const Expanded(flex: 2, child: SizedBox()),
+              Expanded(
+                flex: 0,
                 child: AppElevatedButton(
                   mainColor: colorBrandSecondary,
                   onPressed: () {
@@ -50,11 +51,11 @@ class DialogConfirm extends StatelessWidget {
                   buttonTitle: S.current.cancel,
                 ),
               ),
-              const SizedBox(
-                width: 4,
-              ),
               SizedBox(
-                width: Dimens.d100.responsive(),
+                width: Dimens.d12.responsive(),
+              ),
+              Expanded(
+                flex: 2,
                 child: AppElevatedButton(
                   state: buttonState ?? AppElevatedButtonState.active,
                   onPressed: () {

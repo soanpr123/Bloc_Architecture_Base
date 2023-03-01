@@ -218,12 +218,18 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                   navigator.push(const AppRouteInfo.changePassWord());
                 }),
                 buildButton(S.current.log_out, onTap: () {
-                  navigator.showDialog(AppPopupInfo.confirm(
-                    message: S.current.tell_me_logout,
-                    confirm: Func0(() async {
+                  navigator.showDialog(AppPopupInfo.dialogConfirmComon(
+                    title: S.current.tell_me_logout,
+                    onPress: () {
                       bloc.add(const LogOutRequest());
-                    }),
+                    },
                   ));
+                  // navigator.showDialog(AppPopupInfo.confirm(
+                  //   message: S.current.tell_me_logout,
+                  //   confirm: Func0(() async {
+
+                  //   }),
+                  // ));
                 }),
               ],
             ),

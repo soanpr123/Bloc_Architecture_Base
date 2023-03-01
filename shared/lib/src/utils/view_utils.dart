@@ -42,9 +42,12 @@ class ViewUtils {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 
+  static void setsetEnabledSystemUIOverlays(SystemUiMode systemUiMode) {
+   SystemChrome.setEnabledSystemUIMode(systemUiMode);
+  }
+
   static Offset? getWidgetPosition(GlobalKey globalKey) {
-    return (globalKey.currentContext?.findRenderObject() as RenderBox?)
-        ?.let((it) => it.localToGlobal(Offset.zero));
+    return (globalKey.currentContext?.findRenderObject() as RenderBox?)?.let((it) => it.localToGlobal(Offset.zero));
   }
 
   static double? getWidgetWidth(GlobalKey globalKey) {
@@ -52,7 +55,6 @@ class ViewUtils {
   }
 
   static double? getWidgetHeight(GlobalKey globalKey) {
-    return (globalKey.currentContext?.findRenderObject() as RenderBox?)
-        ?.let((it) => it.size.height);
+    return (globalKey.currentContext?.findRenderObject() as RenderBox?)?.let((it) => it.size.height);
   }
 }

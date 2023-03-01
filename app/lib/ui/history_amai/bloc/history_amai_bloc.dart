@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:domain/domain.dart';
 
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 
@@ -33,8 +34,9 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
     await _getHistory(
       emit: emit,
       isInitialLoad: true,
-      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true)),
-      doOnSuccessOrError: () async => emit(state.copyWith(isShimmerLoading: false)),
+      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true, apirequest: APIRequestStatus.loading)),
+      doOnSuccessOrError: () async =>
+          emit(state.copyWith(isShimmerLoading: false, apirequest: APIRequestStatus.loaded)),
     );
   }
 
@@ -45,7 +47,7 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       pages: state.page + 1,
       doOnSuccessOrError: () async {
         // appBloc.add(const AppInitiated());
-        emit(state.copyWith(isShimmerLoading: false));
+        emit(state.copyWith(isShimmerLoading: false, apirequest: APIRequestStatus.loaded));
 
         event.completer.loadComplete();
       },
@@ -60,11 +62,15 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
         listDataNoti.clear();
         emit(state.copyWith(
           isShimmerLoading: true,
+          apirequest: APIRequestStatus.loaded,
         ));
       },
       doOnSuccessOrError: () async {
         // appBloc.add(const AppInitiated());
-        emit(state.copyWith(isShimmerLoading: false));
+        emit(state.copyWith(
+          isShimmerLoading: false,
+          apirequest: APIRequestStatus.loaded,
+        ));
 
         event.completer.refreshCompleted();
       },
@@ -82,26 +88,41 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getHistoryUseCase.execute(GetHistoryUseCaseInput(page: pages));
-       
-  
-        
+        if (output.isNotEmpty) {
           emit(state.copyWith(
             history: output,
-            page:1,
+            apirequest: APIRequestStatus.loaded,
+            page: 1,
             enablePullNotifi: false,
           ));
-       
+        } else {
+          emit(state.copyWith(
+            apirequest: APIRequestStatus.nodata,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        }
       },
       doOnError: (e) async {
-        emit(state.copyWith(
-          loadUsersException: e,
-          enablePullNotifi: false,
-          page: 1,
-        ));
+        if (e.appExceptionType == AppExceptionType.remote) {
+          emit(state.copyWith(
+            loadUsersException: e,
+            apirequest: APIRequestStatus.connectionError,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        } else {
+          emit(state.copyWith(
+            loadUsersException: e,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        }
       },
       doOnSubscribe: doOnSubscribe,
       doOnSuccessOrError: doOnSuccessOrError,
       handleLoading: false,
+      handleError: false,
     );
   }
 }

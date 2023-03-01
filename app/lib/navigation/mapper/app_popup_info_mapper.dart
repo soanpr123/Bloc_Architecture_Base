@@ -84,6 +84,12 @@ class AppPopupInfoMapper extends BasePopupInfoMapper {
       ),
       dialogConfirm: (message, title, onPress, context) =>
           DialogConfirm(title: title ?? '', message: message ?? Container(), onPressed: onPress),
+      dialogConfirmComon:(message, title, titleButton, onPress, context) =>  DialogConfirmCommon(
+        message: Container(),
+        title: title ?? '',
+        tileButton: titleButton,
+        onPressed: onPress,
+      ),
     );
   }
 }
