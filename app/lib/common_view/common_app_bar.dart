@@ -91,13 +91,27 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottomOpacity: bottomOpacity,
       leadingWidth: leadingWidth,
       systemOverlayStyle: systemOverlayStyle,
-      leading: leadingIcon,
+      leading: Padding(
+        padding: EdgeInsets.only(top: Dimens.d30.responsive()),
+        child: leadingIcon,
+      ),
       centerTitle: centerTitle,
       title: GestureDetector(
         onTap: onTitlePressed,
         behavior: HitTestBehavior.translucent,
         child: titleType == AppBarTitle.text
-            ? Text(text ?? '', style: typoInterNomal18.copyWith(color: corlorText ?? colorTextDark))
+            ? Padding(
+                padding: EdgeInsets.only(top: Dimens.d30.responsive()),
+                child: Text(
+                  text ?? '',
+                  style: typoInterNomal18.copyWith(
+                    color: corlorText ?? colorTextDark,
+                    fontSize: Dimens.d20.responsive(),
+                    fontWeight: FontWeight.w700,
+                    height: 1.5,
+                  ),
+                ),
+              )
             : titleType == AppBarTitle.logo
                 ? _buildIcon(Assets.svg.logoHome)
                 : null,

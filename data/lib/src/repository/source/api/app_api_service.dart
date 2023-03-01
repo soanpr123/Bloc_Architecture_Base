@@ -214,6 +214,13 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<dynamic>> readAll() async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'notifications/all-read',
+    );
+  }
+
   Future<DataResponse<dynamic>> payment(int amai, String note) async {
     return await _authAppServerApiClient.request(method: RestMethod.post, path: 'transactions', body: {
       'amount_amais': amai,

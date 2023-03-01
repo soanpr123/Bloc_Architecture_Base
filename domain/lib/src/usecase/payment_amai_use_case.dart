@@ -23,7 +23,7 @@ class PaymentUseCase extends BaseFutureResUseCase<PaymentInput, BaseEntryData> {
 @freezed
 class PaymentInput extends BaseInput with _$PaymentInput {
   const factory PaymentInput({
-    @Default(SymbolConstants.amaipayment) int amai,
+    @Default(0) int amai,
     @Default(SymbolConstants.amaiNote) String note,
   }) = _PaymentInput;
 }

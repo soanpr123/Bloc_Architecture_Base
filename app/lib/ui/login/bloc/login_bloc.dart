@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import '../../../utils/toast_message.dart';
@@ -65,7 +66,6 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
     emit(state.copyWith(
       email: event.email,
       buttonState: _isLoginButtonEnabled(event.email, state.password),
-      onPageError: '',
     ));
   }
 
@@ -75,7 +75,6 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
       buttonStateForgot: _isLoginButtonEnabledForgot(
         event.email,
       ),
-      onPageError: '',
     ));
   }
 
@@ -83,28 +82,32 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
     emit(state.copyWith(
       password: event.password,
       buttonState: _isLoginButtonEnabled(state.email, event.password),
-      onPageError: '',
     ));
   }
 
   FutureOr<void> _onLoginButtonPressed(LoginButtonPressed event, Emitter<LoginState> emit) {
     return runBlocCatching(
-      doOnSubscribe: () async => emit(state.copyWith(buttonState: AppElevatedButtonState.loading)),
+      doOnSubscribe: () async => emit(state.copyWith(buttonState: AppElevatedButtonState.loading, onPageError: '')),
       action: () async {
         final out = await _loginUseCase.execute(LoginInput(email: state.email, password: state.password));
         if (out.statusCode == 200) {
           await navigator.replace(const AppRouteInfo.main());
         } else {
           errorToast(msg: out.message);
+          // showToast();
         }
 
         // print()
       },
       handleError: false,
       doOnError: (e) async {
-        // print(e);
-        errorToast(msg: exceptionMessageMapper.map(e));
-        emit(state.copyWith(onPageError: exceptionMessageMapper.map(e)));
+        print(e);
+
+        if (e.appExceptionType == AppExceptionType.validation) {
+          emit(state.copyWith(onPageError: exceptionMessageMapper.map(e)));
+        } else {
+          errorToast(msg: exceptionMessageMapper.map(e));
+        }
       },
       doOnSuccessOrError: () async {
         emit(state.copyWith(buttonState: AppElevatedButtonState.active));
@@ -134,9 +137,10 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
       },
       handleError: false,
       doOnError: (e) async {
-        // print(e);
         errorToast(msg: exceptionMessageMapper.map(e));
-        emit(state.copyWith(onPageError: exceptionMessageMapper.map(e)));
+        if (e.appExceptionType == AppExceptionType.validation) {
+          emit(state.copyWith(onPageError: exceptionMessageMapper.map(e)));
+        }
       },
       doOnSuccessOrError: () async {
         emit(state.copyWith(buttonStateForgot: AppElevatedButtonState.active));

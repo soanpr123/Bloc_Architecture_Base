@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
+import '../../../utils/toast_message.dart';
 
 @Injectable()
 class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
@@ -15,15 +17,15 @@ class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
     );
   }
   final PaymentUseCase _paymentUseCase;
+
   FutureOr<void> _onPaymentAmaiPageInitiated(PaymentAmaiInitiated event, Emitter<PaymentAmaiState> emit) async {
     await runBlocCatching(
       doOnSubscribe: () async {
         emit(state.copyWith(buttonState: AppElevatedButtonState.loading));
       },
       action: () async {
-        final output = await _paymentUseCase.execute(const PaymentInput());
+        final output = await _paymentUseCase.execute(PaymentInput(amai: SymbolConstants.amaipayment));
         if (output.data['status_code'] == 200) {
-          
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: true));
         } else {
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: false));
@@ -31,6 +33,9 @@ class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
       },
       doOnSuccessOrError: () async {
         emit(state.copyWith(buttonState: AppElevatedButtonState.active));
+      },
+      doOnError: (e) async {
+        errorToast(msg: exceptionMessageMapper.map(e));
       },
       handleLoading: false,
     );

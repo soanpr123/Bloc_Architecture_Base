@@ -9,13 +9,14 @@ import '../app/bloc/app_bloc.dart';
 import '../exception_handler/exception_handler.dart';
 import '../exception_handler/exception_message_mapper.dart';
 import '../resource/dimens/app_dimen.dart';
+import '../utils/toast_message.dart';
 import 'bloc/base_bloc.dart';
 import 'bloc/common/common_bloc.dart';
 import 'bloc/common/common_event.dart';
 import 'bloc/common/common_state.dart';
 
-abstract class BasePageState<T extends StatefulWidget, B extends BaseBloc>
-    extends BasePageStateDelegate<T, B> with LogMixin {}
+abstract class BasePageState<T extends StatefulWidget, B extends BaseBloc> extends BasePageStateDelegate<T, B>
+    with LogMixin {}
 
 abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBloc> extends State<T>
     implements ExceptionHandlerListener {
@@ -32,10 +33,7 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
     ..disposeBag = disposeBag
     ..appBloc = appBloc
     ..exceptionHandler = exceptionHandler
-    ..exceptionMessageMapper = exceptionMessageMapper
-    
-    ;
-    
+    ..exceptionMessageMapper = exceptionMessageMapper;
 
   late final B bloc = GetIt.instance.get<B>()
     ..navigator = navigator
@@ -48,12 +46,16 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
   late final DisposeBag disposeBag = DisposeBag();
 
   bool get isAppWidget => false;
+  @override
+  void initState() {
+    super.initState();
+    ToastMes.of(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     if (!isAppWidget) {
       AppDimen.of(context);
-  
     }
 
     return Provider(
@@ -65,8 +67,7 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
         ],
         child: BlocListener<CommonBloc, CommonState>(
           listenWhen: (previous, current) =>
-              previous.appExceptionWrapper != current.appExceptionWrapper &&
-              current.appExceptionWrapper != null,
+              previous.appExceptionWrapper != current.appExceptionWrapper && current.appExceptionWrapper != null,
           listener: (context, state) {
             handleException(state.appExceptionWrapper!);
           },

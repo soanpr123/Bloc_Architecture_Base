@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../app.dart';
@@ -11,6 +12,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     // this._getInitialAppDataUseCase,
     // this._saveIsDarkModeUseCase,
     // this._saveLanguageCodeUseCase,
+    this._clearCurrentUserDataUseCase,
     this._getUsersUseCase,
     this._totalNotificationUseCase,
   ) : super(const AppState()) {
@@ -40,6 +42,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   // final SaveLanguageCodeUseCase _saveLanguageCodeUseCase;
   final GetMeUseCase _getUsersUseCase;
   final GetTotalNotificationUseCase _totalNotificationUseCase;
+  final ClearCurrentUserDataUseCase _clearCurrentUserDataUseCase;
   void _onIsLoggedInStatusChanged(IsLoggedInStatusChanged event, Emitter<AppState> emit) {
     emit(state.copyWith(isLoggedIn: event.isLoggedIn));
   }
@@ -104,7 +107,8 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
           emit(state.copyWith(users: output));
         } else {
           errorToast(msg: 'Vui lòng đăng nhập lại để tiếp tục');
-          commonBloc.add(const ForceLogoutButtonPressed());
+          await _clearCurrentUserDataUseCase.execute(const ClearCurrentUserDataInput());
+          await GetIt.instance.get<AppNavigator>().replace(const AppRouteInfo.login());
         }
       },
       doOnError: (e) async {},

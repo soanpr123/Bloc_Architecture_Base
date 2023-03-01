@@ -67,7 +67,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
     }
 
     return ShaderMask(
-      blendMode: BlendMode.srcATop,
+      blendMode: BlendMode.modulate,
       shaderCallback: (bounds) {
         return gradient.createShader(
           Rect.fromLTWH(

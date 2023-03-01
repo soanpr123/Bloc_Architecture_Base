@@ -69,6 +69,7 @@ abstract class Repository {
   });
   Future<BaseEntryData> getTotalNotificationUnread();
   Future<BaseEntryData> readNotification(String id);
+  Future<BaseEntryData> readAllNotification();
   Future<BaseEntryData> paymentAmai(int amai, String note);
   Future<ListDataStoreEntry> getDataStore();
 

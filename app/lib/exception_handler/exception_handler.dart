@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 class ExceptionHandler {
@@ -33,10 +34,10 @@ class ExceptionHandler {
           case RemoteExceptionKind.timeout:
             await _showErrorDialogWithRetry(
               message: message,
-              onRetryPressed: Func0(() async {
+              onRetryPressed: () async {
                 await navigator.pop();
                 await appExceptionWrapper.doOnRetry?.call();
-              }),
+              },
             );
             break;
           default:
@@ -82,12 +83,17 @@ class ExceptionHandler {
 
   Future<void> _showErrorDialogWithRetry({
     required String message,
-    required Func0<void>? onRetryPressed,
+    required Function? onRetryPressed,
   }) async {
-    await navigator.showDialog(AppPopupInfo.errorWithRetryDialog(
-      message: message,
-      onRetryPressed: onRetryPressed,
+    await navigator.showDialog(AppPopupInfo.dialogConfirmComon(
+      title: message,
+      titleButton: S.current.reload,
+      onPress: onRetryPressed,
     ));
+    // await navigator.showDialog(AppPopupInfo.errorWithRetryDialog(
+    //   message: message,
+    //   onRetryPressed: onRetryPressed,
+    // ));
   }
 }
 

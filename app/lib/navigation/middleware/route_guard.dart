@@ -1,3 +1,4 @@
+import 'package:app/utils/toast_message.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
@@ -18,12 +19,14 @@ class RouteGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    print(_isLoggedIn);
+   
     if (_isLoggedIn) {
       resolver.next(true);
+      
     } else {
       router.push(const LoginRoute());
       resolver.next(false);
     }
   }
+   
 }

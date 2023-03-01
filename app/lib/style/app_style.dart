@@ -6,13 +6,13 @@ final styleTextField = typoInterNomal14;
 final decorTextField = InputDecoration(
   enabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.white, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderRadius: BorderRadius.all(Radius.circular(5)),
   ),
   focusedBorder: const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.white, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderRadius: BorderRadius.all(Radius.circular(5)),
   ),
-  contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
+  contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4),
   hintStyle: typoInterNomal14.copyWith(color: colorTextBland),
   counterText: '',
   fillColor: Colors.white,
