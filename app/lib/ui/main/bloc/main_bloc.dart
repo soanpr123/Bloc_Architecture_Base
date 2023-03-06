@@ -20,8 +20,6 @@ class MainBloc extends BaseBloc<MainEvent, MainState> {
   final GetMeUseCase _getUsersUseCase;
   final GetTotalNotificationUseCase _totalNotificationUseCase;
   FutureOr<void> _onMainPageInitiated(MainPageInitiated event, Emitter<MainState> emit) async {
-    // await _getTotal(emit: emit);
+    appBloc.add(const AppInitiated(handleErr: true));
   }
-
- 
 }

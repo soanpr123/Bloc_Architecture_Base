@@ -52,6 +52,7 @@ class _QrCodePageState extends BasePageState<QrCodePage, QrCodeBloc> {
                   borderLength: 30,
                   borderWidth: 10,
                   cutOutSize: 250,
+                  cutOutBottomOffset: Dimens.d100.responsive(),
                 ),
                 onPermissionSet: (p0, p1) async {
                   controller = p0;
@@ -66,7 +67,7 @@ class _QrCodePageState extends BasePageState<QrCodePage, QrCodeBloc> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 16),
+                  padding: EdgeInsets.only(top: Dimens.d68.responsive()),
                   child: Text(
                     S.current.qr_title,
                     style: typoInterNomal18.copyWith(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700),
@@ -76,7 +77,7 @@ class _QrCodePageState extends BasePageState<QrCodePage, QrCodeBloc> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 64),
+                  padding: EdgeInsets.only(bottom: Dimens.d114.responsive()),
                   child: GestureDetector(
                     onTap: () {
                       navigator.pop();

@@ -13,6 +13,8 @@ class AppTextField extends StatelessWidget {
     this.onTap,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
+    this.errText,
+    this.show = false,
     Key? key,
   }) : super(key: key);
 
@@ -24,17 +26,37 @@ class AppTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final bool obscureText;
+  final String? errText;
+  final bool? show;
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            style: typoInterNomal16.copyWith(color: colorTextMedium),
-          ),
-        ),
+        show == true
+            ? RichText(
+                text: TextSpan(
+                  text: title,
+                  style: typoInterNomal16.copyWith(color: colorTextMedium, fontWeight: FontWeight.w600),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '*',
+                      style: typoInterNomal14.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: colorSupportDanger,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: typoInterNomal16.copyWith(color: colorTextMedium, fontWeight: FontWeight.w600),
+                ),
+              ),
         SizedBox(height: Dimens.d8.responsive()),
         AppTextFormField(
           borderRadius: Dimens.d5.responsive(),
@@ -45,6 +67,7 @@ class AppTextField extends StatelessWidget {
           hintText: hintText,
           keyboardType: keyboardType,
           suffixIcon: suffixIcon,
+          errorText: errText,
         ),
       ],
     );

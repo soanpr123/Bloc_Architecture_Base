@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import '../../../utils/toast_message.dart';
@@ -41,16 +42,36 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
   final OrderStoreUseCase _orderStoreUseCase;
   FutureOr<void> _onMainPageInitiated(AmaiStoreInitiated event, Emitter<AmaiStoreState> emit) async {
     await runBlocCatching(
-      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true)),
+      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true, apirequestNoti: APIRequestStatus.loading)),
       action: () async {
         final output = await _getStoreUseCase.execute(const GetStoreInput());
-
-        emit(state.copyWith(canteen: output.canteen, other: output.other));
+        if (output.canteen.isNotEmpty && output.other.isNotEmpty) {
+          emit(state.copyWith(canteen: output.canteen, other: output.other, apirequestNoti: APIRequestStatus.loaded));
+        } else {
+          emit(state.copyWith(canteen: output.canteen, other: output.other, apirequestNoti: APIRequestStatus.nodata));
+        }
       },
       doOnSuccessOrError: () async => emit(
         state.copyWith(isShimmerLoading: false),
       ),
+      doOnError: (e) async {
+        print(e.appExceptionType);
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+          print(exception.kind);
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              apirequestNoti: APIRequestStatus.connectionError,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            apirequestNoti: APIRequestStatus.nodata,
+          ));
+        }
+      },
       handleLoading: false,
+      handleError: false,
     );
 
     await _getOrder(emit);
@@ -114,7 +135,24 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
       doOnSuccessOrError: () async => emit(
         state.copyWith(buttonStateDelete: AppElevatedButtonState.active),
       ),
+      doOnError: (e) async {
+        print(e.appExceptionType);
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+          print(exception.kind);
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              apirequestNoti: APIRequestStatus.connectionError,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            apirequestNoti: APIRequestStatus.nodata,
+          ));
+        }
+      },
       handleLoading: false,
+      handleError: false,
     );
   }
 }

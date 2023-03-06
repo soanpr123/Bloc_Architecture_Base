@@ -37,5 +37,7 @@ class AppLanguageChanged extends AppEvent with _$AppLanguageChanged {
 
 @freezed
 class AppInitiated extends AppEvent with _$AppInitiated {
-  const factory AppInitiated() = _AppInitiated;
+  const factory AppInitiated({
+    @Default(true) bool handleErr,
+  }) = _AppInitiated;
 }

@@ -8,12 +8,11 @@ import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 
-
 @Injectable()
+@LazySingleton()
 class CommonBloc extends BaseBloc<CommonEvent, CommonState> {
   CommonBloc(
     this._clearCurrentUserDataUseCase,
-
   ) : super(const CommonState()) {
     on<LoadingVisibilityEmitted>(
       _onLoadingVisibilityEmitted,
@@ -40,7 +39,6 @@ class CommonBloc extends BaseBloc<CommonEvent, CommonState> {
   }
 
   final ClearCurrentUserDataUseCase _clearCurrentUserDataUseCase;
-  
 
   FutureOr<void> _onLoadingVisibilityEmitted(
     LoadingVisibilityEmitted event,

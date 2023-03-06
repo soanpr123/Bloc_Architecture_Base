@@ -1,4 +1,3 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resources/resources.dart';
@@ -25,8 +24,12 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
       },
       child: CommonScaffold(
         body: Padding(
-          padding:
-              EdgeInsets.only(top: MediaQuery.of(context).padding.top, bottom: MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(
+            Dimens.d16.responsive(),
+            Dimens.d68.responsive(),
+            Dimens.d16.responsive(),
+            Dimens.d24.responsive(),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -40,13 +43,17 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                         Text(
                           S.current.payment,
                           style: typoInterNomal18.copyWith(
-                              color: colorTextDark, fontSize: 24, fontWeight: FontWeight.w700),
+                            color: colorTextDark,
+                            fontSize: Dimens.d24.responsive(),
+                            fontWeight: FontWeight.w700,
+                            height: 1.5,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: Dimens.d16.responsive(),
+                    height: Dimens.d80.responsive(),
                   ),
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
@@ -55,29 +62,33 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                           ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                               buildWhen: (previous, current) => previous.status != current.status,
                               builder: (context, statePay) {
-                                return statePay.status ? Assets.svg.paymentDone.svg() : Assets.svg.payment1.svg();
+                                return statePay.status
+                                    ? Assets.svg.paymentDone
+                                        .svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive())
+                                    : Assets.svg.payment1
+                                        .svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive());
                               },
                             )
-                          : Assets.svg.paymentEr.svg();
+                          : Assets.svg.paymentEr
+                              .svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive());
                     },
                   ),
                   SizedBox(
-                    height: Dimens.d16.responsive(),
+                    height: Dimens.d24.responsive(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Dimens.d120),
-                    child: Center(
-                      child: DottedLine(
-                        dashLength: 30,
-                        dashGapLength: 10,
-                        lineThickness: 5,
-                        dashRadius: 5,
-                        dashColor: colorBrandPrimary,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(
+                        flex: 2,
+                        child: Assets.svg.dotIc.svg(),
                       ),
-                    ),
+                      Expanded(flex: 1, child: Container()),
+                    ],
                   ),
                   SizedBox(
-                    height: Dimens.d16.responsive(),
+                    height: Dimens.d8.responsive(),
                   ),
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
@@ -90,16 +101,18 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                     ? Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Assets.svg.logoamai.svg(width: 32, height: 32),
+                                          Assets.svg.logoamai
+                                              .svg(width: Dimens.d48.responsive(), height: Dimens.d48.responsive()),
                                           SizedBox(
                                             width: Dimens.d8.responsive(),
                                           ),
                                           Text(
                                             '${SymbolConstants.amaipayment} ${S.current.amai_point('').replaceAll(':', '')}',
                                             style: typoInterNomal18.copyWith(
-                                              color: colorTextDark,
-                                              fontSize: 24,
+                                              color: colorTextMedium,
+                                              fontSize: Dimens.d24.responsive(),
                                               fontWeight: FontWeight.w700,
+                                              height: 1.5,
                                             ),
                                           ),
                                         ],
@@ -108,8 +121,9 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                         S.current.payment_done,
                                         style: typoInterNomal18.copyWith(
                                           color: colorBrandPrimary,
-                                          fontSize: 24,
+                                          fontSize: Dimens.d24.responsive(),
                                           fontWeight: FontWeight.w700,
+                                          height: 1.5,
                                         ),
                                       );
                               },
@@ -118,42 +132,43 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                               S.current.amai_invalid,
                               style: typoInterNomal18.copyWith(
                                 color: colorSupportWarning,
-                                fontSize: 24,
+                                fontSize: Dimens.d24.responsive(),
                                 fontWeight: FontWeight.w700,
+                                height: 1.5,
                               ),
                             );
                     },
                   ),
                   SizedBox(
-                    height: Dimens.d16.responsive(),
+                    height: Dimens.d8.responsive(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Dimens.d120),
-                    child: Center(
-                      child: DottedLine(
-                        dashLength: 30,
-                        dashGapLength: 10,
-                        lineThickness: 5,
-                        dashRadius: 5,
-                        dashColor: colorBrandPrimary,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(
+                        flex: 2,
+                        child: Assets.svg.dotIc.svg(),
                       ),
-                    ),
+                      Expanded(flex: 1, child: Container()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Dimens.d24.responsive(),
                   ),
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
                       return (state.users.totalAmais ?? 0) > SymbolConstants.amaipayment
                           ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                S.current.amai_noti,
-                                textAlign: TextAlign.center,
-                                style: typoInterNomal18.copyWith(
-                                  color: colorTextMedium,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                          : Text(
+                              S.current.amai_noti,
+                              textAlign: TextAlign.center,
+                              style: typoInterNomal14.copyWith(
+                                color: colorTextMedium,
+                                fontSize: Dimens.d14.responsive(),
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
                               ),
                             );
                     },
@@ -163,16 +178,14 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                     builder: (context, state) {
                       return !state.status
                           ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                S.current.payment_code_note,
-                                textAlign: TextAlign.center,
-                                style: typoInterNomal18.copyWith(
-                                  color: colorTextMedium,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                          : Text(
+                              S.current.payment_code_note,
+                              textAlign: TextAlign.center,
+                              style: typoInterNomal14.copyWith(
+                                color: colorTextMedium,
+                                fontSize: Dimens.d14.responsive(),
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
                               ),
                             );
                     },

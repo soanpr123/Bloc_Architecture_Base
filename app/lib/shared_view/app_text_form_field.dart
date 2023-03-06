@@ -23,6 +23,7 @@ class AppTextFormField extends StatefulWidget {
   final double? borderRadius;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
+  final Color? colorErr;
   // ignore: member-ordering
   const AppTextFormField({
     super.key,
@@ -46,6 +47,7 @@ class AppTextFormField extends StatefulWidget {
     this.borderRadius,
     this.colorBorderEnable,
     this.maxLines,
+    this.colorErr,
   });
 
   @override
@@ -63,8 +65,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 100),
+    return Container(
+      height: Dimens.d40.responsive(),
       child: TextFormField(
         readOnly: widget.readOnly ?? false,
         focusNode: _focusNode,
@@ -101,9 +103,25 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             ),
           ),
           hintText: widget.hintText,
-          errorText: widget.errorText,
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
+          contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+          // isDense: true,
+          errorText: widget.errorText,
+          errorMaxLines: 1,
+          errorStyle: const TextStyle(fontSize: 0.01),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: widget.colorErr ?? colorSupportDanger),
+            borderRadius: BorderRadius.circular(
+              widget.borderRadius ?? 0,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: widget.colorErr ?? colorSupportDanger),
+            borderRadius: BorderRadius.circular(
+              widget.borderRadius ?? 0,
+            ),
+          ),
         ),
       ),
     );

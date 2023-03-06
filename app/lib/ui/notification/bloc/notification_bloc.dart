@@ -4,13 +4,15 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
-
+import '../../../utils/toast_message.dart';
 
 @Injectable()
 class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
-  NotificationBloc(this._getNotificationUseCase, this._getNotificationUnreadUseCase, this._readNotificationUseCase)
+  NotificationBloc(this._getNotificationUseCase, this._getNotificationUnreadUseCase, this._readNotificationUseCase,
+      this._allNotificationUseCase)
       : super(NotificationState()) {
     on<NotificationPageInitiated>(
       _onNotifiPageInitiated,
@@ -40,27 +42,42 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       _readNotifi,
       transformer: log(),
     );
+    on<NotificationonTapTab>(
+      _onTapTab,
+      transformer: log(),
+    );
+    on<ReadAllNotifiPress>(
+      _onReadAll,
+      transformer: log(),
+    );
   }
 
   final GetNotificationUseCase _getNotificationUseCase;
   final GetNotificationUnreadUseCase _getNotificationUnreadUseCase;
   final ReadNotificationUseCase _readNotificationUseCase;
-
+  final ReadAllNotificationUseCase _allNotificationUseCase;
   final List<AppNotification> listDataNoti = [];
   FutureOr<void> _onNotifiPageInitiated(NotificationPageInitiated event, Emitter<NotificationState> emit) async {
-    appBloc.add(const AppInitiated());
     await _getNotifi(
       emit: emit,
       isInitialLoad: true,
-      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true)),
-      doOnSuccessOrError: () async => emit(state.copyWith(isShimmerLoading: false)),
+      doOnSubscribe: () async => emit(state.copyWith(
+        isShimmerLoading: true,
+        apirequestNoti: APIRequestStatus.loading,
+      )),
+      doOnSuccessOrError: () async => emit(state.copyWith(
+        isShimmerLoading: false,
+      )),
     );
 
     await _getNotifiUnread(
       emit: emit,
       isInitialLoad: true,
-      doOnSubscribe: () async => emit(state.copyWith(isShimmerLoadingUnread: true)),
-      doOnSuccessOrError: () async => emit(state.copyWith(isShimmerLoadingUnread: false)),
+      doOnSubscribe: () async =>
+          emit(state.copyWith(isShimmerLoadingUnread: true, apirequestUnread: APIRequestStatus.loading)),
+      doOnSuccessOrError: () async => emit(state.copyWith(
+        isShimmerLoadingUnread: false,
+      )),
     );
   }
 
@@ -69,6 +86,54 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       emit: emit,
       isInitialLoad: false,
       pages: state.page + 1,
+    );
+  }
+
+  void _onTapTab(NotificationonTapTab event, Emitter<NotificationState> emit) {
+    Log.d(event.tabController.index);
+    emit(state.copyWith(curentTab: event.tabController.index));
+  }
+
+  FutureOr<void> _onReadAll(ReadAllNotifiPress event, Emitter<NotificationState> emit) async {
+    return runBlocCatching(
+      doOnSubscribe: () async {},
+      action: () async {
+        emit(state.copyWith(loadUsersException: null));
+        final output = await _allNotificationUseCase.execute(const ReadAllNotificationInput());
+        if (output.data['status_code'] == 200) {
+          appBloc.add(const AppInitiated());
+
+          await _getNotifi(
+            emit: emit,
+            isInitialLoad: true,
+          );
+          await _getNotifiUnread(
+            emit: emit,
+            isInitialLoad: true,
+          );
+        } else {
+          errorToast(msg: output.data['message']);
+        }
+        // for (var item in output.notification) {
+        //   // print(item.title);
+        //   listDataNoti.add(item);
+        // }
+        // if ((output.currentPage) == (output.totalPage)) {
+        //   emit(state.copyWith(
+        //     users: listDataNoti,
+        //     page: output.currentPage,
+        //     enablePullNotifi: false,
+        //   ));
+        // } else {
+        //   emit(state.copyWith(
+        //     users: listDataNoti,
+        //     page: output.currentPage,
+        //     enablePullNotifi: true,
+        //   ));
+        // }
+      },
+      doOnError: (e) async {},
+      handleLoading: false,
     );
   }
 
@@ -102,10 +167,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         listDataNoti.clear();
         emit(state.copyWith(
           isShimmerLoading: true,
+          apirequestNoti: APIRequestStatus.loading,
         ));
       },
       doOnSuccessOrError: () async {
-        appBloc.add(const AppInitiated());
         emit(state.copyWith(isShimmerLoading: false));
 
         if (!event.completer.isCompleted) {
@@ -132,12 +197,15 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         listDataNoti.clear();
         emit(state.copyWith(
           isShimmerLoadingUnread: true,
+          apirequestUnread: APIRequestStatus.loading,
         ));
       },
       doOnSuccessOrError: () async {
         // GetIt.instance.get<MainBloc>().add(const MainPageInitiated());
-        appBloc.add(const AppInitiated());
-        emit(state.copyWith(isShimmerLoadingUnread: false));
+
+        emit(state.copyWith(
+          isShimmerLoadingUnread: false,
+        ));
 
         if (!event.completer.isCompleted) {
           event.completer.complete();
@@ -157,35 +225,37 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getNotificationUseCase.execute(GetNotificationInput(page: pages), isInitialLoad);
-        emit(state.copyWith(notifi: output));
-        // for (var item in output.notification) {
-        //   // print(item.title);
-        //   listDataNoti.add(item);
-        // }
-        // if ((output.currentPage) == (output.totalPage)) {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: false,
-        //   ));
-        // } else {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: true,
-        //   ));
-        // }
+        if (output.data.isNotEmpty) {
+          appBloc.add(const AppInitiated());
+          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
+        } else {
+          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata));
+        }
       },
       doOnError: (e) async {
-        emit(state.copyWith(
-          loadUsersException: e,
-          enablePullNotifi: false,
-          page: 1,
-        ));
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              loadUsersException: e,
+              apirequestNoti: APIRequestStatus.connectionError,
+              enablePullNotifi: false,
+              page: 1,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            loadUsersException: e,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        }
       },
       doOnSubscribe: doOnSubscribe,
       doOnSuccessOrError: doOnSuccessOrError,
       handleLoading: false,
+      handleError: false,
     );
   }
 
@@ -200,7 +270,13 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       action: () async {
         emit(state.copyWith(loadNotifiUnreadException: null));
         final output = await _getNotificationUnreadUseCase.execute(const GetNotificationUnreadInput(), isInitialLoad);
-        emit(state.copyWith(notifiUnread: output));
+        if (output.data.isNotEmpty) {
+          appBloc.add(const AppInitiated());
+          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.loaded));
+        } else {
+          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.nodata));
+        }
+
         // for (var item in output.notification) {
         //   // print(item.title);
         //   listDataNoti.add(item);
@@ -220,15 +296,29 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         // }
       },
       doOnError: (e) async {
-        emit(state.copyWith(
-          loadNotifiUnreadException: e,
-          enablePullNotifi: false,
-          page: 1,
-        ));
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              loadUsersException: e,
+              apirequestUnread: APIRequestStatus.connectionError,
+              enablePullNotifi: false,
+              page: 1,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            loadUsersException: e,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        }
       },
       doOnSubscribe: doOnSubscribe,
       doOnSuccessOrError: doOnSuccessOrError,
       handleLoading: false,
+      handleError: false,
     );
   }
 }

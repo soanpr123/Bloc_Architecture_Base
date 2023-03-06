@@ -32,8 +32,9 @@ class AppElevatedButton extends StatelessWidget {
               return mainColor ?? colorBrandPrimary;
             }
             if (states.contains(MaterialState.disabled)) {
-              return Colors.grey;
+              return colorDisabled;
             }
+
             return mainColor ?? colorBrandPrimary;
           },
         ),
@@ -44,9 +45,11 @@ class AppElevatedButton extends StatelessWidget {
             );
           },
         ),
+        elevation: MaterialStateProperty.all(0.0),
+        shadowColor: MaterialStateProperty.all(Colors.transparent),
       ),
       child: SizedBox(
-        height: 48,
+        height: Dimens.d40.responsive(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -66,10 +69,9 @@ class AppElevatedButton extends StatelessWidget {
             Text(
               buttonTitle ?? '',
               style: style ??
-                  TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: state == AppElevatedButtonState.active ? Colors.white : Colors.black38,
+                  typoInterNomal14.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
             ),
           ],

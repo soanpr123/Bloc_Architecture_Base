@@ -21,13 +21,32 @@ class LoginForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTextField(
-          title: S.current.email,
-          hintText: S.current.email,
-          // obscureText: true,
-          onChanged: (email) => bloc.add(EmailTextFieldChanged(email: email)),
-          controller: email,
-          keyboardType: TextInputType.visiblePassword,
+        BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, state) {
+            return AppTextField(
+              show: true,
+              title: S.current.email,
+              hintText: S.current.email,
+              // obscureText: true,
+              onChanged: (email) => bloc.add(EmailTextFieldChanged(email: email)),
+              controller: email,
+              keyboardType: TextInputType.visiblePassword,
+              errText: state.onPageError == '' ? null : state.onPageError,
+            );
+          },
+        ),
+        const SizedBox(height: 4),
+        BlocBuilder<LoginBloc, LoginState>(
+          bloc: bloc,
+          buildWhen: (previous, current) => previous.onPageError != current.onPageError,
+          builder: (context, state) {
+            return state.onPageError != ''
+                ? Text(
+                    state.onPageError,
+                    style: typoInterNomal14.copyWith(color: colorSupportDanger, fontSize: Dimens.d12.responsive()),
+                  )
+                : const SizedBox.shrink();
+          },
         ),
         const SizedBox(
           height: 24,
@@ -37,6 +56,7 @@ class LoginForm extends StatelessWidget {
           buildWhen: (previous, current) => previous.obscureText != current.obscureText,
           builder: (context, state) {
             return AppTextField(
+              show: true,
               title: S.current.password,
               hintText: S.current.password,
               obscureText: state.obscureText,
@@ -86,25 +106,25 @@ class LoginForm extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: () {
-                bloc.add(const GotoView());
-              },
-              child: Text(
-                S.current.forgot_pass,
-                style: typoInterNomal14.copyWith(color: colorBrandPrimary),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
+        // const SizedBox(
+        //   height: 16,
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   children: [
+        //     GestureDetector(
+        //       onTap: () {
+        //         bloc.add(const GotoView());
+        //       },
+        //       child: Text(
+        //         S.current.forgot_pass,
+        //         style: typoInterNomal14.copyWith(color: colorBrandPrimary),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        SizedBox(
+          height: Dimens.d24.responsive(),
         ),
         BlocBuilder<LoginBloc, LoginState>(
           bloc: bloc,
