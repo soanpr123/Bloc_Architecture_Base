@@ -39,15 +39,14 @@ final typoInterNomal14 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: Dimens.d14.responsive(),
-  letterSpacing: 1,
   color: colorTextDark,
+
 );
 
 final typoInterNomal16 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: Dimens.d16.responsive(),
-  letterSpacing: 1,
   color: colorTextDark,
   height: 1.5,
 );
@@ -56,7 +55,6 @@ final typoInterNomal18 = GoogleFonts.inter(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: Dimens.d18.responsive(),
-  letterSpacing: 1,
   height: 1.5,
   color: colorTextDark,
 );

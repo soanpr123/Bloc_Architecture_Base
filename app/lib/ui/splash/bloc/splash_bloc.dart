@@ -25,7 +25,7 @@ class SplashBloc extends BaseBloc<SplashEvent, SplashState> {
         emit(state.copyWith(
           isLoggedIn: output.isLoggedIn,
         ));
-        await Future<void>.delayed(const Duration(seconds: 1));
+        await Future<void>.delayed(const Duration(seconds: 2));
         await navigator.replace(const AppRouteInfo.main());
       },
       handleLoading: false,

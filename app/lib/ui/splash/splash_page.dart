@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared/shared.dart';
 
 import '../../app.dart';
 import 'bloc/splash_bloc.dart';
@@ -35,7 +37,7 @@ class _SplashPageState extends BasePageState<SplashPage, SplashBloc> {
           children: [
             Positioned(
               right: 0,
-              top: 50,
+              top: 0,
               bottom: 0,
               child: Container(
                 color: Colors.transparent,
@@ -67,6 +69,17 @@ class _SplashPageState extends BasePageState<SplashPage, SplashBloc> {
                     style: typoInterNomal18.copyWith(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: Dimens.d40.responsive()),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Version ${GetIt.instance.get<AppInfo>().versionName}',
+                  style: typoInterNomal14.copyWith(
+                      color: Colors.white, fontSize: Dimens.d14.responsive(), height: 1.5, fontWeight: FontWeight.w400),
+                ),
               ),
             ),
           ],

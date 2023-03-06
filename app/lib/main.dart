@@ -36,7 +36,7 @@ Future<void> _runMyApp() async {
     availableLocales: [
       const Locale('vi'),
     ],
-    enabled: false,
+    enabled: !kReleaseMode,
     builder: (context) => MyApp(
       initialResource: initialResource,
     ),

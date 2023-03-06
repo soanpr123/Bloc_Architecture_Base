@@ -1,8 +1,7 @@
-import 'package:app/shared_view/loading_widget.dart';
 import 'package:flutter/material.dart';
 
-
 import 'error_widget.dart';
+import 'loading_widget.dart';
 
 enum APIRequestStatus { unInitialized, loading, loaded, error, connectionError, nodata }
 
@@ -12,16 +11,18 @@ class BodyBuilder extends StatelessWidget {
     required this.image,
     required this.child,
     required this.reload,
+    this.isStore = false,
     Key? key,
   }) : super(key: key);
   final APIRequestStatus? apiRequestStatus;
   final Widget? child;
   final Function? reload;
+  final bool isStore;
   final Widget image;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: _buildBody());
+    return _buildBody();
   }
 
   Widget _buildBody() {
@@ -67,6 +68,7 @@ class BodyBuilder extends StatelessWidget {
             MyErrorWidget(
               refreshCallBack: reload!,
               isNodata: true,
+              isStore: isStore,
               image: image,
             ),
           ],

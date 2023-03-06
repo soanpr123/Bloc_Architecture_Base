@@ -9,6 +9,7 @@ import '../../app.dart';
 
 import '../../shared_view/custom_bottom_navigation.dart';
 import 'bloc/main_bloc.dart';
+import 'bloc/main_event.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
   void initState() {
     super.initState();
     // commonBloc.add(const CommonPageInitiated());
-    appBloc.add(const AppInitiated());
+    bloc.add(const MainPageInitiated());
   }
 
   @override
@@ -39,7 +40,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
         onPressed: () async {
           // context.router.push(const QrCodeRoute());?
           await navigator.push(const AppRouteInfo.qrCode());
-          appBloc.add(const AppInitiated());
+          appBloc.add(const AppInitiated(handleErr: false));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

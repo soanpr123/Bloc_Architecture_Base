@@ -35,8 +35,9 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       emit: emit,
       isInitialLoad: true,
       doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true, apirequest: APIRequestStatus.loading)),
-      doOnSuccessOrError: () async =>
-          emit(state.copyWith(isShimmerLoading: false, apirequest: APIRequestStatus.loaded)),
+      doOnSuccessOrError: () async => emit(state.copyWith(
+        isShimmerLoading: false,
+      )),
     );
   }
 
@@ -88,6 +89,7 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getHistoryUseCase.execute(GetHistoryUseCaseInput(page: pages));
+
         if (output.isNotEmpty) {
           emit(state.copyWith(
             history: output,
@@ -96,6 +98,7 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
             enablePullNotifi: false,
           ));
         } else {
+          
           emit(state.copyWith(
             apirequest: APIRequestStatus.nodata,
             enablePullNotifi: false,
@@ -105,12 +108,16 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       },
       doOnError: (e) async {
         if (e.appExceptionType == AppExceptionType.remote) {
-          emit(state.copyWith(
-            loadUsersException: e,
-            apirequest: APIRequestStatus.connectionError,
-            enablePullNotifi: false,
-            page: 1,
-          ));
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              loadUsersException: e,
+              apirequest: APIRequestStatus.connectionError,
+              enablePullNotifi: false,
+              page: 1,
+            ));
+          }
         } else {
           emit(state.copyWith(
             loadUsersException: e,

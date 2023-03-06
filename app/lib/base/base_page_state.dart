@@ -49,13 +49,13 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
   @override
   void initState() {
     super.initState();
-    ToastMes.of(context);
   }
 
   @override
   Widget build(BuildContext context) {
     if (!isAppWidget) {
       AppDimen.of(context);
+      ToastMes.of(context);
     }
 
     return Provider(

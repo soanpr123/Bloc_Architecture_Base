@@ -38,7 +38,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + Dimens.d32.responsive(),
+              top: MediaQuery.of(context).padding.top + Dimens.d33.responsive(),
               left: Dimens.d16.responsive(),
               right: Dimens.d16.responsive(),
             ),
@@ -131,8 +131,10 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                   S.current.function,
                   style: typoInterNomal16.copyWith(
                     color: colorTextDark,
+                    fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w700,
                     height: 1.5,
+                    
                   ),
                 ),
                 SizedBox(

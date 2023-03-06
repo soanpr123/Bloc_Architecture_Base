@@ -86,7 +86,6 @@ abstract class BaseBlocDelegate<E extends BaseBlocEvent, S extends BaseBlocState
       }
       await doOnSuccessOrError?.call();
     } on AppException catch (e) {
-     ;
       if (handleLoading) {
         hideLoading();
       }

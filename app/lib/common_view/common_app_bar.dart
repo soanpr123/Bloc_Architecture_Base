@@ -35,7 +35,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingIconColor,
     this.corlorText,
   })  : preferredSize = Size.fromHeight(
-          height ?? Dimens.d56.responsive(),
+          height ?? Dimens.d60.responsive(),
         ),
         super(key: key);
 
@@ -92,7 +92,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: leadingWidth,
       systemOverlayStyle: systemOverlayStyle,
       leading: Padding(
-        padding: EdgeInsets.only(top: Dimens.d30.responsive()),
+        padding: EdgeInsets.only(top: Dimens.d20.responsive(), bottom: Dimens.d12.responsive()),
         child: leadingIcon,
       ),
       centerTitle: centerTitle,
@@ -101,7 +101,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         behavior: HitTestBehavior.translucent,
         child: titleType == AppBarTitle.text
             ? Padding(
-                padding: EdgeInsets.only(top: Dimens.d30.responsive()),
+                padding: EdgeInsets.only(top: Dimens.d30.responsive(), bottom: Dimens.d12.responsive()),
                 child: Text(
                   text ?? '',
                   style: typoInterNomal18.copyWith(

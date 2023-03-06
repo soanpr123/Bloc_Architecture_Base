@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -6,9 +8,11 @@ import '../app.dart';
 class ToastMes {
   ToastMes._({
     required this.fToast,
+    required this.context,
   });
   static late ToastMes current;
   final FToast fToast;
+  final BuildContext context;
 
   static ToastMes of(BuildContext context) {
     final fToast = FToast();
@@ -16,6 +20,7 @@ class ToastMes {
 
     final screen = ToastMes._(
       fToast: fToast,
+      context: context,
     );
 
     current = screen;
@@ -27,7 +32,13 @@ class ToastMes {
 void errorToast({String msg = ''}) {
   final toast = Container(
     // width: double.infinity,
-    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+
+    padding: EdgeInsets.fromLTRB(
+      Dimens.d24.responsive(),
+      Platform.isIOS ? Dimens.d38.responsive() : Dimens.d12.responsive(),
+      Dimens.d24.responsive(),
+      Dimens.d12.responsive(),
+    ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(0),
       color: colorSupportDanger,
@@ -51,7 +62,11 @@ void errorToast({String msg = ''}) {
         Flexible(
           child: Text(
             msg,
-            style: typoInterNomal14.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+            style: typoInterNomal14.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              height: 1.5,
+            ),
           ),
         ),
       ],
@@ -63,11 +78,11 @@ void errorToast({String msg = ''}) {
     toastDuration: const Duration(seconds: 2),
     positionedToastBuilder: (context, child) {
       return Positioned(
-        child: child,
         top: 0.0,
         // left: 16.0,
         right: 0,
         left: 0,
+        child: child,
       );
     },
   );
@@ -76,7 +91,12 @@ void errorToast({String msg = ''}) {
 void successToast(String msg) {
   final toast = Container(
     // width: double.infinity,
-    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+    padding: EdgeInsets.fromLTRB(
+      Dimens.d24.responsive(),
+      Platform.isIOS ? Dimens.d38.responsive() : Dimens.d12.responsive(),
+      Dimens.d24.responsive(),
+      Dimens.d12.responsive(),
+    ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(0),
       color: colorBrandPrimary,

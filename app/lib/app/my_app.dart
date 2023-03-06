@@ -25,6 +25,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
   @override
   void initState() {
     super.initState();
+    bloc.add(const AppInitiated(handleErr: false));
   }
 
   @override

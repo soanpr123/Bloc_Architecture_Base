@@ -30,7 +30,7 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
         centerTitle: true,
         backgroundColor: colorBrandPrimary,
         elevation: 1,
-        height: Dimens.d80.responsive(),
+        // height: MediaQuery.of(context).padding.top + Dimens.d56.responsive(),
       ),
       body: BlocBuilder<HistoryAmaiBloc, HistoryAmaiState>(
         buildWhen: (previous, current) =>
@@ -77,7 +77,6 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                           groupBy: (element) => element.groub ?? '',
 
                           groupSeparatorBuilder: (String value) => Container(
-                            height: Dimens.d30.responsive(),
                             width: double.infinity,
                             color: colorUiBg05,
                             padding: EdgeInsets.symmetric(
@@ -126,9 +125,9 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                                   height: 1.5,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: Dimens.d8.responsive(),
-                                              ),
+                                              // SizedBox(
+                                              //   height: Dimens.d18.responsive(),
+                                              // ),
                                               Text(
                                                 e.createdAt ?? '',
                                                 style: typoInterNomal14.copyWith(
