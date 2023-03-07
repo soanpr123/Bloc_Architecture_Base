@@ -60,3 +60,10 @@ class NotificationonTapTab extends NotificationEvent with _$NotificationonTapTab
 class ReadAllNotifiPress extends NotificationEvent with _$ReadAllNotifiPress {
   const factory ReadAllNotifiPress() = _ReadAllNotifiPress;
 }
+
+@freezed
+class NotificationonTapNavi extends NotificationEvent with _$NotificationonTapNavi {
+  const factory NotificationonTapNavi({
+    required bool reload,
+  }) = _NotificationonTapNavi;
+}

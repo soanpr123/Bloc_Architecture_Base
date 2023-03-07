@@ -18,6 +18,7 @@ class NotificationState extends BaseBlocState with _$NotificationState {
     @Default(true) bool enablePullNotifi,
     @Default(0) int curentTab,
     @Default(1) int page,
+    @Default(false) bool reload,
     AppException? loadUsersException,
     @Default(false) bool isShimmerLoadingUnread,
     AppException? loadNotifiUnreadException,

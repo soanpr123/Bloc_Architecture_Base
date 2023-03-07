@@ -50,6 +50,11 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       _onReadAll,
       transformer: log(),
     );
+
+    on<NotificationonTapNavi>(
+      _onNotireloadPage,
+      transformer: log(),
+    );
   }
 
   final GetNotificationUseCase _getNotificationUseCase;
@@ -79,6 +84,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         isShimmerLoadingUnread: false,
       )),
     );
+  }
+
+  FutureOr<void> _onNotireloadPage(NotificationonTapNavi event, Emitter<NotificationState> emit) async {
+    emit(state.copyWith(reload: event.reload));
   }
 
   FutureOr<void> _onUserLoadMore(NotificationLoadMore event, Emitter<NotificationState> emit) async {
@@ -159,12 +168,12 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
   }
 
   FutureOr<void> _onHomePageRefreshed(NotificationPageRefreshed event, Emitter<NotificationState> emit) async {
+   
     await _getNotifi(
       emit: emit,
       isInitialLoad: true,
       pages: 1,
       doOnSubscribe: () async {
-        listDataNoti.clear();
         emit(state.copyWith(
           isShimmerLoading: true,
           apirequestNoti: APIRequestStatus.loading,
@@ -226,7 +235,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getNotificationUseCase.execute(GetNotificationInput(page: pages), isInitialLoad);
         if (output.data.isNotEmpty) {
-          appBloc.add(const AppInitiated());
+          // appBloc.add(const AppInitiated());
           emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
         } else {
           emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata));
@@ -271,7 +280,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         emit(state.copyWith(loadNotifiUnreadException: null));
         final output = await _getNotificationUnreadUseCase.execute(const GetNotificationUnreadInput(), isInitialLoad);
         if (output.data.isNotEmpty) {
-          appBloc.add(const AppInitiated());
+          // appBloc.add(const AppInitiated());
           emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.loaded));
         } else {
           emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.nodata));

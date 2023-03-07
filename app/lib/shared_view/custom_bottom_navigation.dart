@@ -71,19 +71,19 @@ class CustomBottomNavigation extends StatelessWidget {
               Padding(
                 padding:
                     EdgeInsets.only(left: items.indexOf(item) == 2 ? 32 : 0, right: items.indexOf(item) == 1 ? 32 : 0),
-                child: InkWell(
-                  overlayColor: MaterialStateProperty.all(colorDisabled),
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimens.d100.responsive()),
-                  ),
-                  onTap: () => onTap?.call(items.indexOf(item)),
-                  child: Container(
-                    margin: margin,
-                    width: 64,
-                    height: 64,
-                    child: Stack(
-                      children: <Widget>[
-                        Align(
+                child: Stack(
+                  children: [
+                    InkWell(
+                      overlayColor: MaterialStateProperty.all(colorDisabled),
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimens.d100.responsive()),
+                      ),
+                      onTap: () => onTap?.call(items.indexOf(item)),
+                      child: Container(
+                        margin: margin,
+                        width: 64,
+                        height: 64,
+                        child: Align(
                           alignment: Alignment.center,
                           child: Ink(
                             child: Image.asset(
@@ -96,33 +96,41 @@ class CustomBottomNavigation extends StatelessWidget {
                             ),
                           ),
                         ),
-                        items.indexOf(item) == 2
-                            ? GestureDetector(
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: total == 0
-                                      ? Container()
-                                      : Container(
-                                          margin: const EdgeInsets.only(top: 0, right: 8),
-                                          width: 24,
-                                          height: 24,
-                                          decoration: BoxDecoration(
-                                            color: colorSupportDanger,
-                                            borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              total >= 99 ? '+99' : '${total}',
-                                              style: typoInterNomal14.copyWith(fontSize: 10, color: Colors.white),
+                      ),
+                    ),
+                    items.indexOf(item) == 2
+                        ? Positioned(
+                            top: Dimens.d12.responsive(),
+                            right: Dimens.d14.responsive(),
+                            child: GestureDetector(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: total == 0
+                                    ? Container()
+                                    : Container(
+                                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                                        width: 18,
+                                        height: 18,
+                                        decoration: BoxDecoration(
+                                          color: colorSupportDanger,
+                                          borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            total >= 99 ? '99' : '$total',
+                                            style: typoInterNomal14.copyWith(
+                                              fontSize: 10,
+                                              color: Colors.white,
+                                              // height: 1,
                                             ),
                                           ),
                                         ),
-                                ),
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                  ),
+                                      ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ),
           ],

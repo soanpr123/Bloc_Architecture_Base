@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../app.dart';
 
@@ -10,7 +11,13 @@ class CommonNewPageProgressIndicator extends StatelessWidget {
     return Center(
       child: Padding(
         padding: EdgeInsets.all(Dimens.d8.responsive()),
-        child: const CircularProgressIndicator.adaptive(),
+        child: Lottie.asset(
+          Assets.json.loading,
+          width: Dimens.d100.responsive(),
+          height: Dimens.d100.responsive(),
+          frameRate: FrameRate.max,
+          repeat: true,
+        ),
       ),
     );
   }

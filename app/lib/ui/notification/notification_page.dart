@@ -71,6 +71,15 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
             _pagingControllerUnread.error = state.loadNotifiUnreadException;
           },
         ),
+        BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) => previous.reload != current.reload,
+          listener: (context, state) {
+          
+            final completer = Completer<void>();
+            bloc.add(NotificationPageRefreshed(completer: completer));
+            // appBloc.add(const AppReloadNotipage(reload: false));
+          },
+        ),
       ],
       child: child,
     );
@@ -102,6 +111,7 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                         TextButton(
                           onPressed: () {
                             tabController.animateTo(0);
+                            appBloc.add(const AppInitiated());
                             bloc.add(NotificationonTapTab(tabController: tabController));
                             final completer = Completer<void>();
                             bloc.add(NotificationPageRefreshed(completer: completer));
@@ -123,6 +133,7 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                             final completer = Completer<void>();
 
                             tabController.animateTo(1);
+                            appBloc.add(const AppInitiated());
                             bloc.add(NotificationonTapTab(tabController: tabController));
                             bloc.add(NotificationUnreadPageRefreshed(completer: completer));
                           },
@@ -175,89 +186,91 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
             ),
           ),
           Expanded(
-            child: TabBarView(
-              controller: tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                BlocBuilder<NotificationBloc, NotificationState>(
-                  buildWhen: (previous, current) =>
-                      previous.notifi != current.notifi ||
-                      previous.isShimmerLoading != current.isShimmerLoading ||
-                      previous.enablePullNotifi != current.enablePullNotifi ||
-                      previous.page != current.page ||
-                      previous.apirequestNoti != current.apirequestNoti,
-                  builder: (context, state) {
-                    return BodyBuilder(
-                      apiRequestStatus: state.apirequestNoti,
-                      image: Assets.png.noData.image(
-                        width: Dimens.d265.responsive(),
-                        height: Dimens.d200.responsive(),
-                        fit: BoxFit.contain,
-                      ),
-                      reload: () {
-                        bloc.add(const NotificationPageInitiated());
-                      },
-                      child: RefreshIndicator(
-                        onRefresh: () {
-                          final completer = Completer<void>();
-                          bloc.add(NotificationPageRefreshed(completer: completer));
+            child: BlocBuilder<AppBloc, AppState>(
+              buildWhen: (previous, current) => previous.reload != current.reload,
+              builder: (context, stateapp) {
+                return TabBarView(
+                  controller: tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    BlocBuilder<NotificationBloc, NotificationState>(
+                      buildWhen: (previous, current) => previous != current,
+                      builder: (context, state) {
+                       
 
-                          return completer.future;
-                        },
-                        child: state.isShimmerLoading && state.notifi.data.isEmpty
-                            ? const _ListViewLoader()
-                            : CommonPagedListView<AppNotification>(
-                                pagingController: _pagingController,
-                                itemBuilder: (context, item, index) {
-                                  return ItemNotify(
-                                    bloc: bloc,
-                                    item: item,
-                                  );
-                                },
-                              ),
-                      ),
-                    );
-                  },
-                ),
-                BlocBuilder<NotificationBloc, NotificationState>(
-                  buildWhen: (previous, current) =>
-                      previous.notifiUnread != current.notifiUnread ||
-                      previous.isShimmerLoadingUnread != current.isShimmerLoadingUnread ||
-                      previous.apirequestUnread != current.apirequestUnread,
-                  builder: (context, state) {
-                    return BodyBuilder(
-                      apiRequestStatus: state.apirequestUnread,
-                      image: Assets.png.noData.image(
-                        width: Dimens.d265.responsive(),
-                        height: Dimens.d200.responsive(),
-                        fit: BoxFit.contain,
-                      ),
-                      reload: () {
-                        bloc.add(const NotificationPageInitiated());
-                      },
-                      child: RefreshIndicator(
-                        onRefresh: () {
-                          final completer = Completer<void>();
-                          bloc.add(NotificationUnreadPageRefreshed(completer: completer));
+                        return BodyBuilder(
+                          apiRequestStatus: state.apirequestNoti,
+                          image: Assets.png.noData.image(
+                            width: Dimens.d265.responsive(),
+                            height: Dimens.d200.responsive(),
+                            fit: BoxFit.contain,
+                          ),
+                          reload: () {
+                            bloc.add(const NotificationPageInitiated());
+                          },
+                          child: RefreshIndicator(
+                            onRefresh: () {
+                              final completer = Completer<void>();
+                              bloc.add(NotificationPageRefreshed(completer: completer));
 
-                          return completer.future;
-                        },
-                        child: state.isShimmerLoadingUnread && state.notifiUnread.data.isEmpty
-                            ? const _ListViewLoader()
-                            : CommonPagedListView<AppNotification>(
-                                pagingController: _pagingControllerUnread,
-                                itemBuilder: (context, item, index) {
-                                  return ItemNotify(
-                                    bloc: bloc,
-                                    item: item,
-                                  );
-                                },
-                              ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                              return completer.future;
+                            },
+                            child: state.isShimmerLoading && state.notifi.data.isEmpty
+                                ? const _ListViewLoader()
+                                : CommonPagedListView<AppNotification>(
+                                    pagingController: _pagingController,
+                                    itemBuilder: (context, item, index) {
+                                      return ItemNotify(
+                                        bloc: bloc,
+                                        item: item,
+                                      );
+                                    },
+                                  ),
+                          ),
+                        );
+                      },
+                    ),
+                    BlocBuilder<NotificationBloc, NotificationState>(
+                      buildWhen: (previous, current) =>
+                          previous.notifiUnread != current.notifiUnread ||
+                          previous.isShimmerLoadingUnread != current.isShimmerLoadingUnread ||
+                          previous.apirequestUnread != current.apirequestUnread,
+                      builder: (context, state) {
+                        return BodyBuilder(
+                          apiRequestStatus: state.apirequestUnread,
+                          image: Assets.png.noData.image(
+                            width: Dimens.d265.responsive(),
+                            height: Dimens.d200.responsive(),
+                            fit: BoxFit.contain,
+                          ),
+                          reload: () {
+                            bloc.add(const NotificationPageInitiated());
+                          },
+                          child: RefreshIndicator(
+                            onRefresh: () {
+                              final completer = Completer<void>();
+                              bloc.add(NotificationUnreadPageRefreshed(completer: completer));
+
+                              return completer.future;
+                            },
+                            child: state.isShimmerLoadingUnread && state.notifiUnread.data.isEmpty
+                                ? const _ListViewLoader()
+                                : CommonPagedListView<AppNotification>(
+                                    pagingController: _pagingControllerUnread,
+                                    itemBuilder: (context, item, index) {
+                                      return ItemNotify(
+                                        bloc: bloc,
+                                        item: item,
+                                      );
+                                    },
+                                  ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],
