@@ -12,6 +12,8 @@ class AppState extends BaseBlocState with _$AppState {
     @Default(false) bool isLoggedIn,
     @Default(false) bool isDarkTheme,
     @Default(0) int total,
+    @Default(false) bool reload,
+    @Default(false) bool reloadHis,
     @Default(Profile()) Profile users,
   }) = _AppState;
 }

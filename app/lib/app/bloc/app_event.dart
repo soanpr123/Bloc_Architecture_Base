@@ -41,3 +41,17 @@ class AppInitiated extends AppEvent with _$AppInitiated {
     @Default(true) bool handleErr,
   }) = _AppInitiated;
 }
+
+@freezed
+class AppReloadNotipage extends AppEvent with _$AppReloadNotipage {
+  const factory AppReloadNotipage({
+    @Default(false) bool reload,
+  }) = _AppReloadNotipage;
+}
+
+@freezed
+class AppReloadHistory extends AppEvent with _$AppReloadHistory {
+  const factory AppReloadHistory({
+    @Default(false) bool reloadHis,
+  }) = _AppReloadHistory;
+}

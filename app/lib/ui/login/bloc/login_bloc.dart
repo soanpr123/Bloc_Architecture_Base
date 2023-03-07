@@ -101,7 +101,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
       },
       handleError: false,
       doOnError: (e) async {
-        print(e);
+    
 
         if (e.appExceptionType == AppExceptionType.validation) {
           emit(state.copyWith(onPageError: exceptionMessageMapper.map(e)));

@@ -28,10 +28,14 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
       transformer: throttleTime(),
     );
 
-    // on<AppLanguageChanged>(
-    //   _onAppLanguageChanged,
-    //   transformer: log(),
-    // );
+    on<AppReloadNotipage>(
+      _onReloadNoti,
+      transformer: log(),
+    );
+    on<AppReloadHistory>(
+      _onReloadHist,
+      transformer: log(),
+    );
 
     on<AppInitiated>(
       _onAppInitiated,
@@ -72,6 +76,15 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     );
   }
 
+  Future<void> _onReloadNoti(AppReloadNotipage event, Emitter<AppState> emit) async {
+    emit(state.copyWith(reload: event.reload));
+  }
+
+  Future<void> _onReloadHist(AppReloadHistory event, Emitter<AppState> emit) async {
+    emit(state.copyWith(reloadHis: !event.reloadHis));
+   
+  }
+
   // Future<void> _onAppLanguageChanged(AppLanguageChanged event, Emitter<AppState> emit) async {
   //   await runBlocCatching(
   //     action: () async {
@@ -85,6 +98,9 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   Future<void> _onAppInitiated(AppInitiated event, Emitter<AppState> emit) async {
     if (_isLoggedIn) {
       await runBlocCatching(
+        doOnSubscribe: () async {
+          // emit(state.copyWith(reload: true));
+        },
         action: () async {
           final output = await _totalNotificationUseCase.execute(
             const GetTotalNotificationInput(),
@@ -99,7 +115,10 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
         handleLoading: false,
         handleError: event.handleErr,
         doOnError: (e) async {
-          print(e);
+         
+        },
+        doOnSuccessOrError: () async {
+        
         },
       );
 

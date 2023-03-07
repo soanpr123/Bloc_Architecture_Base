@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:resources/resources.dart';
 
@@ -41,6 +44,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
           // context.router.push(const QrCodeRoute());?
           await navigator.push(const AppRouteInfo.qrCode());
           appBloc.add(const AppInitiated(handleErr: false));
+          navigator.navigateToBottomTab(0);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -62,9 +66,15 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
               currentIndex: tabsRouter.activeIndex,
               onTap: (i) {
                 if (i == tabsRouter.activeIndex) {
-                  navigator.popUntilRoot();
-                } else {
-                  tabsRouter.setActiveIndex(i);
+                  (navigator as AppNavigatorImpl).popUntilRootOfCurrentBottomTab();
+                }
+                tabsRouter.setActiveIndex(i);
+                if (i == 1) {
+                  appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));
+                }
+                if (i == 2) {
+                  appBloc.add(const AppInitiated());
+                  appBloc.add(AppReloadNotipage(reload: !state.reload));
                 }
               },
               items: [

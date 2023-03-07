@@ -24,7 +24,7 @@ class SymbolConstants {
   static int get amaipayment {
     switch (EnvConstants.flavor) {
       case Flavor.develop:
-        return 5;
+        return 3;
       case Flavor.qa:
         return 5;
       case Flavor.staging:

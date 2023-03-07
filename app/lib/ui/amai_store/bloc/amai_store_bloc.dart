@@ -55,10 +55,10 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
         state.copyWith(isShimmerLoading: false),
       ),
       doOnError: (e) async {
-        print(e.appExceptionType);
+       
         if (e.appExceptionType == AppExceptionType.remote) {
           final exception = e as RemoteException;
-          print(exception.kind);
+        
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apirequestNoti: APIRequestStatus.connectionError,
@@ -136,10 +136,10 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
         state.copyWith(buttonStateDelete: AppElevatedButtonState.active),
       ),
       doOnError: (e) async {
-        print(e.appExceptionType);
+       
         if (e.appExceptionType == AppExceptionType.remote) {
           final exception = e as RemoteException;
-          print(exception.kind);
+         
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apirequestNoti: APIRequestStatus.connectionError,
