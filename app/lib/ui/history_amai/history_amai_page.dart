@@ -28,8 +28,6 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
         BlocListener<AppBloc, AppState>(
           listenWhen: (previous, current) => previous.reloadHis != current.reloadHis,
           listener: (context, state) {
-          
-
             bloc.add(const HistoryPageInitiated());
           },
         ),
@@ -119,10 +117,7 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                   isLoading: state.isShimmerLoading,
                                   loadingWidget: const LoadingItem(),
                                   child: GestureDetector(
-                                    onTap: () async {
-                                      // bloc.add(
-                                      //     ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id));
-                                    },
+                                    onTap: () async {},
                                     child: ListTile(
                                       leading: Assets.svg.chicken.svg(),
                                       minLeadingWidth: Dimens.d5.responsive(),
@@ -178,116 +173,6 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                     ),
                                   ),
                                 );
-                                // return index == 0 || state.history[index].groub != state.history[index - 1].groub
-                                //     ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                //         // const SizedBox(height: 16),
-                                //         Container(
-                                //           height: Dimens.d30.responsive(),
-                                //           width: double.infinity,
-                                //           color: colorDisabled,
-                                //           padding: EdgeInsets.symmetric(vertical: Dimens.d4.responsive()),
-                                //           child: Center(
-                                //             child: Text(
-                                //               'Tháng ${state.history[index].groub ?? ''}',
-                                //               style: typoInterNomal14.copyWith(
-                                //                 color: colorBrandPrimary,
-                                //                 fontWeight: FontWeight.w700,
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //         const SizedBox(height: 8),
-                                //         ShimmerLoading(
-                                //           isLoading: state.isShimmerLoading,
-                                //           loadingWidget: const LoadingItem(),
-                                //           child: GestureDetector(
-                                //             onTap: () async {
-                                //               // bloc.add(
-                                //               //     ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id));
-                                //             },
-                                //             child: ListTile(
-                                //               title: Padding(
-                                //                 padding: EdgeInsets.symmetric(vertical: Dimens.d12.responsive()),
-                                //                 child: Row(
-                                //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                                //                   children: [
-                                //                     Column(
-                                //                       crossAxisAlignment: CrossAxisAlignment.start,
-                                //                       children: [
-                                //                         Text(state.history[index].note ?? '',
-                                //                             style: typoInterNomal14.copyWith(
-                                //                               color: colorTextMedium,
-                                //                               fontWeight: FontWeight.w600,
-                                //                             )),
-                                //                         SizedBox(
-                                //                           height: Dimens.d8.responsive(),
-                                //                         ),
-                                //                         Text(
-                                //                           state.history[index].createdAt ?? '',
-                                //                           style: typoInterNomal14.copyWith(color: colorTextMedium),
-                                //                         ),
-                                //                       ],
-                                //                     ),
-                                //                     Row(
-                                //                       children: [
-                                //                         Text(
-                                //                           '-${state.history[index].amountAmais} ',
-                                //                           style: typoInterNomal14.copyWith(
-                                //                               color: colorSupportWarning, fontWeight: FontWeight.w600),
-                                //                         ),
-                                //                         Assets.svg.logoamai.svg(width: 20, height: 20),
-                                //                       ],
-                                //                     ),
-                                //                   ],
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ])
-                                //     : ShimmerLoading(
-                                //         isLoading: state.isShimmerLoading,
-                                //         loadingWidget: const LoadingItem(),
-                                //         child: GestureDetector(
-                                //           onTap: () async {
-                                //             // bloc.add(
-                                //             //     ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id));
-                                //           },
-                                //           child: ListTile(
-                                //             title: Padding(
-                                //               padding: EdgeInsets.symmetric(vertical: Dimens.d12.responsive()),
-                                //               child: Row(
-                                //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                                //                 children: [
-                                //                   Column(
-                                //                     crossAxisAlignment: CrossAxisAlignment.start,
-                                //                     children: [
-                                //                       Text(
-                                //                         state.history[index].createdAt ?? '',
-                                //                         style: typoInterNomal14.copyWith(color: colorTextMedium),
-                                //                       ),
-                                //                       SizedBox(
-                                //                         height: Dimens.d8.responsive(),
-                                //                       ),
-                                //                       Text(
-                                //                         state.history[index].note ?? '',
-                                //                         style: typoInterNomal14.copyWith(color: colorTextDark),
-                                //                       ),
-                                //                     ],
-                                //                   ),
-                                //                   Text(
-                                //                     '-${state.history[index].amountAmais} Amai',
-                                //                     style: typoInterNomal14.copyWith(
-                                //                         color: colorSupportWarning, fontWeight: FontWeight.w600),
-                                //                   ),
-                                //                 ],
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
                               },
                             ),
                 ),
