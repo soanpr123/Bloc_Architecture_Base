@@ -168,6 +168,31 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<dynamic>> checkUserRead({required String slungs}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'announcements/$slungs/read-link',
+    );
+  }
+
+  Future<DataResponse<AnnounmentData>> getAnnounment({
+    required int page,
+    required int? limit,
+  }) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'announcements',
+      queryParameters: {
+        'page': page,
+        'per_page': limit,
+        'orders[0][key]': 'updated_at',
+        'orders[0][dir]': 'asc',
+      },
+      // successResponseMapperType: SuccessResponseMapperType.jsonArray,
+      decoder: AnnounmentData.fromJson,
+    );
+  }
+
   Future<DataResponse<NotificationData>> getNotificationUnread({
     required int page,
     required int? limit,

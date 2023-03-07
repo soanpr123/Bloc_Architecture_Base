@@ -12,7 +12,7 @@ class CommonNewPageProgressIndicator extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(Dimens.d8.responsive()),
         child: Lottie.asset(
-          Assets.json.loading,
+          Assets.json.loadmore,
           width: Dimens.d100.responsive(),
           height: Dimens.d100.responsive(),
           frameRate: FrameRate.max,

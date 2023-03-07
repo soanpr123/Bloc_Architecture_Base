@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/shared.dart';
 
@@ -9,6 +10,8 @@ import '../app/bloc/app_bloc.dart';
 import '../exception_handler/exception_handler.dart';
 import '../exception_handler/exception_message_mapper.dart';
 import '../resource/dimens/app_dimen.dart';
+import '../resource/dimens/dimens.dart';
+import '../resource/generated/assets.gen.dart';
 import '../utils/toast_message.dart';
 import 'bloc/base_bloc.dart';
 import 'bloc/common/common_bloc.dart';
@@ -94,8 +97,14 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
 
   Widget buildPageListeners({required Widget child}) => child;
 
-  Widget buildPageLoading() => const Center(
-        child: CircularProgressIndicator(),
+  Widget buildPageLoading() => Center(
+        child: Lottie.asset(
+          Assets.json.loading,
+          width: Dimens.d100.responsive(),
+          height: Dimens.d100.responsive(),
+          frameRate: FrameRate.max,
+          repeat: true,
+        ),
       );
 
   Widget buildPage(BuildContext context);

@@ -15,5 +15,7 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.paymentAmai() = _Payment;
   const factory AppRouteInfo.paymentResult() = _PaymentResult;
   const factory AppRouteInfo.changePassWord() = _ChangePassWord;
+  const factory AppRouteInfo.announmentPage() = _AnnounmentPage;
+  const factory AppRouteInfo.featureDevelop() = _FeatureDevelop;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

@@ -9,5 +9,6 @@ part 'anouncement_detail_state.freezed.dart';
 class AnouncementDetailState extends BaseBlocState with _$AnouncementDetailState {
   const factory AnouncementDetailState({
     @Default(AnnouncementDetail()) AnnouncementDetail announcementDetail,
+    @Default(false) bool show,
   }) = _AnouncementDetailState;
 }

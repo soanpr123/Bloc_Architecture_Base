@@ -20,6 +20,8 @@ import '../../ui/infomation_profile_page/infomation_profile_page.dart';
     AutoRoute<dynamic>(
       page: PaymentAmaiPage,
     ),
+    AutoRoute<dynamic>(page: AnnouncementDetailPage),
+    AutoRoute<dynamic>(page: FeatureDeveloperPage),
   ],
 )
 class $AppRouter {}
@@ -36,6 +38,7 @@ const mainScreenRouter = CustomRoute<dynamic>(
       children: [
         AutoRoute<dynamic>(page: HomePage, initial: true),
         AutoRoute<dynamic>(page: AmaiStorePage, initial: true),
+        AutoRoute<dynamic>(page: AnnounmentPage, initial: true),
       ],
     ),
     AutoRoute<dynamic>(
@@ -51,7 +54,6 @@ const mainScreenRouter = CustomRoute<dynamic>(
       children: [
         AutoRoute<dynamic>(page: NotificationPage, initial: true),
         AutoRoute<dynamic>(page: AmaiStorePage, initial: true),
-        AutoRoute<dynamic>(page: AnnouncementDetailPage, initial: true),
       ],
     ),
     AutoRoute<dynamic>(

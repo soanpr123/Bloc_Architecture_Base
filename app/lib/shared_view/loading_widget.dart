@@ -14,8 +14,8 @@ class LoadingWidget extends StatelessWidget {
     return Center(
       child: Lottie.asset(
         Assets.json.loading,
-        width: Dimens.d150.responsive(),
-        height: Dimens.d150.responsive(),
+        width: Dimens.d100.responsive(),
+        height: Dimens.d100.responsive(),
         frameRate: FrameRate.max,
         repeat: true,
       ),

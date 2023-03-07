@@ -21,6 +21,7 @@ class RepositoryImpl implements Repository {
     this._appApiService,
     this._appPreferences,
     // this._appDatabase,
+    this._announmentDataMapper,
     this._preferenceUserDataMapper,
     this._userDataMapper,
     this._languageCodeDataMapper,
@@ -32,6 +33,7 @@ class RepositoryImpl implements Repository {
     this._amaiOrderDataMapper,
     this._historyDataMapper,
     this._announcementDataMapper,
+    this._baseBoolDataMapper,
   );
 
   final AppApiService _appApiService;
@@ -41,6 +43,7 @@ class RepositoryImpl implements Repository {
   // final AppDatabase _appDatabase;
   final AnnouncementDataMapper _announcementDataMapper;
   final NotificationDataMapper _notificationDataMapper;
+  final AnnounmentDataMapper _announmentDataMapper;
   final HistoryDataMapper _historyDataMapper;
   final PreferenceUserDataMapper _preferenceUserDataMapper;
   final UserDataMapper _userDataMapper;
@@ -48,6 +51,7 @@ class RepositoryImpl implements Repository {
   final LanguageCodeDataMapper _languageCodeDataMapper;
   final AmaiOrderDataMapper _amaiOrderDataMapper;
   final ImageUploadDataMapper _imageUploadDataMapper;
+  final BaseBoolDataMapper _baseBoolDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -283,6 +287,26 @@ class RepositoryImpl implements Repository {
   @override
   Future<BaseEntryData> readAllNotification() async {
     final ouput = await _appApiService.readAll();
+
+    return _baseResponseDataMapper.mapToEntity(ouput);
+  }
+
+  @override
+  Future<PagedList<DataAnnoument>> getAnnounment({required int page, required int? limit}) async {
+    final response = await _appApiService.getAnnounment(page: page, limit: limit);
+
+    return PagedList(
+      data: _announmentDataMapper.mapToListEntity(response.data?.data ?? []),
+      perPage: response.data?.perPage,
+      currentPage: response.data?.currentPage,
+      total: response.data?.total,
+      totalPage: response.data?.totalPage,
+    );
+  }
+
+  @override
+  Future<BaseEntryData> checkUserRead({required String slungs}) async {
+    final ouput = await _appApiService.checkUserRead(slungs: slungs);
 
     return _baseResponseDataMapper.mapToEntity(ouput);
   }

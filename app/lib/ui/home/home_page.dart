@@ -1,6 +1,8 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get_it/get_it.dart';
 import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
@@ -15,9 +17,42 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends BasePageState<HomePage, HomeBloc> {
+  final listMenu = [
+    {
+      'id': 0,
+      'icon': Assets.png.icAmaiStore.path,
+      'name': S.current.store,
+      'onTap': const AppRouteInfo.amaiStore(),
+    },
+    {
+      'id': 1,
+      'icon': Assets.png.icNotification.path,
+      'name': S.current.notifycation_local,
+      'onTap': const AppRouteInfo.announmentPage(),
+    },
+    {
+      'id': 2,
+      'icon': Assets.png.icAmaiWiki.path,
+      'name': S.current.wiki,
+      'onTap': const AppRouteInfo.featureDevelop(),
+    },
+    {
+      'id': 3,
+      'icon': Assets.png.icMember.path,
+      'name': S.current.memberlist,
+      'onTap': const AppRouteInfo.featureDevelop(),
+    },
+    {
+      'id': 4,
+      'icon': Assets.png.icBlogs.path,
+      'name': S.current.blogs,
+      'onTap': const AppRouteInfo.featureDevelop(),
+    },
+  ];
   @override
   void initState() {
     super.initState();
+    GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
   }
 
   @override
@@ -134,41 +169,119 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w700,
                     height: 1.5,
-                    
                   ),
                 ),
                 SizedBox(
                   height: Dimens.d16.responsive(),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    // context.router.push(AmaiStoreRoute());
-                    navigator.push(const AppRouteInfo.amaiStore());
+
+                AlignedGridView.count(
+                  padding: EdgeInsets.zero,
+                  itemCount: listMenu.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 24,
+                  shrinkWrap: true,
+                  clipBehavior: Clip.antiAlias,
+                  itemBuilder: (ctx, i) {
+                    final item = listMenu[i];
+
+                    return GestureDetector(
+                      onTap: () {
+                        // context.router.push(AmaiStoreRoute());
+                        navigator.push(item['onTap'] as AppRouteInfo);
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: Dimens.d50.responsive(),
+                            height: Dimens.d50.responsive(),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    width: Dimens.d48.responsive(),
+                                    height: Dimens.d48.responsive(),
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(item['icon'].toString()), fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                ),
+                                item['id'] == 0
+                                    ? DateTimeUtils.checkTime()
+                                        ? Container()
+                                        : Align(
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                              width: 12,
+                                              height: 12,
+                                              decoration: BoxDecoration(
+                                                color: colorSupportDanger,
+                                                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                              ),
+                                            ),
+                                          )
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: Dimens.d8.responsive(),
+                          ),
+                          Text(
+                            item['name'].toString(),
+                            textAlign: TextAlign.center,
+                            style: typoInterNomal14.copyWith(
+                              color: colorTextMedium,
+                              fontWeight: FontWeight.w400,
+                              fontSize: Dimens.d12.responsive(),
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
-                  child: Column(
-                    children: [
-                      Container(
-                        width: Dimens.d48.responsive(),
-                        height: Dimens.d48.responsive(),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(Assets.png.icAmaiStore.path)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dimens.d8.responsive(),
-                      ),
-                      Text(
-                        S.current.store,
-                        style: typoInterNomal14.copyWith(
-                          color: colorTextMedium,
-                          fontWeight: FontWeight.w400,
-                          fontSize: Dimens.d12.responsive(),
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
+                // Wrap(
+                //   spacing: 24,
+                //   children: listMenu
+                //       .map(
+                //         (e) => GestureDetector(
+                //           onTap: () {
+                //             // context.router.push(AmaiStoreRoute());
+                //             navigator.push(const AppRouteInfo.amaiStore());
+                //           },
+                //           child: Column(
+                //             children: [
+                //               Container(
+                //                 width: Dimens.d48.responsive(),
+                //                 height: Dimens.d48.responsive(),
+                //                 decoration: BoxDecoration(
+                //                   image: DecorationImage(image: AssetImage(e['icon'].toString())),
+                //                 ),
+                //               ),
+                //               SizedBox(
+                //                 height: Dimens.d8.responsive(),
+                //               ),
+                //               Text(
+                //                 e['name'].toString(),
+                //                 style: typoInterNomal14.copyWith(
+                //                   color: colorTextMedium,
+                //                   fontWeight: FontWeight.w400,
+                //                   fontSize: Dimens.d12.responsive(),
+                //                   height: 1.5,
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       )
+                //       .toList(),
+                // ),
               ],
             ),
           ),
