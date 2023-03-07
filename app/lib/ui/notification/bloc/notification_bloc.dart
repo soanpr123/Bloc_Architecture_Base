@@ -168,7 +168,6 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
   }
 
   FutureOr<void> _onHomePageRefreshed(NotificationPageRefreshed event, Emitter<NotificationState> emit) async {
-   
     await _getNotifi(
       emit: emit,
       isInitialLoad: true,
@@ -285,24 +284,6 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         } else {
           emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.nodata));
         }
-
-        // for (var item in output.notification) {
-        //   // print(item.title);
-        //   listDataNoti.add(item);
-        // }
-        // if ((output.currentPage) == (output.totalPage)) {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: false,
-        //   ));
-        // } else {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: true,
-        //   ));
-        // }
       },
       doOnError: (e) async {
         if (e.appExceptionType == AppExceptionType.remote) {

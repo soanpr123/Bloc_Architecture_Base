@@ -20,6 +20,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       paymentAmai: () => const PaymentAmaiRoute(),
       paymentResult: () => const AmaiStoreRoute(),
       changePassWord: () => const ChangePassRoute(),
+      announmentPage: () => const AnnounmentRoute(),
+      featureDevelop: () => const FeatureDeveloperRoute(),
       // itemDetail: (user) => ItemDetailRoute(user: user),
     );
   }

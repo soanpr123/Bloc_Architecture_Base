@@ -62,6 +62,10 @@ abstract class Repository {
     required int page,
     required int? limit,
   });
+  Future<PagedList<DataAnnoument>> getAnnounment({
+    required int page,
+    required int? limit,
+  });
 
   Future<PagedList<AppNotification>> getNotificationUnread({
     required int page,
@@ -85,6 +89,12 @@ abstract class Repository {
   });
 
   Future<AnnouncementDetail> getAnnouncementsDetail({
+    required String slungs,
+  });
+
+
+  
+  Future<BaseEntryData> checkUserRead({
     required String slungs,
   });
 }

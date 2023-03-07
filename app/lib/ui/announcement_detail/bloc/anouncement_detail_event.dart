@@ -14,3 +14,10 @@ class AnouncementPageInitiated extends AnouncementDetailEvent with _$Anouncement
     required String slungs,
   }) = _AnouncementPageInitiated;
 }
+
+@freezed
+class AnouncementPageShowBack extends AnouncementDetailEvent with _$AnouncementPageShowBack {
+  const factory AnouncementPageShowBack({
+    @Default(false) bool show,
+  }) = _AnouncementPageShowBack;
+}
