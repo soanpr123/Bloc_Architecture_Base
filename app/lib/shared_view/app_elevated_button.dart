@@ -13,6 +13,7 @@ class AppElevatedButton extends StatelessWidget {
     this.mainColor,
     this.style,
     this.state = AppElevatedButtonState.active,
+    this.borderRadius,
   });
 
   final String? buttonTitle;
@@ -20,7 +21,7 @@ class AppElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final AppElevatedButtonState state;
   final TextStyle? style;
-
+  final BorderRadiusGeometry? borderRadius;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -41,7 +42,7 @@ class AppElevatedButton extends StatelessWidget {
         shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
           (Set<MaterialState> states) {
             return RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: borderRadius ?? BorderRadius.circular(5),
             );
           },
         ),

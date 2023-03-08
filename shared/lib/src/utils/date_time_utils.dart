@@ -48,11 +48,15 @@ class DateTimeUtils {
     final currentTime = DateTime.now();
     final targetTime = DateTime(currentTime.year, currentTime.month, currentTime.day, 10, 30);
 
-    if (currentTime.isAfter(targetTime)) {
-      return true;
-    } else {
-      return false;
-    }
+    return currentTime.isAfter(targetTime) ? true : false;
+  }
+
+  static bool checkTimeHome() {
+    final now = DateTime.now();
+    final startTime = DateTime(now.year, now.month, now.day, 9, 30, 0);
+    final endTime = DateTime(now.year, now.month, now.day, 10, 30, 0);
+
+    return now.isAfter(startTime) && now.isBefore(endTime) ? true : false;
   }
 
   static DateTime? toDateTime(String dateTimeString, {bool isUtc = false}) {

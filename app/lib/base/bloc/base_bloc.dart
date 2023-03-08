@@ -80,7 +80,7 @@ abstract class BaseBlocDelegate<E extends BaseBlocEvent, S extends BaseBlocState
       }
 
       await action.call();
-
+    
       if (handleLoading) {
         hideLoading();
       }

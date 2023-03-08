@@ -1,4 +1,6 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:resources/resources.dart';
 
 import '../../app.dart';
@@ -37,6 +39,18 @@ class FeatureDeveloperPage extends StatelessWidget {
               style: typoInterNomal14.copyWith(
                 height: 1.5,
                 color: colorTextMedium,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                GetIt.instance.get<AppNavigator>().pop();
+              },
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(colorDisabled),
+              ),
+              child: Text(
+                S.current.back_to_home,
+                style: typoInterNomal14.copyWith(color: colorBrandPrimary, fontWeight: FontWeight.w600, height: 1.5),
               ),
             ),
           ],

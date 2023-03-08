@@ -89,7 +89,7 @@ class HistoryAmaiBloc extends BaseBloc<HistoryAmaiEvent, HistoryAmaiState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getHistoryUseCase.execute(GetHistoryUseCaseInput(page: pages));
-
+   await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.isNotEmpty) {
           emit(state.copyWith(
             history: output,

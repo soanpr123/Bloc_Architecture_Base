@@ -105,66 +105,93 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
 
   FutureOr<void> _onReadAll(ReadAllNotifiPress event, Emitter<NotificationState> emit) async {
     return runBlocCatching(
-      doOnSubscribe: () async {},
-      action: () async {
-        emit(state.copyWith(loadUsersException: null));
-        final output = await _allNotificationUseCase.execute(const ReadAllNotificationInput());
-        if (output.data['status_code'] == 200) {
-          appBloc.add(const AppInitiated());
+        doOnSubscribe: () async {},
+        action: () async {
+          emit(state.copyWith(loadUsersException: null));
+          final output = await _allNotificationUseCase.execute(const ReadAllNotificationInput());
+          if (output.data['status_code'] == 200) {
+            appBloc.add(const AppInitiated(handleErr: false));
 
-          await _getNotifi(
-            emit: emit,
-            isInitialLoad: true,
-          );
-          await _getNotifiUnread(
-            emit: emit,
-            isInitialLoad: true,
-          );
-        } else {
-          errorToast(msg: output.data['message']);
-        }
-        // for (var item in output.notification) {
-        //   // print(item.title);
-        //   listDataNoti.add(item);
-        // }
-        // if ((output.currentPage) == (output.totalPage)) {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: false,
-        //   ));
-        // } else {
-        //   emit(state.copyWith(
-        //     users: listDataNoti,
-        //     page: output.currentPage,
-        //     enablePullNotifi: true,
-        //   ));
-        // }
-      },
-      doOnError: (e) async {},
-      handleLoading: false,
-    );
+            await _getNotifi(
+              emit: emit,
+              isInitialLoad: true,
+            );
+            await _getNotifiUnread(
+              emit: emit,
+              isInitialLoad: true,
+            );
+          } else {
+            errorToast(msg: output.data['message']);
+          }
+          // for (var item in output.notification) {
+          //   // print(item.title);
+          //   listDataNoti.add(item);
+          // }
+          // if ((output.currentPage) == (output.totalPage)) {
+          //   emit(state.copyWith(
+          //     users: listDataNoti,
+          //     page: output.currentPage,
+          //     enablePullNotifi: false,
+          //   ));
+          // } else {
+          //   emit(state.copyWith(
+          //     users: listDataNoti,
+          //     page: output.currentPage,
+          //     enablePullNotifi: true,
+          //   ));
+          // }
+        },
+        doOnError: (e) async {},
+        handleLoading: false,
+        handleError: false);
   }
 
   FutureOr<void> _readNotifi(ReadNotification event, Emitter<NotificationState> emit) async {
     // ignore: unawaited_futures
-    await _readNotificationUseCase.execute(ReadNotificationInput(id: event.id));
-    // GetIt.instance.get<MainBloc>().add(const MainPageInitiated());
-    appBloc.add(const AppInitiated());
+    await runBlocCatching(
+      action: () async {
+        await _readNotificationUseCase.execute(ReadNotificationInput(id: event.id));
+        appBloc.add(const AppInitiated(handleErr: false));
 
-    if (event.type == 'announcements') {
-      await navigator.push(AppRouteInfo.announcementDetail(event.slung));
-    } else if (event.type == 'lunch_menus') {
-      await navigator.push(const AppRouteInfo.amaiStore());
-    }
-    await _getNotifi(
-      emit: emit,
-      isInitialLoad: true,
+        if (event.type == 'announcements') {
+          await navigator.push(AppRouteInfo.announcementDetail(event.slung));
+        } else if (event.type == 'lunch_menus') {
+          await navigator.push(const AppRouteInfo.amaiStore());
+        }
+        await _getNotifi(
+          emit: emit,
+          isInitialLoad: true,
+        );
+        await _getNotifiUnread(
+          emit: emit,
+          isInitialLoad: true,
+        );
+      },
+      handleError: false,
+      handleLoading: false,
+      doOnError: (e) async {
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              loadUsersException: e,
+              apirequestNoti: APIRequestStatus.connectionError,
+              apirequestUnread: APIRequestStatus.connectionError,
+              enablePullNotifi: false,
+              page: 1,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            loadUsersException: e,
+            enablePullNotifi: false,
+            page: 1,
+          ));
+        }
+      },
     );
-    await _getNotifiUnread(
-      emit: emit,
-      isInitialLoad: true,
-    );
+    // GetIt.instance.get<MainBloc>().add(const MainPageInitiated());
   }
 
   FutureOr<void> _onHomePageRefreshed(NotificationPageRefreshed event, Emitter<NotificationState> emit) async {
@@ -233,6 +260,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getNotificationUseCase.execute(GetNotificationInput(page: pages), isInitialLoad);
+        await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
           // appBloc.add(const AppInitiated());
           emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
@@ -278,6 +306,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       action: () async {
         emit(state.copyWith(loadNotifiUnreadException: null));
         final output = await _getNotificationUnreadUseCase.execute(const GetNotificationUnreadInput(), isInitialLoad);
+        await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
           // appBloc.add(const AppInitiated());
           emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.loaded));

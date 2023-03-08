@@ -7,7 +7,7 @@ class SymbolConstants {
 
   static const String amountStore = '35.000đ';
   static const String amaiNote = 'Thanh toán đồ canteen';
-
+  static const int delayedApi = 2;
   static String get codePayment {
     switch (EnvConstants.flavor) {
       case Flavor.develop:

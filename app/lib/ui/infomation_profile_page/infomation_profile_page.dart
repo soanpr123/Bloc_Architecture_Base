@@ -28,8 +28,9 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
     return CommonScaffold(
       hideKeyboardWhenTouchOutside: true,
       appBar: CommonAppBar(
-        leadingIcon: const BackButton(color: Colors.black),
-        backgroundColor: Colors.white,
+        leadingIcon: const BackButton(color: Colors.white),
+        corlorText: Colors.white,
+        backgroundColor: colorBrandPrimary,
         centerTitle: true,
         elevation: 1,
         text: S.current.infomation_profile,
@@ -44,25 +45,25 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
             child: ListView(
               shrinkWrap: true,
               children: [
-                const SizedBox(
-                  height: 32,
+                SizedBox(
+                  height: Dimens.d12.responsive(),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       S.current.introduction_profile,
-                      style: typoInterNomal18.copyWith(fontSize: 20),
+                      style: typoInterNomal18.copyWith(fontSize: Dimens.d20, fontWeight: FontWeight.w700, height: 1.5),
+                    ),
+                    const SizedBox(
+                      width: 8,
                     ),
                     GestureDetector(
                       onTap: () {
                         // context.read<InfomationProfileCubit>().showEdit(!state.showEdit);
                         bloc.add(InfomationProfileShowEditInput(show: bloc.state.showEdit));
                       },
-                      child: Text(
-                        S.current.edit,
-                        style: typoInterNomal14.copyWith(decoration: TextDecoration.underline, color: Colors.blue),
-                      ),
+                      child: Assets.svg.edit2Line.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
                     ),
                   ],
                 ),
@@ -72,10 +73,12 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                 BlocBuilder<InfomationProfileBloc, InfomationProfilePageState>(
                   buildWhen: (previous, current) => previous.showEdit != current.showEdit,
                   builder: (context, stateInfo) {
+                    aboutCtrl.text = state.users.incognito?.about ?? '';
+
                     return !stateInfo.showEdit
                         ? Text(
                             state.users.incognito?.about ?? 'Không có giới thiệu',
-                            style: typoInterNomal14,
+                            style: typoInterNomal14.copyWith(height: 1.5, fontWeight: FontWeight.w400),
                           )
                         : InfoWidget(
                             aboutCtrl: aboutCtrl,
@@ -84,18 +87,18 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                   },
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 24,
                 ),
                 Row(
                   children: [
                     Text(
                       S.current.infomation_profile,
-                      style: typoInterNomal18.copyWith(fontSize: 20),
+                      style: typoInterNomal18.copyWith(fontSize: Dimens.d20, fontWeight: FontWeight.w700, height: 1.5),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: Dimens.d12.responsive(),
                 ),
                 buildContent(
                   S.current.position_name,
@@ -118,7 +121,7 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                           children: [
                             Text(
                               state.users.workStatusName ?? '',
-                              style: typoInterNomal14.copyWith(color: colorBrandPrimary),
+                              style: typoInterNomal14.copyWith(color: colorBrandPrimary, height: 1.5),
                             ),
                             const SizedBox(
                               width: 4,
@@ -211,8 +214,15 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                             S.current.socials,
                             style: typoInterNomal16,
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: Dimens.d4.responsive(),
+                          ),
+                          Text(
+                            '${S.current.face_book}: ',
+                            style: typoInterNomal14,
+                          ),
+                          SizedBox(
+                            height: Dimens.d4.responsive(),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -232,15 +242,15 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const SizedBox(
-                            height: 4,
+                          SizedBox(
+                            height: Dimens.d4.responsive(),
                           ),
                           Text(
                             '${S.current.telegram}: ',
                             style: typoInterNomal14,
+                          ),
+                          SizedBox(
+                            height: Dimens.d4.responsive(),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -288,21 +298,21 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                 title,
                 style: typoInterNomal16,
               ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: Dimens.d4.responsive(),
               ),
               Row(
                 children: [
                   Flexible(
                     child: Text(
                       content,
-                      style: typoInterNomal14,
+                      style: typoInterNomal14.copyWith(height: 1.5),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 16,
+              SizedBox(
+                height: Dimens.d12.responsive(),
               ),
             ],
           ),
@@ -328,39 +338,45 @@ class InfoWidget extends StatelessWidget {
           maxLines: 10,
           onChanged: (v) => bloc.add(InfomationProfilePageTextfieldInput(text: v)),
         ),
-        const SizedBox(
-          height: 16,
+        SizedBox(
+          height: Dimens.d24.responsive(),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SizedBox(
-              height: 40,
-              child: AppElevatedButton(
-                buttonTitle: S.current.cancel,
-                mainColor: colorBrandSecondary,
-                onPressed: () {
-                  bloc.add(InfomationProfileShowEditInput(show: bloc.state.showEdit));
-                },
+            Expanded(
+              child: SizedBox(
+                height: Dimens.d32.responsive(),
+                child: AppElevatedButton(
+                  buttonTitle: S.current.cancel,
+                  borderRadius: const BorderRadius.all(Radius.circular(3)),
+                  mainColor: colorBrandSecondary,
+                  onPressed: () {
+                    bloc.add(InfomationProfileShowEditInput(show: bloc.state.showEdit));
+                  },
+                ),
               ),
             ),
-            const SizedBox(
-              width: 4,
+            SizedBox(
+              width: Dimens.d4.responsive(),
             ),
             BlocBuilder<InfomationProfileBloc, InfomationProfilePageState>(
               bloc: bloc,
               buildWhen: (previous, current) => previous.buttonState != current.buttonState,
               builder: (context, state) {
-                return SizedBox(
-                  height: 40,
-                  child: AppElevatedButton(
-                    state: state.buttonState,
-                    buttonTitle: S.current.save,
-                    onPressed: () {
-                      // Future.delayed(Duration())?
-                      // context.read<InfomationProfileCubit>().updateMe(aboutCtrl.text.trim());
-                      bloc.add(const InfomationProfilePageInitiated());
-                    },
+                return Expanded(
+                  child: SizedBox(
+                    height: Dimens.d32.responsive(),
+                    child: AppElevatedButton(
+                      state: state.buttonState,
+                      borderRadius: const BorderRadius.all(Radius.circular(3)),
+                      buttonTitle: S.current.save,
+                      onPressed: () {
+                        // Future.delayed(Duration())?
+                        // context.read<InfomationProfileCubit>().updateMe(aboutCtrl.text.trim());
+                        bloc.add(const InfomationProfilePageInitiated());
+                      },
+                    ),
                   ),
                 );
               },
