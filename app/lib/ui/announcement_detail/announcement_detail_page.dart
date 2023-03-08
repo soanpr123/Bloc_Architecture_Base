@@ -49,57 +49,77 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
         // height: MediaQuery.of(context).padding.top + Dimens.d60.responsive(),
       ),
       body: BlocBuilder<AnouncementDetailBloc, AnouncementDetailState>(
-        buildWhen: (previous, current) => previous.announcementDetail != current.announcementDetail,
+        buildWhen: (previous, current) =>
+            previous.announcementDetail != current.announcementDetail ||
+            previous.apiRequestStatus != current.apiRequestStatus,
         builder: (context, state) {
           return SafeArea(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          state.announcementDetail.title ?? '',
-                          style: typoInterNomal18.copyWith(
-                            fontSize: Dimens.d24.responsive(),
-                            height: 1.5,
-                            fontWeight: FontWeight.w700,
+            child: BodyBuilder(
+              apiRequestStatus: state.apiRequestStatus,
+              image: Assets.png.noData.image(
+                width: Dimens.d265.responsive(),
+                height: Dimens.d200.responsive(),
+                fit: BoxFit.contain,
+              ),
+              reload: () {
+                bloc.add(AnouncementPageInitiated(slungs: widget.slungs));
+              },
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: Dimens.d8.responsive()),
+                          Text(
+                            state.announcementDetail.title ?? '',
+                            style: typoInterNomal18.copyWith(
+                              fontSize: Dimens.d18.responsive(),
+                              height: 1.5,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: Dimens.d12.responsive()),
-                        state.announcementDetail.createdAt != ''
-                            ? Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_month_outlined,
-                                    size: Dimens.d16.responsive(),
-                                  ),
-                                  SizedBox(width: Dimens.d8.responsive()),
-                                  Text(
-                                    state.announcementDetail.createdAt ?? '',
-                                    style: typoInterNomal14.copyWith(color: colorTextMedium, height: 1.5),
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                      ],
+                          SizedBox(height: Dimens.d12.responsive()),
+                          state.announcementDetail.createdAt != ''
+                              ? Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      size: Dimens.d16.responsive(),
+                                    ),
+                                    SizedBox(width: Dimens.d8.responsive()),
+                                    Text(
+                                      state.announcementDetail.createdAt ?? '',
+                                      style: typoInterNomal14.copyWith(color: colorTextMedium, height: 1.5),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: Dimens.d8.responsive()),
-                  Markdown(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    data: state.announcementDetail.content ?? '',
-                    selectable: true,
-                    onTapLink: (text, href, title) {
-                      IntentUtils.openBrowserURL(url: href ?? '', inApp: false);
-                    },
-                  ),
-                ],
+                    SizedBox(height: Dimens.d8.responsive()),
+                    Markdown(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      data: state.announcementDetail.content ?? '',
+                      selectable: true,
+                      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                        p: typoInterNomal14.copyWith(height: 1.5),
+                        a: typoInterNomal14.copyWith(
+                          color: colorBrandPrimary,
+                        ),
+                      ),
+                      onTapLink: (text, href, title) {
+                        IntentUtils.openBrowserURL(url: href ?? '', inApp: false);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

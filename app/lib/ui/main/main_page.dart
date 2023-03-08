@@ -73,7 +73,11 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
                   appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));
                 }
                 if (i == 2) {
-                  appBloc.add(const AppInitiated());
+                  appBloc.add(const AppInitiated(handleErr: false));
+                  appBloc.add(AppReloadNotipage(reload: !state.reload));
+                }
+                 if (i == 3) {
+                  appBloc.add(const AppInitiated(handleErr: false));
                   appBloc.add(AppReloadNotipage(reload: !state.reload));
                 }
               },

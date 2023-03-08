@@ -72,10 +72,8 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
   }
 
   FutureOr<void> _readNotifi(ReadAnnounment event, Emitter<AnnounmentState> emit) async {
-    appBloc.add(const AppInitiated());
-
     await navigator.push(AppRouteInfo.announcementDetail(event.slung));
-
+    appBloc.add(const AppInitiated(handleErr: false));
     await _getAnnounment(
       emit: emit,
       isInitialLoad: true,
@@ -92,8 +90,8 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
       action: () async {
         emit(state.copyWith(loadUsersException: null));
         final output = await _getAnnounmentCase.execute(const GetAnnoumentInput(), isInitialLoad);
+         await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
-         
           emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
         } else {
           emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata));

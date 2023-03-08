@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:resources/resources.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import '../../../utils/toast_message.dart';
@@ -54,7 +56,55 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
   }
 
   FutureOr<void> _oChangePassPress(ChangePassPress event, Emitter<ChangePassState> emit) async {
-    await changePass(currPas: state.currPass, newPass: state.newPass, confirmPassword: state.confiPass);
+    if (!ValidationUtils.isPasswordValidExp(state.currPass) && state.currPass.length < 8) {
+      emit(
+        state.copyWith(
+          showErrPass: S.current.password_invalid,
+          showErrNewPass: state.showErrNewPass,
+          showConfPass: state.showConfPass,
+        ),
+      );
+
+      return;
+    } else {
+      emit(state.copyWith(showErrPass: '', showErrNewPass: state.showErrNewPass, showConfPass: state.showConfPass));
+    }
+    if (!ValidationUtils.isPasswordValidExp(state.newPass) && state.newPass.length < 8) {
+      emit(state.copyWith(
+        showErrPass: state.showErrPass,
+        showErrNewPass: S.current.password_invalid,
+        showConfPass: state.showConfPass,
+      ));
+
+      return;
+    } else {
+      emit(state.copyWith(
+        showErrPass: state.showErrPass,
+        showErrNewPass: '',
+        showConfPass: state.showConfPass,
+      ));
+    }
+    if (!ValidationUtils.isPasswordValidExp(state.confiPass) && state.confiPass.length < 8) {
+      emit(state.copyWith(
+        showErrPass: state.showErrPass,
+        showErrNewPass: state.showErrNewPass,
+        showConfPass: S.current.password_invalid,
+      ));
+
+      return;
+    } else {
+      emit(state.copyWith(
+        showErrPass: state.showErrPass,
+        showErrNewPass: state.showErrNewPass,
+        showConfPass: '',
+      ));
+    }
+    if (state.newPass != state.currPass) {
+      errorToast(msg: S.current.same_pass_invalid);
+
+      return;
+    }
+    await changePass(currPas: state.currPass, newPass: state.newPass, confirmPassword: state.confiPass, emit: emit);
   }
 
   FutureOr<void> _oChangeTextPassInput(ChangePassTextInput event, Emitter<ChangePassState> emit) async {
@@ -62,6 +112,7 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
       newPass: state.newPass,
       confiPass: state.confiPass,
       currPass: event.currentPass,
+      buttonState: _isLoginButtonEnabled(event.currentPass, state.newPass, state.confiPass),
     ));
   }
 
@@ -70,6 +121,7 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
       newPass: event.newPass,
       confiPass: state.confiPass,
       currPass: state.currPass,
+      buttonState: _isLoginButtonEnabled(state.currPass, event.newPass, state.confiPass),
     ));
   }
 
@@ -78,7 +130,14 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
       newPass: state.newPass,
       confiPass: event.confirmPass,
       currPass: state.currPass,
+      buttonState: _isLoginButtonEnabled(state.currPass, state.newPass, event.confirmPass),
     ));
+  }
+
+  AppElevatedButtonState _isLoginButtonEnabled(String Pass, String NewPass, String confirmPas) {
+    return Pass.isNotEmpty && NewPass.isNotEmpty && confirmPas.isNotEmpty
+        ? AppElevatedButtonState.active
+        : AppElevatedButtonState.inactive;
   }
 
   FutureOr<void> _onShowPassPress(ShowPassPress event, Emitter<ChangePassState> emit) async {
@@ -109,16 +168,22 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
     String? currPas,
     String? newPass,
     String? confirmPassword,
+    required Emitter<ChangePassState> emit,
   }) async {
     return runBlocCatching(
+        doOnSubscribe: () async {
+          emit(state.copyWith(buttonState: AppElevatedButtonState.loading));
+        },
         action: () async {
           final out = await _resetPasswordUseCase.execute(
             ResetPasswordInput(newPass: newPass ?? '', password: currPas ?? '', confirmPassword: confirmPassword ?? ''),
           );
           if (out.data['status_code'] == 200) {
+            emit(state.copyWith(buttonState: AppElevatedButtonState.inactive));
             successToast(out.data['message']);
             await navigator.pop();
           } else {
+            emit(state.copyWith(buttonState: AppElevatedButtonState.active));
             if (out.data['data'] != null && out.data['data']['current_password'] != null) {
               errorToast(msg: out.data['data']['current_password'].join('.'));
             } else {
@@ -127,8 +192,10 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
           }
         },
         handleError: false,
+        handleLoading: false,
         // ignore: prefer-trailing-comma
         doOnError: (e) async {
+          emit(state.copyWith(buttonState: AppElevatedButtonState.active));
           errorToast(msg: exceptionMessageMapper.map(e));
         });
   }

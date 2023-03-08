@@ -22,7 +22,7 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
     // TODO: implement initState
     super.initState();
     bloc.add(const AnnounmentPageInitiated());
-    appBloc.add(const AppInitiated());
+    appBloc.add(const AppInitiated(handleErr: false));
     _pagingController.listen(
       onLoadMore: () => bloc.add(const AnnounmentLoadMore()),
     );
