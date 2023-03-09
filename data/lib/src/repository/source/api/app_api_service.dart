@@ -9,6 +9,7 @@ import '../../../../../data.dart';
 import '../../model/amai_order_data.dart';
 import '../../model/amai_store_data.dart';
 import '../../model/announcement_detail_data.dart';
+import '../../model/blogs_model_data.dart';
 import '../../model/history_amai_data.dart';
 import '../../model/profile_data.dart';
 import '../../model/upload_image_data.dart';
@@ -175,6 +176,27 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<dynamic>> likeBlogs({required String slungs}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'posts/$slungs/like',
+    );
+  }
+
+  Future<DataResponse<dynamic>> likeComment({required String slungs, required int id}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'posts/$slungs/$id/like',
+    );
+  }
+
+  Future<DataResponse<dynamic>> sendAmai({required String slungs}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'posts/$slungs/amai',
+    );
+  }
+
   Future<DataResponse<WikiModelData>> getListWiki({
     required int page,
     required int? limit,
@@ -185,6 +207,8 @@ class AppApiService {
       queryParameters: {
         'page': page,
         'per_page': limit,
+        'orders[0][key]': 'created_at',
+        'orders[0][dir]': 'desc',
       },
       decoder: WikiModelData.fromJson,
     );
@@ -195,6 +219,14 @@ class AppApiService {
       method: RestMethod.get,
       path: 'wiki/$slungs',
       decoder: WikiDetailData.fromJson,
+    );
+  }
+
+  Future<DataResponse<BlogsModelData>> getDetailBlogs({required String slungs}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'posts/$slungs',
+      decoder: BlogsModelData.fromJson,
     );
   }
 
@@ -311,6 +343,15 @@ class AppApiService {
       method: RestMethod.get,
       path: 'announcements/$slungs',
       decoder: AnnouncementDetailData.fromJson,
+    );
+  }
+
+  Future<DataListResponse<ComentDataModel>> getComent(String slungs) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'posts/$slungs/comments',
+      successResponseMapperType: SuccessResponseMapperType.dataJsonArray,
+      decoder: ComentDataModel.fromJson,
     );
   }
 }

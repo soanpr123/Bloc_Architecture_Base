@@ -157,6 +157,12 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
           await navigator.push(AppRouteInfo.announcementDetail(event.slung));
         } else if (event.type == 'lunch_menus') {
           await navigator.push(const AppRouteInfo.amaiStore());
+        } else if (event.type == 'posts') {
+          await navigator.push(AppRouteInfo.blogsDetail(event.slung));
+          // await navigator.push(AppRouteInfo.blogsDetail('test002'));
+        } else if (event.type == 'amai_transactions') {
+          navigator.navigateToBottomTab(1);
+          appBloc.add(AppReloadHistory(reloadHis: appBloc.state.reloadHis));
         }
         await _getNotifi(
           emit: emit,
@@ -203,10 +209,11 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         emit(state.copyWith(
           isShimmerLoading: true,
           apirequestNoti: APIRequestStatus.loading,
+          reload: false,
         ));
       },
       doOnSuccessOrError: () async {
-        emit(state.copyWith(isShimmerLoading: false));
+        emit(state.copyWith(isShimmerLoading: false, reload: true));
 
         if (!event.completer.isCompleted) {
           event.completer.complete();
@@ -258,14 +265,14 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
   }) async {
     return runBlocCatching(
       action: () async {
-        emit(state.copyWith(loadUsersException: null));
+        emit(state.copyWith(loadUsersException: null, reload: false));
         final output = await _getNotificationUseCase.execute(GetNotificationInput(page: pages), isInitialLoad);
         await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
           // appBloc.add(const AppInitiated());
-          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
+          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded, reload: true));
         } else {
-          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata));
+          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata, reload: true));
         }
       },
       doOnError: (e) async {
@@ -277,6 +284,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
               loadUsersException: e,
               apirequestNoti: APIRequestStatus.connectionError,
               enablePullNotifi: false,
+              reload: true,
               page: 1,
             ));
           }
@@ -284,6 +292,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
           emit(state.copyWith(
             loadUsersException: e,
             enablePullNotifi: false,
+            reload: true,
             page: 1,
           ));
         }
@@ -304,14 +313,14 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
   }) async {
     return runBlocCatching(
       action: () async {
-        emit(state.copyWith(loadNotifiUnreadException: null));
+        emit(state.copyWith(loadNotifiUnreadException: null, reload: false));
         final output = await _getNotificationUnreadUseCase.execute(const GetNotificationUnreadInput(), isInitialLoad);
         await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
           // appBloc.add(const AppInitiated());
-          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.loaded));
+          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.loaded, reload: true));
         } else {
-          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.nodata));
+          emit(state.copyWith(notifiUnread: output, apirequestUnread: APIRequestStatus.nodata, reload: true));
         }
       },
       doOnError: (e) async {
@@ -323,6 +332,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
               loadUsersException: e,
               apirequestUnread: APIRequestStatus.connectionError,
               enablePullNotifi: false,
+              reload: true,
               page: 1,
             ));
           }
@@ -330,6 +340,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
           emit(state.copyWith(
             loadUsersException: e,
             enablePullNotifi: false,
+            reload: true,
             page: 1,
           ));
         }

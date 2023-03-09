@@ -12,6 +12,11 @@ Color colorTextMedium = HexColor('4B5563');
 Color colorSupportDanger = HexColor('EF4444');
 Color colorSupportWarning = HexColor('F59E0B');
 Color colorAmber100 = HexColor('FEF3C7');
+Color colorRed200 = HexColor('FECACA');
+
+Color colorRed500 = HexColor('EF4444');
+Color colorUiBg03 = HexColor('CAEAD7');
+Color colorUiBg04 = HexColor('E2E8F0');
 Color colorBrandSecondary = HexColor('9CA3AF');
 Color colorGray600 = HexColor('4B5563');
 Color colorGray800 = HexColor('1F2937');

@@ -84,6 +84,11 @@ class ProfileBloc extends BaseBloc<ProfileEvent, ProfileState> {
   }
 
   FutureOr<void> _onEditNamePressed(EditNamePressed event, Emitter<ProfileState> emit) async {
+    if (state.name.length > 50) {
+      errorToast(msg: 'Tên không được dài hơn 50 kí tự');
+
+      return;
+    }
     await _updateMe(
       emit: emit,
       name: state.name,
@@ -146,8 +151,8 @@ class ProfileBloc extends BaseBloc<ProfileEvent, ProfileState> {
   Future<void> _updateAvt({required Emitter<ProfileState> emit, required String avt}) async {
     return runBlocCatching(
       action: () async {
-        final out = await _updateMeUseCase
-            .execute(UpdateMeInput(avt: avt, about: appBloc.state.users.incognito?.about ?? ''));
+        final out =
+            await _updateMeUseCase.execute(UpdateMeInput(avt: avt, about: appBloc.state.users.incognito?.about ?? ''));
 
         if (out.data['status_code'] == 200) {
           successToast(out.data['message']);

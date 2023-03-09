@@ -56,6 +56,22 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
   }
 
   @override
+  Widget buildPageListeners({required Widget child}) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) => previous.reloadHis != current.reloadHis,
+          listener: (context, state) {
+            print("reload");
+            appBloc.add(const AppInitiated(handleErr: false));
+          },
+        ),
+      ],
+      child: child,
+    );
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
     Log.d(MediaQuery.of(context).devicePixelRatio, name: 'devicePixelRatio');
 
@@ -82,7 +98,8 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
               children: [
                 BlocBuilder<AppBloc, AppState>(
                   bloc: appBloc,
-                  buildWhen: (previous, current) => previous.users != current.users,
+                  buildWhen: (previous, current) =>
+                      previous.users != current.users || previous.reloadHis != current.reloadHis,
                   builder: (context, state) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,15 +208,16 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                     final item = listMenu[i];
 
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         // context.router.push(AmaiStoreRoute());
-                        navigator.push(item['onTap'] as AppRouteInfo);
+                        await navigator.push(item['onTap'] as AppRouteInfo);
+                        appBloc.add(const AppInitiated(handleErr: false));
                       },
                       child: Column(
                         children: [
                           SizedBox(
-                            width: Dimens.d50.responsive(),
-                            height: Dimens.d50.responsive(),
+                            width: Dimens.d55.responsive(),
+                            height: Dimens.d55.responsive(),
                             child: Stack(
                               children: [
                                 Align(
@@ -215,21 +233,42 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                                     ),
                                   ),
                                 ),
-                                item['id'] == 0
-                                    ? !DateTimeUtils.checkTimeHome()
-                                        ? Container()
-                                        : Align(
-                                            alignment: Alignment.topRight,
-                                            child: Container(
-                                              width: 12,
-                                              height: 12,
-                                              decoration: BoxDecoration(
-                                                color: colorSupportDanger,
-                                                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                              ),
-                                            ),
-                                          )
-                                    : Container(),
+                                BlocBuilder<AppBloc, AppState>(
+                                  bloc: appBloc,
+                                  buildWhen: (previous, current) =>
+                                      previous.users != current.users || previous.reloadHis != current.reloadHis,
+                                  builder: (context, stateApp) {
+                                    return item['id'] == 0
+                                        ? stateApp.users.haveLunchMenu == true
+                                            ? Align(
+                                                alignment: Alignment.topRight,
+                                                child: Container(
+                                                  width: 12,
+                                                  height: 12,
+                                                  decoration: BoxDecoration(
+                                                    color: colorSupportDanger,
+                                                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container()
+                                        : item['id'] == 1
+                                            ? stateApp.users.haveInternalAnnouncement == true
+                                                ? Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Container(
+                                                      width: 12,
+                                                      height: 12,
+                                                      decoration: BoxDecoration(
+                                                        color: colorSupportDanger,
+                                                        borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container()
+                                            : Container();
+                                  },
+                                ),
                               ],
                             ),
                           ),

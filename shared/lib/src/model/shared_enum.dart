@@ -1,4 +1,4 @@
-enum Flavor { develop, qa, staging, production }
+enum Flavor { develop, production }
 
 enum DeviceType { mobile, tablet }
 

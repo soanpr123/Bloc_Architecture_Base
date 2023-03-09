@@ -71,6 +71,10 @@ export 'ui/announment_page/announment_page.dart';
 export 'ui/announment_page/bloc/announment_bloc.dart';
 export 'ui/announment_page/bloc/announment_event.dart';
 export 'ui/announment_page/bloc/announment_state.dart';
+export 'ui/blogs_detail_page/bloc/blogs_detail_bloc.dart';
+export 'ui/blogs_detail_page/bloc/blogs_detail_event.dart';
+export 'ui/blogs_detail_page/bloc/blogs_detail_state.dart';
+export 'ui/blogs_detail_page/blogs_detail_page.dart';
 export 'ui/change_password/bloc/change_pass_bloc.dart';
 export 'ui/change_password/bloc/change_pass_event.dart';
 export 'ui/change_password/bloc/change_pass_state.dart';
@@ -111,3 +115,5 @@ export 'ui/wiki_page/bloc/wiki_bloc.dart';
 export 'ui/wiki_page/bloc/wiki_event.dart';
 export 'ui/wiki_page/bloc/wiki_state.dart';
 export 'ui/wiki_page/wiki_page.dart';
+
+

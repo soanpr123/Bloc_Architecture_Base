@@ -95,7 +95,10 @@
   "memberlist":"Danh sách nhân viên",
   "blogs":"Blogs",
   "function_update":"Đang phát triển",
-  "function_update_detail":"Anh em Internal đang làm việc hết công suất để phát triển chức năng này. Hãy đợi một xíu nhé!"
+  "function_update_detail":"Anh em Internal đang làm việc hết công suất để phát triển chức năng này. Hãy đợi một xíu nhé!",
+   "detailBlogs":"Chi tiết bài viết",
+   "send_amai_title":"Tặng Amai cho bài viết",
+   "send_amai":"Amai đã tặng sẽ không thể thu hồi. Hãy chắc chắn là bạn muốn tặng Amai nhé."
 
 
 }
