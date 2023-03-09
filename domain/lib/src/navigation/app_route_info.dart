@@ -17,5 +17,7 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.changePassWord() = _ChangePassWord;
   const factory AppRouteInfo.announmentPage() = _AnnounmentPage;
   const factory AppRouteInfo.featureDevelop() = _FeatureDevelop;
+  const factory AppRouteInfo.wikiPage() = _WikiPage;
+  const factory AppRouteInfo.wikiDetailPage(String slungs) = _WikiDetailPage;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

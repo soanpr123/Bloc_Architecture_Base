@@ -22,6 +22,7 @@ import '../../ui/infomation_profile_page/infomation_profile_page.dart';
     ),
     AutoRoute<dynamic>(page: AnnouncementDetailPage),
     AutoRoute<dynamic>(page: FeatureDeveloperPage),
+    AutoRoute<dynamic>(page: WikiDetailPage, initial: true),
   ],
 )
 class $AppRouter {}
@@ -39,6 +40,7 @@ const mainScreenRouter = CustomRoute<dynamic>(
         AutoRoute<dynamic>(page: HomePage, initial: true),
         AutoRoute<dynamic>(page: AmaiStorePage, initial: true),
         AutoRoute<dynamic>(page: AnnounmentPage, initial: true),
+        AutoRoute<dynamic>(page: WikiPage, initial: true),
       ],
     ),
     AutoRoute<dynamic>(

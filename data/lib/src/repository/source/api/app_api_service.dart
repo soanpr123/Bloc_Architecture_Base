@@ -175,6 +175,29 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<WikiModelData>> getListWiki({
+    required int page,
+    required int? limit,
+  }) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'wiki',
+      queryParameters: {
+        'page': page,
+        'per_page': limit,
+      },
+      decoder: WikiModelData.fromJson,
+    );
+  }
+
+  Future<DataResponse<WikiDetailData>> getDetailWiki({required String slungs}) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'wiki/$slungs',
+      decoder: WikiDetailData.fromJson,
+    );
+  }
+
   Future<DataResponse<AnnounmentData>> getAnnounment({
     required int page,
     required int? limit,

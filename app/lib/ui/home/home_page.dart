@@ -34,7 +34,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'id': 2,
       'icon': Assets.png.icAmaiWiki.path,
       'name': S.current.wiki,
-      'onTap': const AppRouteInfo.featureDevelop(),
+      'onTap': const AppRouteInfo.wikiPage(),
     },
     {
       'id': 3,
@@ -52,7 +52,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
   @override
   void initState() {
     super.initState();
-    GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
+    // GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
   }
 
   @override

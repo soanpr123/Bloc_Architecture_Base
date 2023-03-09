@@ -11,9 +11,11 @@ import 'mapper/Announcement_detail_mapper.dart';
 import 'mapper/base_response_mapper.dart';
 import 'mapper/data_history_mapper.dart';
 import 'mapper/data_list_store_mapper.dart';
+import 'mapper/detail_wiki_mapper.dart';
 import 'mapper/list_data_history_mapper.dart';
 import 'mapper/order_data_mapper.dart';
 import 'mapper/upload_image_mapper.dart';
+import 'mapper/wiki_data_mapper.dart';
 
 @LazySingleton(as: Repository)
 class RepositoryImpl implements Repository {
@@ -33,7 +35,8 @@ class RepositoryImpl implements Repository {
     this._amaiOrderDataMapper,
     this._historyDataMapper,
     this._announcementDataMapper,
-    this._baseBoolDataMapper,
+    this._wikitDataMapper,
+    this._detailDataMapper,
   );
 
   final AppApiService _appApiService;
@@ -51,7 +54,9 @@ class RepositoryImpl implements Repository {
   final LanguageCodeDataMapper _languageCodeDataMapper;
   final AmaiOrderDataMapper _amaiOrderDataMapper;
   final ImageUploadDataMapper _imageUploadDataMapper;
-  final BaseBoolDataMapper _baseBoolDataMapper;
+
+  final WikitDataMapper _wikitDataMapper;
+  final WikiDetailDataMapper _detailDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -309,5 +314,25 @@ class RepositoryImpl implements Repository {
     final ouput = await _appApiService.checkUserRead(slungs: slungs);
 
     return _baseResponseDataMapper.mapToEntity(ouput);
+  }
+
+  @override
+  Future<WikiDetail> getDetailWiki({required String slungs}) async {
+    final response = await _appApiService.getDetailWiki(slungs: slungs);
+
+    return _detailDataMapper.mapToEntity(response.data);
+  }
+
+  @override
+  Future<PagedList<DataWiki>> getWiki({required int page, required int? limit}) async {
+    final response = await _appApiService.getListWiki(page: page, limit: limit);
+
+    return PagedList(
+      data: _wikitDataMapper.mapToListEntity(response.data?.data ?? []),
+      perPage: response.data?.perPage,
+      currentPage: response.data?.currentPage,
+      total: response.data?.total,
+      totalPage: response.data?.totalPage,
+    );
   }
 }
