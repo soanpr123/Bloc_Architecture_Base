@@ -42,146 +42,146 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
             previous.buttonStateDelete != current.buttonStateDelete ||
             previous.apirequestNoti != current.apirequestNoti,
         builder: (context, state) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: Dimens.d24.responsive(),
-                ),
-                Text(
-                  S.current.amaistore_content,
-                  style: typoInterNomal14.copyWith(
-                    height: 1.5,
+          return BodyBuilder(
+            isStore: true,
+            apiRequestStatus: state.apirequestNoti,
+            image: Assets.png.icNodataStore.image(width: 150, height: 150),
+            reload: () {
+              bloc.add(const AmaiStoreInitiated());
+            },
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: Dimens.d24.responsive(),
                   ),
-                ),
-                SizedBox(
-                  height: Dimens.d8.responsive(),
-                ),
-                Text(
-                  S.current.time_amai,
-                  style: typoInterNomal14.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.italic,
-                    height: 1.5,
+                  Text(
+                    S.current.amaistore_content,
+                    style: typoInterNomal14.copyWith(
+                      height: 1.5,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                      ? Dimens.d24.responsive()
-                      : Dimens.d12.responsive(),
-                ),
-                state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                    ? Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Dimens.d12.responsive(),
-                          vertical: Dimens.d12.responsive(),
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorAmber100,
-                          boxShadow: boxShadow,
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: 'Bạn đã đặt',
+                  SizedBox(
+                    height: Dimens.d8.responsive(),
+                  ),
+                  Text(
+                    S.current.time_amai,
+                    style: typoInterNomal14.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.italic,
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(
+                    height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                        ? Dimens.d24.responsive()
+                        : Dimens.d12.responsive(),
+                  ),
+                  state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                      ? Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimens.d12.responsive(),
+                            vertical: Dimens.d12.responsive(),
+                          ),
+                          decoration: BoxDecoration(
+                            color: colorAmber100,
+                            boxShadow: boxShadow,
+                            borderRadius: const BorderRadius.all(Radius.circular(5)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Bạn đã đặt',
+                                  style: typoInterNomal14.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: colorTextDark,
+                                    fontSize: Dimens.d16.responsive(),
+                                    height: 1.5,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: state.amaiOrder.type == 0
+                                          ? ' Thực đơn ${state.canteen[state.canteen.indexWhere((element) => element.id == state.amaiOrder.lunchMenusId)].orderNo}'
+                                          : ' ${state.amaiOrder.menuName}',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: Dimens.d16.responsive(),
+                                        color: colorBrandPrimary,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' cho bữa trưa hôm nay.!',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: colorTextDark,
+                                        fontSize: Dimens.d16.responsive(),
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: Dimens.d4.responsive(),
+                              ),
+                              Text(
+                                S.current.amai_note_order,
                                 style: typoInterNomal14.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: colorTextDark,
-                                  fontSize: Dimens.d16.responsive(),
+                                  color: colorSupportDanger,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: Dimens.d14.responsive(),
                                   height: 1.5,
                                 ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: state.amaiOrder.type == 0
-                                        ? ' Thực đơn ${state.canteen[state.canteen.indexWhere((element) => element.id == state.amaiOrder.lunchMenusId)].orderNo}'
-                                        : ' ${state.amaiOrder.menuName}',
-                                    style: typoInterNomal14.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: Dimens.d16.responsive(),
-                                      color: colorBrandPrimary,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' cho bữa trưa hôm nay.!',
-                                    style: typoInterNomal14.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: colorTextDark,
-                                      fontSize: Dimens.d16.responsive(),
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ],
                               ),
-                            ),
-                            SizedBox(
-                              height: Dimens.d4.responsive(),
-                            ),
-                            Text(
-                              S.current.amai_note_order,
-                              style: typoInterNomal14.copyWith(
-                                color: colorSupportDanger,
-                                fontWeight: FontWeight.w400,
-                                fontSize: Dimens.d14.responsive(),
-                                height: 1.5,
+                              SizedBox(
+                                height: Dimens.d4.responsive(),
                               ),
-                            ),
-                            SizedBox(
-                              height: Dimens.d4.responsive(),
-                            ),
-                            Text(
-                              S.current.amai_congaru,
-                              style: typoInterNomal14.copyWith(
-                                fontWeight: FontWeight.w700,
-                                fontSize: Dimens.d16.responsive(),
-                                color: colorTextDark,
-                                height: 1.5,
+                              Text(
+                                S.current.amai_congaru,
+                                style: typoInterNomal14.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: Dimens.d16.responsive(),
+                                  color: colorTextDark,
+                                  height: 1.5,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: Dimens.d24.responsive(),
-                            ),
-                            DateTimeUtils.checkTime()
-                                ? Container()
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: Dimens.d40.responsive(),
+                              SizedBox(
+                                height: Dimens.d24.responsive(),
+                              ),
+                              DateTimeUtils.checkTime()
+                                  ? Container()
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: Dimens.d40.responsive(),
+                                          ),
+                                          child: AppElevatedButton(
+                                            state: state.buttonStateDelete,
+                                            buttonTitle: S.current.amai_cance,
+                                            onPressed: () {
+                                              bloc.add(const AmaiStoreDeleteOrderPress());
+                                            },
+                                          ),
                                         ),
-                                        child: AppElevatedButton(
-                                          state: state.buttonStateDelete,
-                                          buttonTitle: S.current.amai_cance,
-                                          onPressed: () {
-                                            bloc.add(const AmaiStoreDeleteOrderPress());
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                          ],
-                        ),
-                      )
-                    : Container(),
-                SizedBox(
-                  height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                      ? Dimens.d24.responsive()
-                      : Dimens.d12.responsive(),
-                ),
-                RefreshIndicator(
-                  onRefresh: () async {
-                    bloc.add(const AmaiStoreInitiated());
-                  },
-                  child: BodyBuilder(
-                    isStore: true,
-                    apiRequestStatus: state.apirequestNoti,
-                    image: Assets.png.icNodataStore.image(width: 150, height: 150),
-                    reload: () {
+                                      ],
+                                    ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                        ? Dimens.d24.responsive()
+                        : Dimens.d12.responsive(),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () async {
                       bloc.add(const AmaiStoreInitiated());
                     },
                     child: Column(
@@ -476,8 +476,8 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

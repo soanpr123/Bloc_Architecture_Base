@@ -31,12 +31,31 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
   }
 
   @override
+  Widget buildPageListeners({required Widget child}) {
+    // TODO: implement buildPageListeners
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) => previous.reload != current.reload,
+          listener: (context, state) {
+            if (bloc.state.showEditName) {
+              bloc.add(const ShowEditNamePressed());
+            }
+            // appBloc.add(const AppReloadNotipage(reload: false));
+          },
+        ),
+      ],
+      child: child,
+    );
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
       hideKeyboardWhenTouchOutside: true,
       body: BlocBuilder<AppBloc, AppState>(
         bloc: appBloc,
-        buildWhen: (previous, current) => previous.users != current.users,
+        buildWhen: (previous, current) => previous.users != current.users || previous.reload != current.reload,
         builder: (context, state) {
           return RefreshIndicator(
             onRefresh: () async {
@@ -59,7 +78,7 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(50)),
                               child: Center(
-                                child: Lottie.asset(Assets.json.loading,
+                                child: Lottie.asset(Assets.json.loadmore,
                                     width: 100, height: 100, frameRate: FrameRate.max, repeat: true),
                               ),
                             ),
@@ -89,21 +108,64 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                                         source: state.users.incognito?.avatar ?? '', fit: BoxFit.cover),
                                   ),
                                 ),
-                                const Positioned(bottom: 0, right: 0, child: Icon(Icons.photo_camera)),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: EdgeInsets.all(Dimens.d4.responsive()),
+                                    decoration: BoxDecoration(
+                                      color: colorBrandSecondary,
+                                      borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Assets.svg.cameraLine
+                                            .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ]),
                             ]),
                           );
                   },
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: Dimens.d12.responsive(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    iconText(
+                      title: NumberFormatUtils.formatNumbers(state.users.totalViewed ?? 0),
+                      icon: Assets.svg.eyeLine.path,
+                    ),
+                    SizedBox(
+                      width: Dimens.d8.responsive(),
+                    ),
+                    iconText(
+                      icon: Assets.svg.heart.path,
+                      title: NumberFormatUtils.formatNumbers(state.users.totalLikes ?? 0),
+                    ),
+                    SizedBox(
+                      width: Dimens.d8.responsive(),
+                    ),
+                    iconText(
+                      icon: Assets.svg.logoamai.path,
+                      title: NumberFormatUtils.formatNumbers(state.users.totalAmais ?? 0),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Dimens.d8.responsive(),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       state.users.name ?? S.current.noname,
-                      style: typoInterNomal18,
+                      style: typoInterNomal18.copyWith(height: 1.5),
                     ),
                   ],
                 ),
@@ -116,61 +178,80 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                   builder: (context, stateProfile) {
                     nameCtrl.text = state.users.incognito?.name ?? '';
 
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (stateProfile.showEditName)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                width: 200,
-                                height: 35,
-                                child: AppTextFormField(
-                                  controller: nameCtrl,
-                                  onChanged: (v) => bloc.add(EditNameTextField(name: v)),
-                                  borderRadius: 10,
+                    return stateProfile.showEditName
+                        ? Padding(
+                            padding: EdgeInsets.fromLTRB(
+                              Dimens.d16.responsive(),
+                              Dimens.d12.responsive(),
+                              Dimens.d16.responsive(),
+                              Dimens.d12.responsive(),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: Dimens.d32.responsive(),
+                                  child: AppTextFormField(
+                                    controller: nameCtrl,
+                                    hintText: '(Biệt danh)',
+                                    onChanged: (v) => bloc.add(EditNameTextField(name: v)),
+                                    borderRadius: 3,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 40,
-                                    child: AppElevatedButton(
-                                      buttonTitle: S.current.cancel,
-                                      mainColor: colorBrandSecondary,
-                                      onPressed: () {
-                                        bloc.add(const ShowEditNamePressed());
-                                      },
-                                    ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    0,
+                                    Dimens.d12.responsive(),
+                                    0,
+                                    Dimens.d12.responsive(),
                                   ),
-                                  const SizedBox(
-                                    width: 4,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          height: Dimens.d32.responsive(),
+                                          child: AppElevatedButton(
+                                            buttonTitle: S.current.cancel,
+                                            borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                            mainColor: colorBrandSecondary,
+                                            onPressed: () {
+                                              bloc.add(const ShowEditNamePressed());
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          height: Dimens.d32.responsive(),
+                                          child: AppElevatedButton(
+                                            borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                            state: stateProfile.buttonState,
+                                            buttonTitle: S.current.save,
+                                            onPressed: () {
+                                              bloc.add(const EditNamePressed());
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: 40,
-                                    child: AppElevatedButton(
-                                      state: stateProfile.buttonState,
-                                      buttonTitle: S.current.save,
-                                      onPressed: () {
-                                        bloc.add(const EditNamePressed());
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           )
-                        else
-                          Row(
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 '(${state.users.incognito?.name ?? S.current.no_orther_name})',
-                                style: typoInterNomal14,
+                                style: typoInterNomal14.copyWith(height: 1.5, color: colorTextMedium),
                               ),
                               const SizedBox(
                                 width: 4,
@@ -180,57 +261,48 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                                 onTap: () {
                                   bloc.add(const ShowEditNamePressed());
                                 },
-                                child: const Icon(
-                                  Icons.edit,
-                                  size: 20,
-                                ),
+                                child: Assets.svg.edit2Line
+                                    .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
                               )
                             ],
-                          ),
-                      ],
-                    );
+                          );
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      iconText(
-                        title: NumberFormatUtils.formatNumbers(state.users.totalViewed ?? 0),
-                        icon: Assets.svg.eyeLine.path,
-                      ),
-                      iconText(
-                        icon: Assets.svg.heart.path,
-                        title: NumberFormatUtils.formatNumbers(state.users.totalLikes ?? 0),
-                      ),
-                      iconText(
-                        icon: Assets.svg.logoamai.path,
-                        title: NumberFormatUtils.formatNumbers(state.users.totalAmais ?? 0),
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  height: Dimens.d12.responsive(),
                 ),
-                buildButton(S.current.infomation_profile, onTap: () {
-                  navigator.push(const AppRouteInfo.infomationProfile());
-                }),
-                buildButton(S.current.change_password, onTap: () {
-                  navigator.push(const AppRouteInfo.changePassWord());
-                }),
-                buildButton(S.current.log_out, onTap: () {
-                  navigator.showDialog(AppPopupInfo.dialogConfirmComon(
-                    title: S.current.tell_me_logout,
-                    onPress: () {
-                      bloc.add(const LogOutRequest());
-                    },
-                  ));
-                  // navigator.showDialog(AppPopupInfo.confirm(
-                  //   message: S.current.tell_me_logout,
-                  //   confirm: Func0(() async {
+                buildButton(
+                  S.current.infomation_profile,
+                  Assets.svg.accountCircleLine.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                  onTap: () async {
+                    await navigator.push(const AppRouteInfo.infomationProfile());
+                  },
+                ),
+                buildButton(
+                  S.current.change_password,
+                  Assets.svg.lock.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                  onTap: () async {
+                    await navigator.push(const AppRouteInfo.changePassWord());
+                  },
+                ),
+                buildButton(
+                  S.current.log_out,
+                  Assets.svg.logout.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                  onTap: () {
+                    navigator.showDialog(AppPopupInfo.dialogConfirmComon(
+                      title: S.current.tell_me_logout,
+                      onPress: () {
+                        bloc.add(const LogOutRequest());
+                      },
+                    ));
+                    // navigator.showDialog(AppPopupInfo.confirm(
+                    //   message: S.current.tell_me_logout,
+                    //   confirm: Func0(() async {
 
-                  //   }),
-                  // ));
-                }),
+                    //   }),
+                    // ));
+                  },
+                ),
               ],
             ),
           );
@@ -239,31 +311,28 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
     );
   }
 
-  Widget buildButton(String title, {GestureTapCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: boxShadow,
-          color: Colors.white,
-        ),
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(16),
-        child: Column(
+  Widget buildButton(
+    String title,
+    Widget icon, {
+    Function()? onTap,
+  }) {
+    return TextButton(
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(colorDisabled),
+      ),
+      onPressed: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: typoInterNomal14,
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 15,
-                ),
-              ],
+            icon,
+            SizedBox(
+              width: Dimens.d8.responsive(),
+            ),
+            Text(
+              title,
+              style: typoInterNomal14,
             ),
           ],
         ),
@@ -280,7 +349,7 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
         ),
         Text(
           title ?? '',
-          style: typoInterNomal14,
+          style: typoInterNomal14.copyWith(height: 1.5),
         ),
       ],
     );

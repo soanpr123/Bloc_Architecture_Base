@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -9,29 +8,30 @@ import 'package:shared/shared.dart';
 import '../../../app.dart';
 
 @Injectable()
-class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
-  AnnounmentBloc(this._getAnnounmentCase, this._readNotificationUseCase) : super(AnnounmentState()) {
-    on<AnnounmentPageInitiated>(
-      _onAnnoumentInitiated,
+class WikiBloc extends BaseBloc<WikiEvent, WikiState> {
+  WikiBloc(
+    this._getWikiUseCase,
+  ) : super(WikiState()) {
+    on<WikiPageInitiated>(
+      _onMainPageInitiated,
       transformer: log(),
     );
-    on<AnnounmentLoadMore>(
-      _onUserLoadMore,
+    on<WikiLoadMore>(
+      _onWikiLoadMore,
       transformer: log(),
     );
-    on<AnnounmentPageRefreshed>(
-      _onHomePageRefreshed,
+    on<WikiPageRefreshed>(
+      _onWikiPageRefreshed,
       transformer: log(),
     );
-    on<ReadAnnounment>(
-      _readNotifi,
+    on<ReadWiki>(
+      _readWiki,
       transformer: log(),
     );
   }
-  final GetAnnoumentnUseCase _getAnnounmentCase;
-  final ReadNotificationUseCase _readNotificationUseCase;
-  FutureOr<void> _onAnnoumentInitiated(AnnounmentPageInitiated event, Emitter<AnnounmentState> emit) async {
-    await _getAnnounment(
+  final GetWikiUseCase _getWikiUseCase;
+  FutureOr<void> _onMainPageInitiated(WikiPageInitiated event, Emitter<WikiState> emit) async {
+    await _getWiki(
       emit: emit,
       isInitialLoad: true,
       doOnSubscribe: () async => emit(state.copyWith(
@@ -44,15 +44,15 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
     );
   }
 
-  FutureOr<void> _onUserLoadMore(AnnounmentLoadMore event, Emitter<AnnounmentState> emit) async {
-    await _getAnnounment(
+  FutureOr<void> _onWikiLoadMore(WikiLoadMore event, Emitter<WikiState> emit) async {
+    await _getWiki(
       emit: emit,
       isInitialLoad: false,
     );
   }
 
-  FutureOr<void> _onHomePageRefreshed(AnnounmentPageRefreshed event, Emitter<AnnounmentState> emit) async {
-    await _getAnnounment(
+  FutureOr<void> _onWikiPageRefreshed(WikiPageRefreshed event, Emitter<WikiState> emit) async {
+    await _getWiki(
       emit: emit,
       isInitialLoad: true,
       doOnSubscribe: () async {
@@ -71,17 +71,17 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
     );
   }
 
-  FutureOr<void> _readNotifi(ReadAnnounment event, Emitter<AnnounmentState> emit) async {
-    await navigator.push(AppRouteInfo.announcementDetail(event.slung));
+  FutureOr<void> _readWiki(ReadWiki event, Emitter<WikiState> emit) async {
+    await navigator.push(AppRouteInfo.wikiDetailPage(event.slung));
     appBloc.add(const AppInitiated(handleErr: false));
-    await _getAnnounment(
+    await _getWiki(
       emit: emit,
       isInitialLoad: true,
     );
   }
 
-  Future<void> _getAnnounment({
-    required Emitter<AnnounmentState> emit,
+  Future<void> _getWiki({
+    required Emitter<WikiState> emit,
     required bool isInitialLoad,
     Future<void> Function()? doOnSubscribe,
     Future<void> Function()? doOnSuccessOrError,
@@ -89,12 +89,13 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
     return runBlocCatching(
       action: () async {
         emit(state.copyWith(loadUsersException: null));
-        final output = await _getAnnounmentCase.execute(const GetAnnoumentInput(), isInitialLoad);
-         await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
+        final output = await _getWikiUseCase.execute(const GetWikiInput(), isInitialLoad);
+        print(output.data);
+        await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.data.isNotEmpty) {
-          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.loaded));
+          emit(state.copyWith(wiki: output, apirequestNoti: APIRequestStatus.loaded));
         } else {
-          emit(state.copyWith(notifi: output, apirequestNoti: APIRequestStatus.nodata));
+          emit(state.copyWith(wiki: output, apirequestNoti: APIRequestStatus.nodata));
         }
       },
       doOnError: (e) async {

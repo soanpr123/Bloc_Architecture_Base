@@ -8,23 +8,22 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 
-class AnnounmentPage extends StatefulWidget {
-  const AnnounmentPage({Key? key}) : super(key: key);
+class WikiPage extends StatefulWidget {
+  const WikiPage({Key? key}) : super(key: key);
 
   @override
-  _AnnounmentPageState createState() => _AnnounmentPageState();
+  _WikiPageState createState() => _WikiPageState();
 }
 
-class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc> {
-  late final _pagingController = CommonPagingController<DataAnnoument>()..disposeBy(disposeBag);
+class _WikiPageState extends BasePageState<WikiPage, WikiBloc> {
+  late final _pagingController = CommonPagingController<DataWiki>()..disposeBy(disposeBag);
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    bloc.add(const AnnounmentPageInitiated());
+    bloc.add(const WikiPageInitiated());
     appBloc.add(const AppInitiated(handleErr: false));
     _pagingController.listen(
-      onLoadMore: () => bloc.add(const AnnounmentLoadMore()),
+      onLoadMore: () => bloc.add(const WikiLoadMore()),
     );
   }
 
@@ -32,13 +31,13 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
   Widget buildPageListeners({required Widget child}) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<AnnounmentBloc, AnnounmentState>(
-          listenWhen: (previous, current) => previous.notifi != current.notifi,
+        BlocListener<WikiBloc, WikiState>(
+          listenWhen: (previous, current) => previous.wiki != current.wiki,
           listener: (context, state) {
-            _pagingController.appendLoadMoreOutput(state.notifi);
+            _pagingController.appendLoadMoreOutput(state.wiki);
           },
         ),
-        BlocListener<AnnounmentBloc, AnnounmentState>(
+        BlocListener<WikiBloc, WikiState>(
           listenWhen: (previous, current) => previous.loadUsersException != current.loadUsersException,
           listener: (context, state) {
             _pagingController.error = state.loadUsersException;
@@ -53,7 +52,7 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
       appBar: CommonAppBar(
-        text: S.current.notifycation_local,
+        text: S.current.wiki,
         centerTitle: true,
         corlorText: Colors.white,
         leadingIcon: const BackButton(color: Colors.white),
@@ -61,7 +60,7 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
         elevation: 1,
         // height: MediaQuery.of(context).padding.top + Dimens.d60.responsive(),
       ),
-      body: BlocBuilder<AnnounmentBloc, AnnounmentState>(
+      body: BlocBuilder<WikiBloc, WikiState>(
         buildWhen: (previous, current) => previous.apirequestNoti != current.apirequestNoti,
         builder: (context, state) {
           return BodyBuilder(
@@ -72,21 +71,21 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
               fit: BoxFit.contain,
             ),
             reload: () {
-              bloc.add(const AnnounmentPageInitiated());
+              bloc.add(const WikiPageInitiated());
             },
             child: RefreshIndicator(
               onRefresh: () {
                 final completer = Completer<void>();
-                bloc.add(AnnounmentPageRefreshed(completer: completer));
+                bloc.add(WikiPageRefreshed(completer: completer));
 
                 return completer.future;
               },
-              child: CommonPagedListView<DataAnnoument>(
+              child: CommonPagedListView<DataWiki>(
                 pagingController: _pagingController,
                 itemBuilder: (context, item, index) {
                   return ListTile(
                     onTap: () {
-                      bloc.add(ReadAnnounment(slung: item.slug ?? ''));
+                      bloc.add(ReadWiki(slung: item.slug ?? ''));
                     },
                     minVerticalPadding: Dimens.d16.responsive(),
                     title: Column(
@@ -99,25 +98,25 @@ class _AnnounmentPageState extends BasePageState<AnnounmentPage, AnnounmentBloc>
                               item.createdAt ?? '',
                               style: typoInterNomal14.copyWith(color: colorTextMedium, height: 1.5),
                             ),
-                            item.isRead == 0
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: Dimens.d2.responsive(),
-                                      horizontal: Dimens.d12.responsive(),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: colorSupportDanger,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(5),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Mới',
-                                      textAlign: TextAlign.center,
-                                      style: typoInterNomal14.copyWith(color: Colors.white, height: 1.5),
-                                    ),
-                                  )
-                                : Container(),
+                            // item.isRead !=null
+                            //     ? Container(
+                            //         padding: EdgeInsets.symmetric(
+                            //           vertical: Dimens.d2.responsive(),
+                            //           horizontal: Dimens.d12.responsive(),
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           color: colorSupportDanger,
+                            //           borderRadius: const BorderRadius.all(
+                            //             Radius.circular(5),
+                            //           ),
+                            //         ),
+                            //         child: Text(
+                            //           'Mới',
+                            //           textAlign: TextAlign.center,
+                            //           style: typoInterNomal14.copyWith(color: Colors.white, height: 1.5),
+                            //         ),
+                            //       )
+                            //     : Container(),
                           ],
                         ),
                         SizedBox(

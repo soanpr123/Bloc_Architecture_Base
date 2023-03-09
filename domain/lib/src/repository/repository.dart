@@ -67,6 +67,15 @@ abstract class Repository {
     required int? limit,
   });
 
+  Future<PagedList<DataWiki>> getWiki({
+    required int page,
+    required int? limit,
+  });
+
+  Future<WikiDetail> getDetailWiki({
+    required String slungs,
+  });
+
   Future<PagedList<AppNotification>> getNotificationUnread({
     required int page,
     required int? limit,
@@ -92,8 +101,6 @@ abstract class Repository {
     required String slungs,
   });
 
-
-  
   Future<BaseEntryData> checkUserRead({
     required String slungs,
   });

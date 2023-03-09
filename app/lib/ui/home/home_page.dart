@@ -34,7 +34,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'id': 2,
       'icon': Assets.png.icAmaiWiki.path,
       'name': S.current.wiki,
-      'onTap': const AppRouteInfo.featureDevelop(),
+      'onTap': const AppRouteInfo.wikiPage(),
     },
     {
       'id': 3,
@@ -52,7 +52,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
   @override
   void initState() {
     super.initState();
-    GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
+    // GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
   }
 
   @override
@@ -140,7 +140,10 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                                 width: Dimens.d24.responsive(),
                               ),
                               Assets.svg.logoHome.svg(
-                                  width: Dimens.d20.responsive(), height: Dimens.d20.responsive(), color: colorGray600),
+                                width: Dimens.d20.responsive(),
+                                height: Dimens.d20.responsive(),
+                                color: colorGray600,
+                              ),
                               SizedBox(
                                 width: Dimens.d4.responsive(),
                               ),
@@ -206,12 +209,14 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                                     height: Dimens.d48.responsive(),
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                          image: AssetImage(item['icon'].toString()), fit: BoxFit.cover),
+                                        image: AssetImage(item['icon'].toString()),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 item['id'] == 0
-                                    ? DateTimeUtils.checkTime()
+                                    ? !DateTimeUtils.checkTimeHome()
                                         ? Container()
                                         : Align(
                                             alignment: Alignment.topRight,

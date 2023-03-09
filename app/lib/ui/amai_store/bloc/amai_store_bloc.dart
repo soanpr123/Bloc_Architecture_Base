@@ -45,6 +45,7 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
       doOnSubscribe: () async => emit(state.copyWith(isShimmerLoading: true, apirequestNoti: APIRequestStatus.loading)),
       action: () async {
         final output = await _getStoreUseCase.execute(const GetStoreInput());
+        await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         if (output.canteen.isNotEmpty && output.other.isNotEmpty) {
           emit(state.copyWith(canteen: output.canteen, other: output.other, apirequestNoti: APIRequestStatus.loaded));
         } else {
@@ -55,10 +56,9 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
         state.copyWith(isShimmerLoading: false),
       ),
       doOnError: (e) async {
-       
         if (e.appExceptionType == AppExceptionType.remote) {
           final exception = e as RemoteException;
-        
+
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apirequestNoti: APIRequestStatus.connectionError,
@@ -136,10 +136,9 @@ class AmaiStoreBloc extends BaseBloc<AmaiStoreEvent, AmaiStoreState> {
         state.copyWith(buttonStateDelete: AppElevatedButtonState.active),
       ),
       doOnError: (e) async {
-       
         if (e.appExceptionType == AppExceptionType.remote) {
           final exception = e as RemoteException;
-         
+
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apirequestNoti: APIRequestStatus.connectionError,

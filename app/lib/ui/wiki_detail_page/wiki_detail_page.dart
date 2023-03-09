@@ -6,30 +6,29 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 
-class AnnouncementDetailPage extends StatefulWidget {
-  const AnnouncementDetailPage({required this.slungs, Key? key}) : super(key: key);
+class WikiDetailPage extends StatefulWidget {
+  const WikiDetailPage({required this.slungs, Key? key}) : super(key: key);
   final String slungs;
   @override
-  _AnnouncementDetailPageState createState() => _AnnouncementDetailPageState();
+  _WikiDetailPageState createState() => _WikiDetailPageState();
 }
 
-class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage, AnouncementDetailBloc> {
+class _WikiDetailPageState extends BasePageState<WikiDetailPage, WikiDetailBloc> {
   late ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
-    bloc.add(AnouncementPageInitiated(slungs: widget.slungs));
+    bloc.add(WikiDetailPageInitiated(slungs: widget.slungs));
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.offset >= 400) {
-          bloc.add(const AnouncementPageShowBack(show: true)); // show the back-to-top button
+          bloc.add(const WikiDetailPageShowBack(show: true)); // show the back-to-top button
         } else {
-          bloc.add(const AnouncementPageShowBack(show: false)); // hide the back-to-top button
+          bloc.add(const WikiDetailPageShowBack(show: false)); // hide the back-to-top button
         }
       });
   }
 
-  // bloc.add(AnouncementPageShowBack());
   @override
   void dispose() {
     _scrollController.dispose(); // dispose the controller
@@ -40,7 +39,7 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
       appBar: CommonAppBar(
-        text: S.current.notifycation_local,
+        text: S.current.wiki,
         centerTitle: true,
         corlorText: Colors.white,
         leadingIcon: const BackButton(color: Colors.white),
@@ -48,7 +47,7 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
         elevation: 1,
         // height: MediaQuery.of(context).padding.top + Dimens.d60.responsive(),
       ),
-      body: BlocBuilder<AnouncementDetailBloc, AnouncementDetailState>(
+      body: BlocBuilder<WikiDetailBloc, WikiDetailState>(
         buildWhen: (previous, current) =>
             previous.announcementDetail != current.announcementDetail ||
             previous.apiRequestStatus != current.apiRequestStatus,
@@ -62,7 +61,7 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
                 fit: BoxFit.contain,
               ),
               reload: () {
-                bloc.add(AnouncementPageInitiated(slungs: widget.slungs));
+                bloc.add(WikiDetailPageInitiated(slungs: widget.slungs));
               },
               child: SingleChildScrollView(
                 controller: _scrollController,
@@ -125,7 +124,7 @@ class _AnnouncementDetailPageState extends BasePageState<AnnouncementDetailPage,
           );
         },
       ),
-      floatingActionButton: BlocBuilder<AnouncementDetailBloc, AnouncementDetailState>(
+      floatingActionButton: BlocBuilder<WikiDetailBloc, WikiDetailState>(
         builder: (context, state) {
           return state.show
               ? GestureDetector(

@@ -1,40 +1,35 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:domain/domain.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 
 @Injectable()
-class AnouncementDetailBloc extends BaseBloc<AnouncementDetailEvent, AnouncementDetailState> {
-  AnouncementDetailBloc(this._announcementDetailUseCase, this._annoumentUseCase)
-      : super(const AnouncementDetailState()) {
-    on<AnouncementPageInitiated>(
-      _onAnnouncementPageInitiated,
+class WikiDetailBloc extends BaseBloc<WikiDetailEvent, WikiDetailState> {
+  WikiDetailBloc(
+    this._getWikiUseCase,
+  ) : super(const WikiDetailState()) {
+    on<WikiDetailPageInitiated>(
+      _onMainPageInitiated,
       transformer: log(),
     );
-    on<AnouncementPageShowBack>(
-      _onAnnouncementShow,
+
+    on<WikiDetailPageShowBack>(
+      _onWikiShow,
       transformer: log(),
     );
   }
-
-  final AnnouncementDetailUseCase _announcementDetailUseCase;
-  final ReadAnnoumentUseCase _annoumentUseCase;
-  FutureOr<void> _onAnnouncementPageInitiated(
-    AnouncementPageInitiated event,
-    Emitter<AnouncementDetailState> emit,
-  ) async {
+  final WikiDetailUseCase _getWikiUseCase;
+  FutureOr<void> _onMainPageInitiated(WikiDetailPageInitiated event, Emitter<WikiDetailState> emit) async {
     await runBlocCatching(
       doOnSubscribe: () async {
         emit(state.copyWith(apiRequestStatus: APIRequestStatus.loading));
       },
       action: () async {
-        await _annoumentUseCase.execute(ReadAnnoumentInput(id: event.slungs));
-        final output = await _announcementDetailUseCase.execute(AnnouncementDetailInput(slungs: event.slungs));
+        final output = await _getWikiUseCase.execute(WikiDetailInput(slungs: event.slungs));
         await Future<void>.delayed(const Duration(seconds: SymbolConstants.delayedApi));
         emit(state.copyWith(announcementDetail: output));
         emit(state.copyWith(apiRequestStatus: APIRequestStatus.loaded));
@@ -55,9 +50,9 @@ class AnouncementDetailBloc extends BaseBloc<AnouncementDetailEvent, Anouncement
     );
   }
 
-  FutureOr<void> _onAnnouncementShow(
-    AnouncementPageShowBack event,
-    Emitter<AnouncementDetailState> emit,
+  FutureOr<void> _onWikiShow(
+    WikiDetailPageShowBack event,
+    Emitter<WikiDetailState> emit,
   ) async {
     emit(state.copyWith(show: event.show));
   }

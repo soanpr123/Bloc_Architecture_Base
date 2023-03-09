@@ -74,9 +74,7 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
         BlocListener<AppBloc, AppState>(
           listenWhen: (previous, current) => previous.reload != current.reload,
           listener: (context, state) {
-          
-            final completer = Completer<void>();
-            bloc.add(NotificationPageRefreshed(completer: completer));
+            bloc.add(const NotificationPageInitiated());
             // appBloc.add(const AppReloadNotipage(reload: false));
           },
         ),
@@ -98,95 +96,108 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
       ),
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(Dimens.d8.responsive(), 0, Dimens.d8.responsive(), 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BlocBuilder<NotificationBloc, NotificationState>(
-                  buildWhen: (previous, current) => previous.curentTab != current.curentTab,
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            tabController.animateTo(0);
-                            appBloc.add(const AppInitiated());
-                            bloc.add(NotificationonTapTab(tabController: tabController));
-                            final completer = Completer<void>();
-                            bloc.add(NotificationPageRefreshed(completer: completer));
-                          },
-                          style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(colorDisabled),
-                          ),
-                          child: Text(
-                            'Tất cả',
-                            style: typoInterNomal14.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: state.curentTab == 0 ? colorBrandPrimary : colorBrandSecondary,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            final completer = Completer<void>();
+          BlocBuilder<AppBloc, AppState>(
+            bloc: appBloc,
+            buildWhen: (previous, current) => previous.reload != current.reload,
+            builder: (context, stateApp) {
+              return BlocBuilder<NotificationBloc, NotificationState>(
+                buildWhen: (previous, current) =>
+                    previous.curentTab != current.curentTab ||
+                    previous.apirequestNoti != current.apirequestNoti ||
+                    previous.apirequestUnread != current.apirequestUnread,
+                builder: (context, state) {
+                  return state.apirequestNoti == APIRequestStatus.loading ||
+                          state.apirequestUnread == APIRequestStatus.loading
+                      ? Container()
+                      : Padding(
+                          padding: EdgeInsets.fromLTRB(Dimens.d8.responsive(), 0, Dimens.d8.responsive(), 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      tabController.animateTo(0);
+                                      appBloc.add(const AppInitiated(handleErr: false));
+                                      bloc.add(NotificationonTapTab(tabController: tabController));
+                                      final completer = Completer<void>();
+                                      bloc.add(NotificationPageRefreshed(completer: completer));
+                                    },
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(colorDisabled),
+                                    ),
+                                    child: Text(
+                                      'Tất cả',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: state.curentTab == 0 ? colorBrandPrimary : colorBrandSecondary,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      final completer = Completer<void>();
 
-                            tabController.animateTo(1);
-                            appBloc.add(const AppInitiated());
-                            bloc.add(NotificationonTapTab(tabController: tabController));
-                            bloc.add(NotificationUnreadPageRefreshed(completer: completer));
-                          },
-                          style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(colorDisabled),
+                                      tabController.animateTo(1);
+                                      appBloc.add(const AppInitiated(handleErr: false));
+                                      bloc.add(NotificationonTapTab(tabController: tabController));
+                                      bloc.add(NotificationUnreadPageRefreshed(completer: completer));
+                                    },
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(colorDisabled),
+                                    ),
+                                    child: Text(
+                                      'Chưa đọc',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.5,
+                                        color: state.curentTab == 1 ? colorBrandPrimary : colorBrandSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      bloc.add(const ReadAllNotifiPress());
+                                    },
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(colorDisabled),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Assets.svg.icCheckDoubleFill
+                                            .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          'Đã đọc',
+                                          style: typoInterNomal14.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: colorBrandPrimary,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          child: Text(
-                            'Chưa đọc',
-                            style: typoInterNomal14.copyWith(
-                              fontWeight: FontWeight.w600,
-                              height: 1.5,
-                              color: state.curentTab == 1 ? colorBrandPrimary : colorBrandSecondary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        bloc.add(const ReadAllNotifiPress());
-                      },
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(colorDisabled),
-                      ),
-                      child: Row(
-                        children: [
-                          Assets.svg.icCheckDoubleFill
-                              .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Đã đọc',
-                            style: typoInterNomal14.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: colorBrandPrimary,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                        );
+                },
+              );
+            },
           ),
           Expanded(
             child: BlocBuilder<AppBloc, AppState>(
+              bloc: appBloc,
               buildWhen: (previous, current) => previous.reload != current.reload,
               builder: (context, stateapp) {
                 return TabBarView(
@@ -196,8 +207,6 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                     BlocBuilder<NotificationBloc, NotificationState>(
                       buildWhen: (previous, current) => previous != current,
                       builder: (context, state) {
-                       
-
                         return BodyBuilder(
                           apiRequestStatus: state.apirequestNoti,
                           image: Assets.png.noData.image(
@@ -221,6 +230,7 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                     pagingController: _pagingController,
                                     itemBuilder: (context, item, index) {
                                       return ItemNotify(
+                                        loading: state.isShimmerLoading,
                                         bloc: bloc,
                                         item: item,
                                       );
@@ -253,17 +263,16 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
 
                               return completer.future;
                             },
-                            child: state.isShimmerLoadingUnread && state.notifiUnread.data.isEmpty
-                                ? const _ListViewLoader()
-                                : CommonPagedListView<AppNotification>(
-                                    pagingController: _pagingControllerUnread,
-                                    itemBuilder: (context, item, index) {
-                                      return ItemNotify(
-                                        bloc: bloc,
-                                        item: item,
-                                      );
-                                    },
-                                  ),
+                            child: CommonPagedListView<AppNotification>(
+                              pagingController: _pagingControllerUnread,
+                              itemBuilder: (context, item, index) {
+                                return ItemNotify(
+                                  bloc: bloc,
+                                  loading: state.isShimmerLoadingUnread,
+                                  item: item,
+                                );
+                              },
+                            ),
                           ),
                         );
                       },
@@ -285,146 +294,143 @@ class ItemNotify extends StatelessWidget {
     super.key,
     required this.bloc,
     required this.item,
+    required this.loading,
   });
 
   final NotificationBloc bloc;
   final AppNotification item;
+  final bool loading;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotificationBloc, NotificationState>(
-      bloc: bloc,
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimens.d8.responsive(),
-            vertical: Dimens.d4.responsive(),
-          ),
-          child: ShimmerLoading(
-            isLoading: state.isShimmerLoading,
-            loadingWidget: const _LoadingItem(),
-            child: GestureDetector(
-              onTap: () async {
-                bloc.add(ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id));
-              },
-              child: Container(
-                // height: 100,
-                margin: EdgeInsets.symmetric(
-                  horizontal: Dimens.d8.responsive(),
-                  vertical: Dimens.d8.responsive(),
-                ),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: Dimens.d8.responsive(),
+        vertical: Dimens.d4.responsive(),
+      ),
+      child: ShimmerLoading(
+        isLoading: loading,
+        loadingWidget: const _LoadingItem(),
+        child: GestureDetector(
+          onTap: () async {
+            bloc.add(ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id));
+          },
+          child: Container(
+            // height: 100,
+            margin: EdgeInsets.symmetric(
+              horizontal: Dimens.d8.responsive(),
+              vertical: Dimens.d8.responsive(),
+            ),
 
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: Dimens.d32.responsive(),
-                      height: Dimens.d32.responsive(),
-                      alignment: Alignment.topCenter,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
-                        borderRadius: BorderRadius.all(Radius.circular(
-                          Dimens.d24.responsive(),
-                        )),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(Dimens.d24.responsive())),
-                        child: item.type == 'announcements' || item.type == 'lunch_menus'
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Assets.svg.logoamai.svg(
-                                    width: Dimens.d20.responsive(),
-                                    height: Dimens.d20.responsive(),
-                                  ),
-                                ],
-                              )
-                            : AppNetworkImage(
-                                source: item.avatar,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Dimens.d32.responsive(),
+                  height: Dimens.d32.responsive(),
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                      Dimens.d24.responsive(),
+                    )),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(Dimens.d24.responsive())),
+                    child: item.type == 'announcements' || item.type == 'lunch_menus'
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Assets.svg.logoamai.svg(
+                                width: Dimens.d20.responsive(),
+                                height: Dimens.d20.responsive(),
                               ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 8,
+                            ],
+                          )
+                        : AppNetworkImage(
+                            source: item.avatar,
                           ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: HtmlWidget(
-                                        item.title ?? '',
-                                        textStyle: typoInterNomal14.copyWith(
-                                          height: 1.5,
-                                        ),
-                                        customStylesBuilder: (element) {
-                                          if (element.className == 'text-notification-bold') {
-                                            return {
-                                              'font-family': 'Inter',
-                                              'font-style': 'normal',
-                                              'color': '#1F2937',
-                                              'font-weight': '600',
-                                              'font-size': ' 14px',
-                                              'line-height': '150%',
-                                            };
-                                          }
-
-                                          return null;
-                                        },
-                                      ),
+                                Flexible(
+                                  child: HtmlWidget(
+                                    item.title ?? '',
+                                    textStyle: typoInterNomal14.copyWith(
+                                      height: 1.5,
                                     ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: Dimens.d4.responsive(),
-                                ),
-                                Text(
-                                  item.createdAt ?? '',
-                                  style: typoInterNomal14.copyWith(
-                                    height: 1.5,
-                                    fontSize: Dimens.d12.responsive(),
-                                    color: colorTextBland,
-                                    letterSpacing: 0.5,
+                                    customStylesBuilder: (element) {
+                                      if (element.className == 'text-notification-bold') {
+                                        return {
+                                          'font-family': 'Inter',
+                                          'font-style': 'normal',
+                                          'color': '#1F2937',
+                                          'font-weight': '600',
+                                          'font-size': ' 14px',
+                                          'line-height': '150%',
+                                        };
+                                      }
+
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            width: Dimens.d12.responsive(),
-                          ),
-                          item.readAt != ''
-                              ? const SizedBox.shrink()
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: Dimens.d12.responsive(),
-                                      height: Dimens.d12.responsive(),
-                                      decoration: BoxDecoration(
-                                        color: colorBrandPrimary,
-                                        borderRadius: BorderRadius.all(Radius.circular(
-                                          Dimens.d24.responsive(),
-                                        )),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                        ],
+                            SizedBox(
+                              height: Dimens.d4.responsive(),
+                            ),
+                            Text(
+                              item.createdAt ?? '',
+                              style: typoInterNomal14.copyWith(
+                                height: 1.5,
+                                fontSize: Dimens.d12.responsive(),
+                                color: colorTextBland,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: Dimens.d12.responsive(),
+                      ),
+                      item.readAt != ''
+                          ? const SizedBox.shrink()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: Dimens.d12.responsive(),
+                                  height: Dimens.d12.responsive(),
+                                  decoration: BoxDecoration(
+                                    color: colorBrandPrimary,
+                                    borderRadius: BorderRadius.all(Radius.circular(
+                                      Dimens.d24.responsive(),
+                                    )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

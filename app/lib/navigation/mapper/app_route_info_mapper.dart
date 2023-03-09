@@ -22,6 +22,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       changePassWord: () => const ChangePassRoute(),
       announmentPage: () => const AnnounmentRoute(),
       featureDevelop: () => const FeatureDeveloperRoute(),
+      wikiPage: () => const WikiRoute(),
+      wikiDetailPage: (slungs) => WikiDetailRoute(slungs: slungs),
       // itemDetail: (user) => ItemDetailRoute(user: user),
     );
   }
