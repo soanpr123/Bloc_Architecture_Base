@@ -96,103 +96,97 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
       ),
       body: Column(
         children: [
-          BlocBuilder<AppBloc, AppState>(
-            bloc: appBloc,
-            buildWhen: (previous, current) => previous.reload != current.reload,
-            builder: (context, stateApp) {
-              return BlocBuilder<NotificationBloc, NotificationState>(
-                buildWhen: (previous, current) =>
-                    previous.curentTab != current.curentTab ||
-                    previous.apirequestNoti != current.apirequestNoti ||
-                    previous.apirequestUnread != current.apirequestUnread,
-                builder: (context, state) {
-                  return state.apirequestNoti == APIRequestStatus.loading ||
-                          state.apirequestUnread == APIRequestStatus.loading
-                      ? Container()
-                      : Padding(
-                          padding: EdgeInsets.fromLTRB(Dimens.d8.responsive(), 0, Dimens.d8.responsive(), 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          BlocBuilder<NotificationBloc, NotificationState>(
+            buildWhen: (previous, current) =>
+                previous.curentTab != current.curentTab ||
+                previous.apirequestNoti != current.apirequestNoti ||
+                previous.apirequestUnread != current.apirequestUnread,
+            builder: (context, state) {
+              return state.apirequestNoti == APIRequestStatus.loading ||
+                      state.apirequestUnread == APIRequestStatus.loading
+                  ? Container()
+                  : Padding(
+                      padding: EdgeInsets.fromLTRB(Dimens.d8.responsive(), 0, Dimens.d8.responsive(), 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      tabController.animateTo(0);
-                                      appBloc.add(const AppInitiated(handleErr: false));
-                                      bloc.add(NotificationonTapTab(tabController: tabController));
-                                      final completer = Completer<void>();
-                                      bloc.add(NotificationPageRefreshed(completer: completer));
-                                    },
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(colorDisabled),
-                                    ),
-                                    child: Text(
-                                      'Tất cả',
-                                      style: typoInterNomal14.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: state.curentTab == 0 ? colorBrandPrimary : colorBrandSecondary,
-                                        height: 1.5,
-                                      ),
-                                    ),
+                              TextButton(
+                                onPressed: () {
+                                  tabController.animateTo(0);
+                                  appBloc.add(const AppInitiated(handleErr: false));
+                                  bloc.add(NotificationonTapTab(tabController: tabController));
+                                  final completer = Completer<void>();
+                                  bloc.add(NotificationPageRefreshed(completer: completer));
+                                },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(colorDisabled),
+                                ),
+                                child: Text(
+                                  'Tất cả',
+                                  style: typoInterNomal14.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: state.curentTab == 0 ? colorBrandPrimary : colorBrandSecondary,
+                                    height: 1.5,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      final completer = Completer<void>();
-
-                                      tabController.animateTo(1);
-                                      appBloc.add(const AppInitiated(handleErr: false));
-                                      bloc.add(NotificationonTapTab(tabController: tabController));
-                                      bloc.add(NotificationUnreadPageRefreshed(completer: completer));
-                                    },
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(colorDisabled),
-                                    ),
-                                    child: Text(
-                                      'Chưa đọc',
-                                      style: typoInterNomal14.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.5,
-                                        color: state.curentTab == 1 ? colorBrandPrimary : colorBrandSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      bloc.add(const ReadAllNotifiPress());
-                                    },
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(colorDisabled),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Assets.svg.icCheckDoubleFill
-                                            .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          'Đã đọc',
-                                          style: typoInterNomal14.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: colorBrandPrimary,
-                                            height: 1.5,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              TextButton(
+                                onPressed: () {
+                                  final completer = Completer<void>();
+
+                                  tabController.animateTo(1);
+                                  appBloc.add(const AppInitiated(handleErr: false));
+                                  bloc.add(NotificationonTapTab(tabController: tabController));
+                                  bloc.add(NotificationUnreadPageRefreshed(completer: completer));
+                                },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(colorDisabled),
+                                ),
+                                child: Text(
+                                  'Chưa đọc',
+                                  style: typoInterNomal14.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.5,
+                                    color: state.curentTab == 1 ? colorBrandPrimary : colorBrandSecondary,
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
-                        );
-                },
-              );
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  bloc.add(const ReadAllNotifiPress());
+                                },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(colorDisabled),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Assets.svg.icCheckDoubleFill
+                                        .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'Đã đọc',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: colorBrandPrimary,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
             },
           ),
           Expanded(
@@ -336,19 +330,20 @@ class ItemNotify extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(Dimens.d24.responsive())),
-                    child: item.type == 'announcements' || item.type == 'lunch_menus'
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Assets.svg.logoamai.svg(
-                                width: Dimens.d20.responsive(),
-                                height: Dimens.d20.responsive(),
+                    child:
+                        item.type == 'announcements' || item.type == 'lunch_menus' || item.type == 'amai_transactions'
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Assets.svg.logoamai.svg(
+                                    width: Dimens.d20.responsive(),
+                                    height: Dimens.d20.responsive(),
+                                  ),
+                                ],
+                              )
+                            : AppNetworkImage(
+                                source: item.avatar,
                               ),
-                            ],
-                          )
-                        : AppNetworkImage(
-                            source: item.avatar,
-                          ),
                   ),
                 ),
                 Expanded(

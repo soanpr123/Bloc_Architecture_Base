@@ -114,7 +114,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: ' cho bữa trưa hôm nay.!',
+                                      text: ' cho bữa trưa hôm nay.',
                                       style: typoInterNomal14.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: colorTextDark,

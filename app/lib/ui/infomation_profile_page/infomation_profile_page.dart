@@ -50,6 +50,7 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       S.current.introduction_profile,
@@ -58,12 +59,18 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                     const SizedBox(
                       width: 8,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // context.read<InfomationProfileCubit>().showEdit(!state.showEdit);
-                        bloc.add(InfomationProfileShowEditInput(show: bloc.state.showEdit));
-                      },
-                      child: Assets.svg.edit2Line.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                    Padding(
+                      padding: EdgeInsets.only(top: Dimens.d8.responsive()),
+                      child: GestureDetector(
+                        onTap: () {
+                          // context.read<InfomationProfileCubit>().showEdit(!state.showEdit);
+                          bloc.add(InfomationProfileShowEditInput(show: bloc.state.showEdit));
+                        },
+                        child: Assets.svg.edit2Line.svg(
+                          width: Dimens.d20.responsive(),
+                          height: Dimens.d20.responsive(),
+                        ),
+                      ),
                     ),
                   ],
                 ),

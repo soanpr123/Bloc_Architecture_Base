@@ -89,6 +89,7 @@ class ProfileData with _$ProfileData {
     @JsonKey(name: 'work_status_name') String? workStatusName,
     String? department,
     @JsonKey(name: 'have_lunch_menu') bool? haveLunchMenu,
+    @JsonKey(name: 'have_internal_announcement') bool? haveInternalAnnouncement,
   }) = _ProfileData;
 
   factory ProfileData.fromJson(Map<String, dynamic> json) => _$ProfileDataFromJson(json);

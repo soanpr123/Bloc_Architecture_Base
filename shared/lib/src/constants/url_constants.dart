@@ -21,10 +21,6 @@ class UrlConstants {
     switch (EnvConstants.flavor) {
       case Flavor.develop:
         return 'https://internaldev-api.amaisoft.com/api/';
-      case Flavor.qa:
-        return 'https://internaldev-api.amaisoft.com/api/';
-      case Flavor.staging:
-        return 'https://internaldev-api.amaisoft.com/api/';
       case Flavor.production:
         return 'https://internal-api.amaisoft.com/api/';
     }

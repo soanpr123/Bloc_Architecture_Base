@@ -37,8 +37,10 @@ class RepositoryImpl implements Repository {
     this._announcementDataMapper,
     this._wikitDataMapper,
     this._detailDataMapper,
+    this._blogsDetailDataMapper,
+    this._commentDataMapper,
   );
-
+  final BlogsDetailDataMapper _blogsDetailDataMapper;
   final AppApiService _appApiService;
   final AppPreferences _appPreferences;
   final TokenDataMapper _tokenDataMapper;
@@ -54,7 +56,7 @@ class RepositoryImpl implements Repository {
   final LanguageCodeDataMapper _languageCodeDataMapper;
   final AmaiOrderDataMapper _amaiOrderDataMapper;
   final ImageUploadDataMapper _imageUploadDataMapper;
-
+  final CommentDataMapper _commentDataMapper;
   final WikitDataMapper _wikitDataMapper;
   final WikiDetailDataMapper _detailDataMapper;
   @override
@@ -334,5 +336,40 @@ class RepositoryImpl implements Repository {
       total: response.data?.total,
       totalPage: response.data?.totalPage,
     );
+  }
+
+  @override
+  Future<BlogsDetailEntry> getDetailBlogs({required String slungs}) async {
+    final response = await _appApiService.getDetailBlogs(slungs: slungs);
+
+    return _blogsDetailDataMapper.mapToEntity(response.data);
+  }
+
+  @override
+  Future<List<ComentDataEntry>> getComents({required String slungs}) async {
+    final response = await _appApiService.getComent(slungs);
+
+    return _commentDataMapper.mapToListEntity(response.data);
+  }
+
+  @override
+  Future<BaseEntryData> likeBlogs({required String slungs}) async {
+    final response = await _appApiService.likeBlogs(slungs: slungs);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<BaseEntryData> likeComent({required String slungs, required int id}) async {
+    final response = await _appApiService.likeComment(slungs: slungs, id: id);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<BaseEntryData> sendAmai({required String slungs}) async {
+    final response = await _appApiService.sendAmai(slungs: slungs);
+
+    return _baseResponseDataMapper.mapToEntity(response);
   }
 }

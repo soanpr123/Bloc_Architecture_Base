@@ -54,6 +54,7 @@ class UserDataMapper extends BaseDataMapper<ProfileData, Profile> {
       workStatusName: data?.workStatusName,
       department: data?.department,
       haveLunchMenu: data?.haveLunchMenu,
+      haveInternalAnnouncement: data?.haveInternalAnnouncement,
     );
   }
 }

@@ -43,7 +43,7 @@ class ViewUtils {
   }
 
   static void setsetEnabledSystemUIOverlays(SystemUiMode systemUiMode) {
-   SystemChrome.setEnabledSystemUIMode(systemUiMode);
+    SystemChrome.setEnabledSystemUIMode(systemUiMode, overlays: [SystemUiOverlay.top]);
   }
 
   static Offset? getWidgetPosition(GlobalKey globalKey) {

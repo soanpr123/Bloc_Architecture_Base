@@ -32,14 +32,8 @@ Future<LoadInitialResourceOutput> _loadInitialResource() async {
 
 Future<void> _runMyApp() async {
   final initialResource = await _loadInitialResource();
-  runApp(DevicePreview(
-    availableLocales: [
-      const Locale('vi'),
-    ],
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(
-      initialResource: initialResource,
-    ),
+  runApp(MyApp(
+    initialResource: initialResource,
   ));
 }
 

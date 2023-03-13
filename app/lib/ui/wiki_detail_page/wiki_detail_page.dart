@@ -5,6 +5,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 import '../../app.dart';
+import '../blogs_detail_page/widget/hightlight_code.dart';
 
 class WikiDetailPage extends StatefulWidget {
   const WikiDetailPage({required this.slungs, Key? key}) : super(key: key);
@@ -112,7 +113,13 @@ class _WikiDetailPageState extends BasePageState<WikiDetailPage, WikiDetailBloc>
                         a: typoInterNomal14.copyWith(
                           color: colorBrandPrimary,
                         ),
+                        blockquoteDecoration: BoxDecoration(
+                          color: colorAmber100,
+                        ),
                       ),
+                      builders: {
+                        'code': CodeElementBuilder(),
+                      },
                       onTapLink: (text, href, title) {
                         IntentUtils.openBrowserURL(url: href ?? '', inApp: false);
                       },

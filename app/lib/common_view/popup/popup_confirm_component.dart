@@ -6,14 +6,14 @@ import '../../app.dart';
 class DialogConfirmCommon extends StatelessWidget {
   const DialogConfirmCommon({
     required this.title,
-    required this.message,
+    this.message,
     this.buttonState,
     this.tileButton,
     required this.onPressed,
     Key? key,
   }) : super(key: key);
   final String title;
-  final Widget message;
+  final String? message;
   final String? tileButton;
   final AppElevatedButtonState? buttonState;
   final Function? onPressed;
@@ -26,7 +26,7 @@ class DialogConfirmCommon extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Thông báo',
+                message ?? 'Thông báo',
                 style: typoInterNomal18.copyWith(color: colorTextDark),
               ),
             ],

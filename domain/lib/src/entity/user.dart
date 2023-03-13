@@ -40,5 +40,6 @@ class Profile with _$Profile {
     @Default('') String? workStatusName,
     @Default('') String? department,
     @Default(false) bool? haveLunchMenu,
+    @Default(false) bool? haveInternalAnnouncement,
   }) = _Profile;
 }

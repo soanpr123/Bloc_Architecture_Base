@@ -104,4 +104,21 @@ abstract class Repository {
   Future<BaseEntryData> checkUserRead({
     required String slungs,
   });
+
+  Future<BlogsDetailEntry> getDetailBlogs({
+    required String slungs,
+  });
+  Future<List<ComentDataEntry>> getComents({
+    required String slungs,
+  });
+  Future<BaseEntryData> likeBlogs({
+    required String slungs,
+  });
+  Future<BaseEntryData> likeComent({
+    required String slungs,
+    required int id,
+  });
+  Future<BaseEntryData> sendAmai({
+    required String slungs,
+  });
 }

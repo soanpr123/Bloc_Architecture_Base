@@ -22,10 +22,7 @@ class AppNetworkImage extends StatelessWidget {
     // var url = Uri.parse('https://example.com/whatsit/create');
     // print(await http.read(Uri.parse('https://example.com/foobar.txt')));
     return source == null || source!.isEmpty || !source!.startsWith('http')
-        ? Image.asset(
-            Assets.png.noAvatar.path,
-            fit: fit,
-          )
+        ? Assets.svg.noAvatar.svg(fit: fit)
         : CachedNetworkImage(
             imageUrl: source ?? '',
             placeholder: (context, url) => SizedBox(

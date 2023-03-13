@@ -26,6 +26,7 @@ class AppConfig extends ApplicationConfig {
       DeviceUtils.deviceType == DeviceType.mobile ? UiConstants.mobileOrientation : UiConstants.tabletOrientation,
     );
     ViewUtils.setsetEnabledSystemUIOverlays(SystemUiMode.immersiveSticky);
+
     // await LocalPushNotificationHelper.init();
   }
 }
