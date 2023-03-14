@@ -10,19 +10,34 @@ class AppNetworkImage extends StatelessWidget {
     this.source,
     this.style = 'none',
     this.fit = BoxFit.fill,
+    this.isAvt = false,
+    this.gender = '',
     this.decoration,
   }) : super(key: key);
 
   final String? source;
   final String style;
   final BoxFit fit;
+  final bool isAvt;
+  final String gender;
   final BoxDecoration? decoration;
   @override
   Widget build(BuildContext context) {
     // var url = Uri.parse('https://example.com/whatsit/create');
     // print(await http.read(Uri.parse('https://example.com/foobar.txt')));
     return source == null || source!.isEmpty || !source!.startsWith('http')
-        ? Assets.svg.noAvatar.svg(fit: fit)
+        ? isAvt
+            ? Container(
+                decoration: BoxDecoration(
+                  color: colorBgAvt,
+                ),
+                child: gender == 'Nam'
+                    ? Assets.png.noAvatar.image(fit: fit)
+                    : gender == 'Nữ'
+                        ? Assets.png.nuNoavt.image(fit: fit)
+                        : Assets.png.ortherNoavt.image(fit: fit),
+              )
+            : Assets.svg.noAvatar.svg(fit: fit)
         : CachedNetworkImage(
             imageUrl: source ?? '',
             placeholder: (context, url) => SizedBox(

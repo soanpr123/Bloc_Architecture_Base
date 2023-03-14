@@ -11,9 +11,12 @@ import '../../../utils/toast_message.dart';
 
 @Injectable()
 class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
-  NotificationBloc(this._getNotificationUseCase, this._getNotificationUnreadUseCase, this._readNotificationUseCase,
-      this._allNotificationUseCase)
-      : super(NotificationState()) {
+  NotificationBloc(
+    this._getNotificationUseCase,
+    this._getNotificationUnreadUseCase,
+    this._readNotificationUseCase,
+    this._allNotificationUseCase,
+  ) : super(NotificationState()) {
     on<NotificationPageInitiated>(
       _onNotifiPageInitiated,
       transformer: log(),

@@ -59,6 +59,10 @@ export 'shared_view/custom_alert.dart';
 export 'style/app_colors.dart';
 export 'style/app_style.dart';
 export 'style/app_text_styles.dart';
+export 'ui/amai_member/amai_member.dart';
+export 'ui/amai_member/bloc/amai_member_bloc.dart';
+export 'ui/amai_member/bloc/amai_member_event.dart';
+export 'ui/amai_member/bloc/amai_member_state.dart';
 export 'ui/amai_store/amai_store_page.dart';
 export 'ui/amai_store/bloc/amai_store_bloc.dart';
 export 'ui/amai_store/bloc/amai_store_event.dart';
@@ -115,5 +119,3 @@ export 'ui/wiki_page/bloc/wiki_bloc.dart';
 export 'ui/wiki_page/bloc/wiki_event.dart';
 export 'ui/wiki_page/bloc/wiki_state.dart';
 export 'ui/wiki_page/wiki_page.dart';
-
-
