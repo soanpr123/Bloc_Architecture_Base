@@ -40,7 +40,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'id': 3,
       'icon': Assets.png.icMember.path,
       'name': S.current.memberlist,
-      'onTap': const AppRouteInfo.featureDevelop(),
+      'onTap': const AppRouteInfo.amaiMember(),
     },
     {
       'id': 4,

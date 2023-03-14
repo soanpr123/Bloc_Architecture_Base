@@ -13,7 +13,7 @@ Color colorSupportDanger = HexColor('EF4444');
 Color colorSupportWarning = HexColor('F59E0B');
 Color colorAmber100 = HexColor('FEF3C7');
 Color colorRed200 = HexColor('FECACA');
-
+Color colorBgAvt = HexColor('F7F7F7');
 Color colorRed500 = HexColor('EF4444');
 Color colorUiBg03 = HexColor('CAEAD7');
 Color colorUiBg04 = HexColor('E2E8F0');

@@ -59,8 +59,8 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                     const SizedBox(
                       width: 8,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: Dimens.d8.responsive()),
+                    Container(
+                      padding: EdgeInsets.only(top: Dimens.d5.responsive()),
                       child: GestureDetector(
                         onTap: () {
                           // context.read<InfomationProfileCubit>().showEdit(!state.showEdit);

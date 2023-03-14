@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartx/dartx.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared/shared.dart';
+
 
 import '../../data.dart';
 import 'mapper/Announcement_detail_mapper.dart';
@@ -12,7 +12,7 @@ import 'mapper/base_response_mapper.dart';
 import 'mapper/data_history_mapper.dart';
 import 'mapper/data_list_store_mapper.dart';
 import 'mapper/detail_wiki_mapper.dart';
-import 'mapper/list_data_history_mapper.dart';
+
 import 'mapper/order_data_mapper.dart';
 import 'mapper/upload_image_mapper.dart';
 import 'mapper/wiki_data_mapper.dart';
@@ -39,6 +39,7 @@ class RepositoryImpl implements Repository {
     this._detailDataMapper,
     this._blogsDetailDataMapper,
     this._commentDataMapper,
+    this._memberDataMapper,
   );
   final BlogsDetailDataMapper _blogsDetailDataMapper;
   final AppApiService _appApiService;
@@ -59,6 +60,7 @@ class RepositoryImpl implements Repository {
   final CommentDataMapper _commentDataMapper;
   final WikitDataMapper _wikitDataMapper;
   final WikiDetailDataMapper _detailDataMapper;
+  final MemberDataMapper _memberDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -371,5 +373,18 @@ class RepositoryImpl implements Repository {
     final response = await _appApiService.sendAmai(slungs: slungs);
 
     return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<PagedList<MemberDataEntry>> getListMember({required int page, required int? limit}) async {
+    final response = await _appApiService.getMember(page: page, limit: limit);
+
+    return PagedList(
+      data: _memberDataMapper.mapToListEntity(response.data?.data ?? []),
+      perPage: response.data?.perPage,
+      currentPage: response.data?.currentPage,
+      total: response.data?.total,
+      totalPage: response.data?.totalPage,
+    );
   }
 }

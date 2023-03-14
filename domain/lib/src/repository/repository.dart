@@ -121,4 +121,8 @@ abstract class Repository {
   Future<BaseEntryData> sendAmai({
     required String slungs,
   });
+   Future<PagedList<MemberDataEntry>> getListMember({
+     required int page,
+    required int? limit,
+  });
 }

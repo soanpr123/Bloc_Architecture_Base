@@ -6,6 +6,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 import '../../app.dart';
+import '../../common_view/popup/popup_infor.dart';
 
 @LazySingleton(as: BasePopupInfoMapper)
 class AppPopupInfoMapper extends BasePopupInfoMapper {
@@ -90,6 +91,7 @@ class AppPopupInfoMapper extends BasePopupInfoMapper {
         tileButton: titleButton,
         onPressed: onPress,
       ),
+      dialogInfo: (user,onPress) => DialogInfo(user: user ?? const MemberDataEntry(),onPress: onPress!,),
     );
   }
 }

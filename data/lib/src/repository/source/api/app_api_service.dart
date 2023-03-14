@@ -169,6 +169,22 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<ListMemberData>> getMember({
+    required int page,
+    required int? limit,
+  }) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'staffs',
+      queryParameters: {
+        'page': page,
+        'per_page': limit,
+      },
+      // successResponseMapperType: SuccessResponseMapperType.jsonArray,
+      decoder: ListMemberData.fromJson,
+    );
+  }
+
   Future<DataResponse<dynamic>> checkUserRead({required String slungs}) {
     return _authAppServerApiClient.request(
       method: RestMethod.post,

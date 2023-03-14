@@ -24,6 +24,7 @@ import '../../ui/infomation_profile_page/infomation_profile_page.dart';
     AutoRoute<dynamic>(page: FeatureDeveloperPage),
     AutoRoute<dynamic>(page: WikiDetailPage),
     AutoRoute<dynamic>(page: BlogsDetailPage),
+    AutoRoute<dynamic>(page: AmaiMemberPage),
   ],
 )
 class $AppRouter {}

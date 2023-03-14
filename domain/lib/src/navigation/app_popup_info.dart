@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/shared.dart';
 
+import '../../domain.dart';
+
 part 'app_popup_info.freezed.dart';
 
 /// dialog, bottomsheet
@@ -32,7 +34,7 @@ class AppPopupInfo with _$AppPopupInfo {
     Function? onPress,
     BuildContext? context,
   }) = _DialogConfirm;
-   const factory AppPopupInfo.dialogConfirmComon({
+  const factory AppPopupInfo.dialogConfirmComon({
     String? message,
     String? title,
     String? titleButton,
@@ -40,4 +42,8 @@ class AppPopupInfo with _$AppPopupInfo {
     BuildContext? context,
   }) = _DialogConfirmComon;
   const factory AppPopupInfo.requiredLoginDialog() = _RequiredLoginDialog;
+  const factory AppPopupInfo.dialogInfo({
+    MemberDataEntry? user,
+    Function? onPress,
+  }) = _DialogInfo;
 }
