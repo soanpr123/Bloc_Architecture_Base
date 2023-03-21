@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'hex_color.dart';
 
 Color colorBrandPrimary = HexColor('47b475');
+Color colorSupportInfo = HexColor('3B82F6');
 Color colorHoverPrimary = HexColor('13926e');
 Color colorDisabled = HexColor('CAEAD7');
 Color colorTextDark = HexColor('1F2937');
@@ -16,6 +17,7 @@ Color colorRed200 = HexColor('FECACA');
 Color colorBgAvt = HexColor('F7F7F7');
 Color colorRed500 = HexColor('EF4444');
 Color colorUiBg03 = HexColor('CAEAD7');
+Color colorUiBg02 = HexColor('9CA3AF');
 Color colorUiBg04 = HexColor('E2E8F0');
 Color colorBrandSecondary = HexColor('9CA3AF');
 Color colorGray600 = HexColor('4B5563');

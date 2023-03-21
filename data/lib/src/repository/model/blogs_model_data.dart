@@ -5,6 +5,7 @@ part 'blogs_model_data.g.dart';
 @freezed
 class Author with _$Author {
   const factory Author({
+    int? id,
     String? name,
     String? avatar,
   }) = _Author;
@@ -46,4 +47,3 @@ class BlogsModelData with _$BlogsModelData {
 
   factory BlogsModelData.fromJson(Map<String, dynamic> json) => _$BlogsModelDataFromJson(json);
 }
-

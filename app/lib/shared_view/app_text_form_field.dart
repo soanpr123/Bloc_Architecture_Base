@@ -86,6 +86,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       },
       onTap: widget.onTap,
       decoration: decorTextField.copyWith(
+        
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: widget.colorBorderFocus ?? colorBrandPrimary),
           borderRadius: BorderRadius.circular(

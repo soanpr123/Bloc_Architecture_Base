@@ -174,12 +174,12 @@ build_prod_ios:
 	cd tools && $(BUILD_CMD) production build ios
 
 build_dev_ipa:
-	cd tools && $(BUILD_CMD) develop build ipa --export-options-plist=ios/exportOptions.plist
+	cd tools && $(BUILD_CMD) develop build ipa 
 
 
 
 build_prod_ipa:
-	cd tools && $(BUILD_CMD) production build ipa --export-options-plist=ios/exportOptions.plist
+	cd tools && $(BUILD_CMD) production build ipa 
 
 pub_get_data:
 	@melos run pub_get_data

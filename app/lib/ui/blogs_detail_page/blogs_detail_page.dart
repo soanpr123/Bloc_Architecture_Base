@@ -20,6 +20,8 @@ class BlogsDetailPage extends StatefulWidget {
 }
 
 class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBloc> {
+  GlobalKey _textKey = GlobalKey();
+
   late ScrollController _scrollController;
   @override
   void initState() {
@@ -45,7 +47,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
         centerTitle: true,
         corlorText: Colors.white,
         leadingIcon: const BackButton(color: Colors.white),
-        backgroundColor: colorBrandPrimary,
+        backgroundColor: colorSupportInfo,
         elevation: 1,
         // height: MediaQuery.of(context).padding.top + Dimens.d60.responsive(),
       ),
@@ -54,6 +56,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
             previous.users != current.users || previous.apiRequestStatus != current.apiRequestStatus,
         builder: (context, state) {
           return SafeArea(
+            bottom: false,
             child: BodyBuilder(
               apiRequestStatus: state.apiRequestStatus,
               image: Assets.png.noData.image(
@@ -216,6 +219,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                             children: [
                               Text(
                                 'Bình luận (${state.users.totalComments})',
+                                key: _textKey,
                                 style: typoInterNomal16.copyWith(
                                     color: colorTextDark, height: 1.5, fontWeight: FontWeight.w700),
                               ),
@@ -364,19 +368,26 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                                   overlayColor: MaterialStateProperty.all(colorUiBg03),
                                 ),
                                 onPressed: () {
-                                  // final RenderBox renderBox =
-                                  //     commentKey.currentContext?.findRenderObject() as RenderBox;
+                                  final RenderBox renderBox = _textKey.currentContext?.findRenderObject() as RenderBox;
 
-                                  // final double offset = renderBox.localToGlobal(Offset.zero).dy;
-                                  // final double appBarHeight = AppBar().preferredSize.height;
-                                  // final double statusBarHeight = MediaQuery.of(context).padding.top;
+                                  final textPosition = renderBox.localToGlobal(Offset.zero);
+                                  final double appBarHeight = AppBar().preferredSize.height + 50;
+                                  final double statusBarHeight = MediaQuery.of(context).padding.top;
                                   // _scrollController.animateTo(offset - appBarHeight - statusBarHeight,
                                   //     duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-                                  _scrollController.animateTo(
-                                    _scrollController.position.maxScrollExtent,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.fastOutSlowIn,
-                                  );
+                                  if (textPosition != null) {
+                                    _scrollController.animateTo(
+                                      textPosition.dy - appBarHeight - statusBarHeight,
+                                      duration: const Duration(milliseconds: 500),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  }
+
+                                  // _scrollController.animateTo(
+                                  //   _scrollController.position.maxScrollExtent,
+                                  //   duration: const Duration(milliseconds: 500),
+                                  //   curve: Curves.fastOutSlowIn,
+                                  // );
                                 },
                                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                   Assets.svg.chat.svg(

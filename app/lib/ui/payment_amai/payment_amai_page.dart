@@ -58,7 +58,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) > SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
                           ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                               buildWhen: (previous, current) => previous.status != current.status,
                               builder: (context, statePay) {
@@ -93,7 +93,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) > SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
                           ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                               buildWhen: (previous, current) => previous.status != current.status,
                               builder: (context, statePay) {
@@ -159,7 +159,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) > SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
                           ? Container()
                           : Text(
                               S.current.amai_noti,
@@ -195,7 +195,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
               BlocBuilder<AppBloc, AppState>(
                 bloc: appBloc,
                 builder: (context, state) {
-                  return (state.users.totalAmais ?? 0) > SymbolConstants.amaipayment
+                  return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
                       ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                           buildWhen: (previous, current) =>
                               previous.status != current.status || previous.buttonState != current.buttonState,

@@ -26,6 +26,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       wikiDetailPage: (slungs) => WikiDetailRoute(slungs: slungs),
       blogsDetail: (slungs) => BlogsDetailRoute(slungs: slungs),
       amaiMember: () => const AmaiMemberRoute(),
+      listBlogsPage: () => const ListBlogsRoute(),
       // itemDetail: (user) => ItemDetailRoute(user: user),
     );
   }

@@ -46,4 +46,7 @@ class AppPopupInfo with _$AppPopupInfo {
     MemberDataEntry? user,
     Function? onPress,
   }) = _DialogInfo;
+  const factory AppPopupInfo.bottomSheet({
+    Widget? child,
+  }) = _BottomSheet;
 }

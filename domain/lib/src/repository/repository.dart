@@ -44,6 +44,17 @@ abstract class Repository {
   Future<bool> saveIsFirstLogin(bool isFirstLogin);
 
   Future<bool> saveIsFirstLaunchApp(bool isFirstLaunchApp);
+   Future<PagedList<BlogsDataEntry>> getListPost({
+    required int page,
+    required int? limit,
+    required String? categorySlug,
+    required String? orderKey,
+    required String? orderDir,
+    required int? postType,
+    required String? search,
+  });
+
+    Future<ResourceDataEntry> getResource();
 
   Future<PagedList<Profile>> getUsers({
     required int page,

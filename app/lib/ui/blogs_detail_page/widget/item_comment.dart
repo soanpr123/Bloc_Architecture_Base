@@ -22,7 +22,7 @@ class ItemComent extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Dimens.d12.responsive()),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: colorUiBorder, width: 2),
+          top: BorderSide(color: colorUiBorder, width: 1),
         ),
       ),
       child: Column(
@@ -80,7 +80,7 @@ class ItemComent extends StatelessWidget {
                               color: colorTextDark,
                             ),
                           ),
-                          SizedBox(height: Dimens.d12.responsive()),
+                          SizedBox(height: Dimens.d4.responsive()),
                           Row(
                             children: [
                               Assets.svg.heartBlack.svg(
@@ -100,7 +100,7 @@ class ItemComent extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  bloc.add(LikeComment(slungs:slungs,id: cmt.id??0 ));
+                                  bloc.add(LikeComment(slungs: slungs, id: cmt.id ?? 0));
                                 },
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(colorDisabled),

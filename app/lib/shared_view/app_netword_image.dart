@@ -13,6 +13,7 @@ class AppNetworkImage extends StatelessWidget {
     this.isAvt = false,
     this.gender = '',
     this.decoration,
+    
   }) : super(key: key);
 
   final String? source;
@@ -27,16 +28,13 @@ class AppNetworkImage extends StatelessWidget {
     // print(await http.read(Uri.parse('https://example.com/foobar.txt')));
     return source == null || source!.isEmpty || !source!.startsWith('http')
         ? isAvt
-            ? Container(
-                decoration: BoxDecoration(
-                  color: colorBgAvt,
-                ),
-                child: gender == 'Nam'
-                    ? Assets.png.noAvatar.image(fit: fit)
-                    : gender == 'Nữ'
-                        ? Assets.png.nuNoavt.image(fit: fit)
-                        : Assets.png.ortherNoavt.image(fit: fit),
-              )
+            ? gender == 'Nam'
+                ? Assets.png.noAvatar.image(
+                    fit: fit,
+                  )
+                : gender == 'Nữ'
+                    ? Assets.png.nuNoavt.image(fit: fit)
+                    : Assets.png.ortherNoavt.image(fit: fit)
             : Assets.svg.noAvatar.svg(fit: fit)
         : CachedNetworkImage(
             imageUrl: source ?? '',

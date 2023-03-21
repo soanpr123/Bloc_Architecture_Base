@@ -28,6 +28,7 @@ class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
         if (output.data['status_code'] == 200) {
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: true));
         } else {
+          errorToast(msg: output.data['message'].toString());
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: false));
         }
       },

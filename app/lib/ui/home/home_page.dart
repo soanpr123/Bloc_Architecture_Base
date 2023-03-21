@@ -46,7 +46,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'id': 4,
       'icon': Assets.png.icBlogs.path,
       'name': S.current.blogs,
-      'onTap': const AppRouteInfo.featureDevelop(),
+      'onTap': const AppRouteInfo.listBlogsPage(),
     },
   ];
   @override
@@ -101,26 +101,26 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                   buildWhen: (previous, current) =>
                       previous.users != current.users || previous.reloadHis != current.reloadHis,
                   builder: (context, state) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        state.users.name != ""
+                            ? Text(
+                                "Chào ${(state.users.name ?? "").split(' ').last}!",
+                                style: typoInterNomal14.copyWith(
+                                  color: colorTextDark,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: Dimens.d16.responsive(),
+                                  height: 1.5,
+                                ),
+                              )
+                            : Container(),
+                        SizedBox(
+                          height: Dimens.d4.responsive(),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            state.users.name != ""
-                                ? Text(
-                                    "Chào ${(state.users.name ?? "").split(' ').last}!",
-                                    style: typoInterNomal14.copyWith(
-                                      color: colorTextDark,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: Dimens.d16.responsive(),
-                                      height: 1.5,
-                                    ),
-                                  )
-                                : Container(),
-                            SizedBox(
-                              height: Dimens.d4.responsive(),
-                            ),
                             Text(
                               DateTimeUtils.formatDate(),
                               style: typoInterNomal14.copyWith(
@@ -130,50 +130,51 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                                 height: 1.5,
                               ),
                             ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 13.5),
+                              // decoration: BoxDecoration(
+                              //   color: Colors.white,
+                              //   borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              //   border: Border.all(color: colorUiBorder, width: 1),
+                              // ),
+                              child: Row(
+                                children: [
+                                  Assets.svg.logoHome
+                                      .svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                                  SizedBox(
+                                    width: Dimens.d4.responsive(),
+                                  ),
+                                  Text(
+                                    '${state.users.totalAmais ?? 0}',
+                                    style: typoInterNomal14.copyWith(
+                                      color: colorTextMedium,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Dimens.d24.responsive(),
+                                  ),
+                                  Assets.svg.logoHome.svg(
+                                    width: Dimens.d20.responsive(),
+                                    height: Dimens.d20.responsive(),
+                                    color: colorGray600,
+                                  ),
+                                  SizedBox(
+                                    width: Dimens.d4.responsive(),
+                                  ),
+                                  Text(
+                                    '${state.users.amaiVotes ?? 0}',
+                                    style: typoInterNomal14.copyWith(
+                                      color: colorTextMedium,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 13.5),
-                          // decoration: BoxDecoration(
-                          //   color: Colors.white,
-                          //   borderRadius: const BorderRadius.all(Radius.circular(5)),
-                          //   border: Border.all(color: colorUiBorder, width: 1),
-                          // ),
-                          child: Row(
-                            children: [
-                              Assets.svg.logoHome.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
-                              SizedBox(
-                                width: Dimens.d4.responsive(),
-                              ),
-                              Text(
-                                '${state.users.totalAmais ?? 0}',
-                                style: typoInterNomal14.copyWith(
-                                  color: colorTextMedium,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.5,
-                                ),
-                              ),
-                              SizedBox(
-                                width: Dimens.d24.responsive(),
-                              ),
-                              Assets.svg.logoHome.svg(
-                                width: Dimens.d20.responsive(),
-                                height: Dimens.d20.responsive(),
-                                color: colorGray600,
-                              ),
-                              SizedBox(
-                                width: Dimens.d4.responsive(),
-                              ),
-                              Text(
-                                '${state.users.amaiVotes ?? 0}',
-                                style: typoInterNomal14.copyWith(
-                                  color: colorTextMedium,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       ],
                     );
@@ -216,8 +217,8 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                       child: Column(
                         children: [
                           SizedBox(
-                            width: Dimens.d55.responsive(),
-                            height: Dimens.d55.responsive(),
+                            width: Dimens.d56.responsive(),
+                            height: Dimens.d56.responsive(),
                             child: Stack(
                               children: [
                                 Align(
