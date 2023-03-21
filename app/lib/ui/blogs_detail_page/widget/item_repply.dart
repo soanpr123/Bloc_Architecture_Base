@@ -108,7 +108,7 @@ class ItemRepply extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: Dimens.d12.responsive()),
+                          SizedBox(height: Dimens.d4.responsive()),
                           Row(
                             children: [
                               Assets.svg.heartBlack.svg(

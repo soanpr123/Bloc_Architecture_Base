@@ -13,6 +13,7 @@ class TagsEntry with _$TagsEntry {
 @freezed
 class AuthorEntry with _$AuthorEntry {
   const factory AuthorEntry({
+    @Default(0) int? id,
     @Default('') String? name,
     @Default('') String? avatar,
   }) = _AuthorEntry;

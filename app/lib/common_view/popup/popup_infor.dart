@@ -48,19 +48,31 @@ class DialogInfo extends StatelessWidget {
           ),
           Center(
             child: Container(
-              width: Dimens.d256.responsive(),
-              height: Dimens.d249.responsive(),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: ClipRRect(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: colorBgAvt,
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                child: AppNetworkImage(
-                  isAvt: true,
-                  gender: user.gender ?? '',
-                  source: user.avatar,
-                ),
               ),
+              child: user.avatar == null || user.avatar!.isEmpty || !user.avatar!.startsWith('http')
+                  ? Container(
+                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        child: AppNetworkImage(
+                          isAvt: true,
+                          gender: user.gender ?? '',
+                          source: user.avatar,
+                        ),
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      child: AppNetworkImage(
+                        isAvt: true,
+                        gender: user.gender ?? '',
+                        source: user.avatar,
+                      ),
+                    ),
             ),
           ),
           SizedBox(

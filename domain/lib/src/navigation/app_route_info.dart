@@ -21,5 +21,6 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.wikiDetailPage(String slungs) = _WikiDetailPage;
   const factory AppRouteInfo.blogsDetail(String slungs) = _BlogsDetail;
   const factory AppRouteInfo.amaiMember() = _AmaiMember;
+  const factory AppRouteInfo.listBlogsPage() = _ListBlogsPage;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

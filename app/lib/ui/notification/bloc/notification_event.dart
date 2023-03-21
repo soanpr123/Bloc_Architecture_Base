@@ -17,6 +17,11 @@ class NotificationPageInitiated extends NotificationEvent with _$NotificationPag
 }
 
 @freezed
+class NotificationPageUnReadInitiated extends NotificationEvent with _$NotificationPageUnReadInitiated {
+  const factory NotificationPageUnReadInitiated() = _NotificationPageUnReadInitiated;
+}
+
+@freezed
 class ReadNotification extends NotificationEvent with _$ReadNotification {
   const factory ReadNotification({
     required String type,

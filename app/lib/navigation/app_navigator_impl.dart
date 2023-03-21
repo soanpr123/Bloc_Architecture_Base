@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:injectable/injectable.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as s;
+
 import 'package:shared/shared.dart';
 
 import '../app.dart';
@@ -279,12 +281,14 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
     bool enableDrag = true,
     m.Color barrierColor = m.Colors.black54,
     m.Color? backgroundColor,
+    m.ShapeBorder? shape,
   }) {
     if (LogConfig.enableNavigatorObserverLog) {
       logD('showModalBottomSheet $appPopupInfo, useRootNav = $useRootNavigator');
     }
 
     return m.showModalBottomSheet<T>(
+      shape: shape,
       context: useRootNavigator ? _rootRouterContext : _currentTabContextOrRootContext,
       builder: (_) => _appPopupInfoMapper.map(appPopupInfo, this),
       isDismissible: isDismissible,
@@ -313,6 +317,31 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
       message,
       duration: duration,
       // backgroundColor: AppColors.current.primaryColor,
+    );
+  }
+
+  @override
+  Future<T?> showBarModalBottomSheetIml<T extends Object?>(
+    AppPopupInfo appPopupInfo, {
+    bool isScrollControlled = false,
+    bool useRootNavigator = false,
+    bool isDismissible = true,
+    bool enableDrag = true,
+    m.Color barrierColor = m.Colors.black54,
+    m.Color? backgroundColor,
+    bool? expaned,
+    m.ShapeBorder? shape,
+  }) {
+    return s.showBarModalBottomSheet(
+      shape: shape,
+      expand: expaned ?? false,
+      context: useRootNavigator ? _rootRouterContext : _currentTabContextOrRootContext,
+      builder: (_) => _appPopupInfoMapper.map(appPopupInfo, this),
+      isDismissible: isDismissible,
+      enableDrag: enableDrag,
+      useRootNavigator: useRootNavigator,
+      backgroundColor: backgroundColor,
+      barrierColor: barrierColor,
     );
   }
 }

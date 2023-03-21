@@ -91,7 +91,11 @@ class AppPopupInfoMapper extends BasePopupInfoMapper {
         tileButton: titleButton,
         onPressed: onPress,
       ),
-      dialogInfo: (user,onPress) => DialogInfo(user: user ?? const MemberDataEntry(),onPress: onPress!,),
+      dialogInfo: (user, onPress) => DialogInfo(
+        user: user ?? const MemberDataEntry(),
+        onPress: onPress!,
+      ),
+      bottomSheet: (child) => BottomSheetCommon(child: child ?? Container()),
     );
   }
 }

@@ -246,6 +246,31 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<ListBlogsData>> getListBlogs({
+    required int page,
+    required int? limit,
+    required String? categorySlug,
+    required String? orderKey,
+    required String? orderDir,
+    required int? postType,
+    required String? search,
+  }) {
+    return _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'categories',
+      queryParameters: {
+        'category_slug': categorySlug,
+        'orders[0][key]': orderKey,
+        'orders[0][dir]': orderDir,
+        'post_type': postType,
+        'page': page,
+        'search': search,
+        'per_page': limit,
+      },
+      decoder: ListBlogsData.fromJson,
+    );
+  }
+
   Future<DataResponse<AnnounmentData>> getAnnounment({
     required int page,
     required int? limit,
@@ -327,6 +352,15 @@ class AppApiService {
   Future<DataResponse<AmaiStoreData>> getDataStore() async {
     return await _authAppServerApiClient.request(
         method: RestMethod.get, path: 'order-lunch/menu', decoder: AmaiStoreData.fromJson);
+  }
+
+  Future<DataResponse<ResourceData>> getResource() async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'master-data',
+      queryParameters: {'resources[category_posts]': ''},
+      decoder: ResourceData.fromJson,
+    );
   }
 
   Future<DataResponse<AmaiOrderData>> getOrderStore() async {

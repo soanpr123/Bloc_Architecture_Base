@@ -34,6 +34,10 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
       designSize: const Size(DeviceConstants.designDeviceWidth, DeviceConstants.designDeviceHeight),
       builder: (context, _) => MaterialApp.router(
         useInheritedMediaQuery: true,
+        theme: ThemeData(
+          primaryColor: colorBrandPrimary,
+          // canvasColor: Colors.transparent,
+        ),
         builder: (context, child) {
           final MediaQueryData data = MediaQuery.of(context);
           DevicePreview.appBuilder(context, child);
@@ -52,7 +56,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
         debugShowCheckedModeBanner: false,
         localeResolutionCallback: (Locale? locale, Iterable<Locale> supportedLocales) =>
             supportedLocales.contains(locale) ? locale : const Locale(LocaleConstants.defaultLocale),
-        locale: DevicePreview.locale(context),
+        locale: const Locale('vi'),
         supportedLocales: S.delegate.supportedLocales,
         localizationsDelegates: const [
           S.delegate,

@@ -12,6 +12,7 @@ class BodyBuilder extends StatelessWidget {
     required this.child,
     required this.reload,
     this.isStore = false,
+    this.isLoadingNew = true,
     Key? key,
   }) : super(key: key);
   final APIRequestStatus? apiRequestStatus;
@@ -19,6 +20,7 @@ class BodyBuilder extends StatelessWidget {
   final Function? reload;
   final bool isStore;
   final Widget image;
+  final bool isLoadingNew;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class BodyBuilder extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(child: LoadingWidget()),
+            Center(child: LoadingWidget(isLoadingNew: isLoadingNew)),
           ],
         );
 
@@ -39,7 +41,7 @@ class BodyBuilder extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(child: LoadingWidget()),
+            Center(child: LoadingWidget(isLoadingNew: isLoadingNew)),
           ],
         );
 

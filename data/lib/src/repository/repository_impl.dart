@@ -5,7 +5,6 @@ import 'package:dartx/dartx.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
 
-
 import '../../data.dart';
 import 'mapper/Announcement_detail_mapper.dart';
 import 'mapper/base_response_mapper.dart';
@@ -40,6 +39,8 @@ class RepositoryImpl implements Repository {
     this._blogsDetailDataMapper,
     this._commentDataMapper,
     this._memberDataMapper,
+    this._listBlogsDataMapper,
+    this._listResourceDataMapper,
   );
   final BlogsDetailDataMapper _blogsDetailDataMapper;
   final AppApiService _appApiService;
@@ -61,6 +62,8 @@ class RepositoryImpl implements Repository {
   final WikitDataMapper _wikitDataMapper;
   final WikiDetailDataMapper _detailDataMapper;
   final MemberDataMapper _memberDataMapper;
+  final ListBlogsDataMapper _listBlogsDataMapper;
+  final ListResourceDataMapper _listResourceDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -386,5 +389,42 @@ class RepositoryImpl implements Repository {
       total: response.data?.total,
       totalPage: response.data?.totalPage,
     );
+  }
+
+  @override
+  Future<PagedList<BlogsDataEntry>> getListPost({
+    required int page,
+    required int? limit,
+    required String? categorySlug,
+    required String? orderKey,
+    required String? orderDir,
+    required int? postType,
+    required String? search,
+  }) async {
+    final response = await _appApiService.getListBlogs(
+      page: page,
+      limit: limit,
+      categorySlug: categorySlug,
+      orderKey: orderKey,
+      orderDir: orderDir,
+      postType: postType,
+      search: search,
+    );
+
+    return PagedList(
+      data: _listBlogsDataMapper.mapToEntity(response.data).blogs,
+      perPage: response.data?.perPage,
+      currentPage: response.data?.currentPage,
+      total: response.data?.total,
+      totalPage: response.data?.totalPage,
+    );
+  }
+
+  @override
+  Future<ResourceDataEntry> getResource() async {
+    final response = await _appApiService.getResource();
+
+    return _listResourceDataMapper.mapToEntity(response.data);
+    
   }
 }

@@ -96,17 +96,30 @@ class _AmaiMemberState extends BasePageState<AmaiMemberPage, AmaiMemberBloc> {
                     child: Container(
                       height: Dimens.d106.responsive(),
                       width: Dimens.d106.responsive(),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: ClipRRect(
+                      decoration: BoxDecoration(
+                        color: colorBgAvt,
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
-                        child: AppNetworkImage(
-                          isAvt: true,
-                          gender: item.gender??'',
-                          source: item.avatar,
-                        ),
                       ),
+                      child: item.avatar == null || item.avatar!.isEmpty || !item.avatar!.startsWith('http')
+                          ? Container(
+                              padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                child: AppNetworkImage(
+                                  isAvt: true,
+                                  gender: item.gender ?? '',
+                                  source: item.avatar,
+                                ),
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              child: AppNetworkImage(
+                                isAvt: true,
+                                gender: item.gender ?? '',
+                                source: item.avatar,
+                              ),
+                            ),
                     ),
                   );
                 },

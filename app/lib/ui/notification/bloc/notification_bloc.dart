@@ -21,6 +21,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       _onNotifiPageInitiated,
       transformer: log(),
     );
+    on<NotificationPageUnReadInitiated>(
+      _onNotifiPageUnreadInitiated,
+      transformer: log(),
+    );
     on<NotificationLoadMore>(
       _onUserLoadMore,
       transformer: log(),
@@ -77,7 +81,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         isShimmerLoading: false,
       )),
     );
+  }
 
+  FutureOr<void> _onNotifiPageUnreadInitiated(
+      NotificationPageUnReadInitiated event, Emitter<NotificationState> emit) async {
     await _getNotifiUnread(
       emit: emit,
       isInitialLoad: true,

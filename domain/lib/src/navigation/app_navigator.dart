@@ -63,7 +63,16 @@ abstract class AppNavigator {
     bool useRootNavigator = true,
   });
 
-  Future<T?> showModalBottomSheet<T extends Object?>(
+  Future<T?> showModalBottomSheet<T extends Object?>(AppPopupInfo appPopupInfo,
+      {bool isScrollControlled = false,
+      bool useRootNavigator = false,
+      bool isDismissible = true,
+      bool enableDrag = true,
+      Color barrierColor = Colors.black54,
+      Color? backgroundColor,
+      ShapeBorder? shape});
+
+  Future<T?> showBarModalBottomSheetIml<T extends Object?>(
     AppPopupInfo appPopupInfo, {
     bool isScrollControlled = false,
     bool useRootNavigator = false,
@@ -71,6 +80,8 @@ abstract class AppNavigator {
     bool enableDrag = true,
     Color barrierColor = Colors.black54,
     Color? backgroundColor,
+    bool? expaned,
+    ShapeBorder? shape,
   });
 
   void showErrorSnackBar(String message, {Duration? duration});
