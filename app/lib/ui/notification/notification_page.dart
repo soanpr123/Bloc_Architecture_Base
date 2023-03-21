@@ -226,18 +226,10 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                                 : CommonPagedListView<AppNotification>(
                                     pagingController: _pagingController,
                                     itemBuilder: (context, item, index) {
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          bloc.add(
-                                            ReadNotification(
-                                                type: item.type ?? '', slung: item.slug ?? '', id: item.id),
-                                          );
-                                        },
-                                        child: ItemNotify(
-                                          loading: state.isShimmerLoading,
-                                          bloc: bloc,
-                                          item: item,
-                                        ),
+                                      return ItemNotify(
+                                        loading: state.isShimmerLoading,
+                                        bloc: bloc,
+                                        item: item,
                                       );
                                     },
                                   ),
@@ -272,17 +264,10 @@ class _NotificationPageState extends BasePageState<NotificationPage, Notificatio
                             child: CommonPagedListView<AppNotification>(
                               pagingController: _pagingControllerUnread,
                               itemBuilder: (context, item, index) {
-                                return GestureDetector(
-                                  onTap: () async {
-                                    bloc.add(
-                                      ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id),
-                                    );
-                                  },
-                                  child: ItemNotify(
-                                    bloc: bloc,
-                                    loading: state.isShimmerLoadingUnread,
-                                    item: item,
-                                  ),
+                                return ItemNotify(
+                                  bloc: bloc,
+                                  loading: state.isShimmerLoadingUnread,
+                                  item: item,
                                 );
                               },
                             ),
@@ -320,122 +305,132 @@ class ItemNotify extends StatelessWidget {
         horizontal: Dimens.d8.responsive(),
         vertical: Dimens.d4.responsive(),
       ),
-      child: ShimmerLoading(
-        isLoading: loading,
-        loadingWidget: const _LoadingItem(),
-        child: Container(
-          // height: 100,
-          margin: EdgeInsets.symmetric(
-            horizontal: Dimens.d8.responsive(),
-            vertical: Dimens.d8.responsive(),
-          ),
+      child: InkWell(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        overlayColor: MaterialStateProperty.all(colorDisabled),
+        onTap: () async {
+          bloc.add(
+            ReadNotification(type: item.type ?? '', slung: item.slug ?? '', id: item.id),
+          );
+        },
+        child: ShimmerLoading(
+          isLoading: loading,
+          loadingWidget: const _LoadingItem(),
+          child: Container(
+            // height: 100,
+            margin: EdgeInsets.symmetric(
+              horizontal: Dimens.d8.responsive(),
+              vertical: Dimens.d8.responsive(),
+            ),
 
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: Dimens.d32.responsive(),
-                height: Dimens.d32.responsive(),
-                alignment: Alignment.topCenter,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.all(Radius.circular(
-                    Dimens.d24.responsive(),
-                  )),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Dimens.d32.responsive(),
+                  height: Dimens.d32.responsive(),
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                      Dimens.d24.responsive(),
+                    )),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(Dimens.d24.responsive())),
+                    child:
+                        item.type == 'announcements' || item.type == 'lunch_menus' || item.type == 'amai_transactions'
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Assets.svg.logoamai.svg(
+                                    width: Dimens.d20.responsive(),
+                                    height: Dimens.d20.responsive(),
+                                  ),
+                                ],
+                              )
+                            : AppNetworkImage(
+                                source: item.avatar,
+                              ),
+                  ),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(Dimens.d24.responsive())),
-                  child: item.type == 'announcements' || item.type == 'lunch_menus' || item.type == 'amai_transactions'
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Assets.svg.logoamai.svg(
-                              width: Dimens.d20.responsive(),
-                              height: Dimens.d20.responsive(),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: HtmlWidget(
+                                    item.title ?? '',
+                                    textStyle: typoInterNomal14.copyWith(
+                                      height: 1.5,
+                                    ),
+                                    customStylesBuilder: (element) {
+                                      if (element.className == 'text-notification-bold') {
+                                        return {
+                                          'font-family': 'Inter',
+                                          'font-style': 'normal',
+                                          'color': '#1F2937',
+                                          'font-weight': '600',
+                                          'font-size': ' 14px',
+                                          'line-height': '150%',
+                                        };
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimens.d4.responsive(),
+                            ),
+                            Text(
+                              item.createdAt ?? '',
+                              style: typoInterNomal14.copyWith(
+                                height: 1.5,
+                                fontSize: Dimens.d12.responsive(),
+                                color: colorTextBland,
+                                letterSpacing: 0.5,
+                              ),
                             ),
                           ],
-                        )
-                      : AppNetworkImage(
-                          source: item.avatar,
                         ),
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                child: HtmlWidget(
-                                  item.title ?? '',
-                                  textStyle: typoInterNomal14.copyWith(
-                                    height: 1.5,
-                                  ),
-                                  customStylesBuilder: (element) {
-                                    if (element.className == 'text-notification-bold') {
-                                      return {
-                                        'font-family': 'Inter',
-                                        'font-style': 'normal',
-                                        'color': '#1F2937',
-                                        'font-weight': '600',
-                                        'font-size': ' 14px',
-                                        'line-height': '150%',
-                                      };
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Dimens.d4.responsive(),
-                          ),
-                          Text(
-                            item.createdAt ?? '',
-                            style: typoInterNomal14.copyWith(
-                              height: 1.5,
-                              fontSize: Dimens.d12.responsive(),
-                              color: colorTextBland,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: Dimens.d12.responsive(),
-                    ),
-                    item.readAt != ''
-                        ? const SizedBox.shrink()
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: Dimens.d12.responsive(),
-                                height: Dimens.d12.responsive(),
-                                decoration: BoxDecoration(
-                                  color: colorBrandPrimary,
-                                  borderRadius: BorderRadius.all(Radius.circular(
-                                    Dimens.d24.responsive(),
-                                  )),
+                      SizedBox(
+                        width: Dimens.d12.responsive(),
+                      ),
+                      item.readAt != ''
+                          ? const SizedBox.shrink()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: Dimens.d12.responsive(),
+                                  height: Dimens.d12.responsive(),
+                                  decoration: BoxDecoration(
+                                    color: colorBrandPrimary,
+                                    borderRadius: BorderRadius.all(Radius.circular(
+                                      Dimens.d24.responsive(),
+                                    )),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                  ],
+                              ],
+                            ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

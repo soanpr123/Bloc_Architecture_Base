@@ -279,39 +279,57 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                                 onPressed: () {
                                   bloc.add(LikeBlogs(slungs: widget.slungs));
                                 },
-                                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                  // stateb.likeStatus == APIRequestStatus.loading
-                                  //     ? SizedBox(
-                                  //         height: 12,
-                                  //         width: 12,
-                                  //         child: CircularProgressIndicator(
-                                  //           valueColor: AlwaysStoppedAnimation<Color>(
-                                  //             colorRed500,
-                                  //           ),
-                                  //         ),
-                                  //       )
-                                  //     : Container(),
-                                  // stateb.likeStatus == APIRequestStatus.loading
-                                  //     ? SizedBox(
-                                  //         width: Dimens.d8.responsive(),
-                                  //       )
-                                  //     : Container(),
-                                  Assets.svg.heartBlack.svg(
-                                    width: Dimens.d20.responsive(),
-                                    height: Dimens.d20.responsive(),
-                                    color: stateb.isLiked == 1 ? colorRed500 : colorGray600,
-                                  ),
-                                  SizedBox(
-                                    width: Dimens.d8.responsive(),
-                                  ),
-                                  Text(
-                                    '${stateb.totalLikes}',
-                                    style: typoInterNomal14.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: stateb.isLiked == 1 ? colorRed500 : colorTextMedium,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        stateb.likeStatus == APIRequestStatus.loading
+                                            ? Padding(
+                                              padding: const EdgeInsets.only(right:8.0),
+                                              child: SizedBox(
+                                                  height: 12,
+                                                  width: 12,
+                                                  child: CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                                      colorRed500,
+                                                    ),
+                                                  ),
+                                                ),
+                                            )
+                                            : const SizedBox(
+                                                height: 0,
+                                              ),
+                                      ],
                                     ),
-                                  ),
-                                ]),
+                                    // Column(
+                                    //   children: [
+                                    //     stateb.likeStatus == APIRequestStatus.loading
+                                    //         ? SizedBox(
+                                    //             width: Dimens.d8.responsive(),
+                                    //           )
+                                    //         : Container(),
+                                    //   ],
+                                    // ),
+                                    Assets.svg.heartBlack.svg(
+                                      width: Dimens.d20.responsive(),
+                                      height: Dimens.d20.responsive(),
+                                      color: stateb.isLiked == 1 ? colorRed500 : colorGray600,
+                                    ),
+                                    SizedBox(
+                                      width: Dimens.d8.responsive(),
+                                    ),
+                                    Text(
+                                      '${stateb.totalLikes}',
+                                      style: typoInterNomal14.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: stateb.isLiked == 1 ? colorRed500 : colorTextMedium,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(

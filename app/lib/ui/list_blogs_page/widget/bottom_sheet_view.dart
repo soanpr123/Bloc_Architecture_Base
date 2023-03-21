@@ -69,7 +69,8 @@ class BottomSheetView extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          Expanded(
+          Flexible(
+            fit: FlexFit.loose,
             child: SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

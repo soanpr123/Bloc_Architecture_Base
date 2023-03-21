@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
-
+import 'package:badges/badges.dart' as badges;
 import '../../app.dart';
 
 class ListBlogsPage extends StatefulWidget {
@@ -155,78 +155,63 @@ class _ListBlogsPageState extends BasePageState<ListBlogsPage, ListBlogsBloc> wi
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      overlayColor: MaterialStateProperty.all(colorDisabled),
-                      customBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Dimens.d5.responsive()),
+                    badges.Badge(
+                      badgeStyle: const badges.BadgeStyle(padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6)),
+
+                      badgeAnimation: const badges.BadgeAnimation.fade(
+                        animationDuration: Duration(milliseconds: 200),
+                        loopAnimation: false,
                       ),
-                      onTap: () async {
-                        await navigator.showBarModalBottomSheetIml(
-                          AppPopupInfo.bottomSheet(
-                            child: BottomSheetView(
-                              navigator: navigator,
-                              bloc: bloc,
-                            ),
-                          ),
-                          // backgroundColor: Colors.transparent,
-                          expaned: false,
-                          isDismissible: false,
-                          useRootNavigator: true,
-                        );
-                      },
-                      child: SizedBox(
-                        width: Dimens.d90.responsive(),
-                        height: Dimens.d40.responsive(),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Dimens.d16.responsive(),
-                                  vertical: Dimens.d8.responsive(),
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  border: Border.all(color: colorBrandPrimary, width: 1),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Assets.svg.filterFill.svg(width: 20, height: 20),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 2.0),
-                                      child: Text(
-                                        S.current.fillter,
-                                        style: typoInterNomal14.copyWith(
-                                          color: colorBrandPrimary,
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                     
+                      showBadge: stateFill.categorySelect.id != -1,
+                      ignorePointer: false,
+                     
+                      position: badges.BadgePosition.topEnd(top: -4, end: -4),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await navigator.showBarModalBottomSheetIml(
+                            AppPopupInfo.bottomSheet(
+                              child: BottomSheetView(
+                                navigator: navigator,
+                                bloc: bloc,
                               ),
                             ),
-                            stateFill.categorySelect.id != -1
-                                ? Align(
-                                    alignment: Alignment.topRight,
-                                    child: Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                        color: colorSupportDanger,
-                                        borderRadius: const BorderRadius.all(Radius.circular(30)),
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
-                          ],
+                            // backgroundColor: Colors.transparent,
+                            expaned: false,
+                            isDismissible: false,
+                            useRootNavigator: true,
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimens.d16.responsive(),
+                            vertical: Dimens.d8.responsive(),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(5)),
+                            border: Border.all(color: colorBrandPrimary, width: 1),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Assets.svg.filterFill.svg(width: 20, height: 20),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2.0),
+                                child: Text(
+                                  S.current.fillter,
+                                  style: typoInterNomal14.copyWith(
+                                    color: colorBrandPrimary,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

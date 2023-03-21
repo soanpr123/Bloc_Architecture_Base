@@ -133,12 +133,14 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
               isLiked: 0,
               totalLikes: state.totalLikes - 1,
               apiRequestStatus: APIRequestStatus.loaded,
+              likeStatus: APIRequestStatus.loaded,
             ));
           } else {
             emit(state.copyWith(
               isLiked: 1,
               totalLikes: state.totalLikes + 1,
               apiRequestStatus: APIRequestStatus.loaded,
+              likeStatus: APIRequestStatus.loaded,
             ));
           }
         } else {

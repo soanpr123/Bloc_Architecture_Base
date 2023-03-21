@@ -56,6 +56,30 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                   SizedBox(
                     height: Dimens.d24.responsive(),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Tiền ăn tháng này:',
+                        style:
+                            typoInterNomal14.copyWith(fontWeight: FontWeight.w600, height: 1.5, color: colorTextDark),
+                      ),
+                      BlocBuilder<AppBloc, AppState>(
+                        buildWhen: (previous, current) =>
+                            previous.users.currentLunchTotalPayment != current.users.currentLunchTotalPayment,
+                        builder: (context, stateApp) {
+                          return Text(
+                            stateApp.users.currentLunchTotalPayment ?? '0 VND',
+                            style: typoInterNomal14.copyWith(
+                                fontWeight: FontWeight.w600, height: 1.5, color: colorBrandPrimary),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Dimens.d24.responsive(),
+                  ),
                   Text(
                     S.current.amaistore_content,
                     style: typoInterNomal14.copyWith(

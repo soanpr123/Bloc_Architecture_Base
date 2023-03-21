@@ -19,43 +19,43 @@ class CustomAlert extends StatelessWidget {
     deviceHeight = orientation == Orientation.portrait ? viewsSize.height : viewsSize.width;
     dialogHeight = deviceHeight! * (0.50);
 
-    return MediaQuery(
-      data: const MediaQueryData(),
-      child: GestureDetector(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 0.5,
-            sigmaY: 0.5,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Center(
-                    child: SizedBox(
-                      width: deviceWidth! * 0.9,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Card(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
+    return SafeArea(
+      
+      child: MediaQuery(
+        data: const MediaQueryData(),
+        child: GestureDetector(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 0.5,
+              sigmaY: 0.5,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: SizedBox(
+                    width: deviceWidth! * 0.9,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
                           ),
-                          child: child,
                         ),
+                        child: child,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    
     );
   }
 }

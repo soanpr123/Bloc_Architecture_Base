@@ -41,5 +41,6 @@ class Profile with _$Profile {
     @Default('') String? department,
     @Default(false) bool? haveLunchMenu,
     @Default(false) bool? haveInternalAnnouncement,
+     @Default('0') String? currentLunchTotalPayment,
   }) = _Profile;
 }
