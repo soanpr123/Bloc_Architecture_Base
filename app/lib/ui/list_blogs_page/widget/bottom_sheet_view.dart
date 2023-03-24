@@ -171,7 +171,7 @@ class BottomSheetView extends StatelessWidget {
             height: 12,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical:16),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
             child: Row(
               children: [
                 Expanded(

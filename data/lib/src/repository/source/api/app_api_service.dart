@@ -336,6 +336,14 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<dynamic>> createFeedBack(Map<String, dynamic> request) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'feedback',
+      body: request,
+    );
+  }
+
   Future<DataResponse<dynamic>> readAll() async {
     return await _authAppServerApiClient.request(
       method: RestMethod.post,

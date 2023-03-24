@@ -294,6 +294,13 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                   },
                 ),
                 buildButton(
+                  S.current.report,
+                  Assets.svg.bugLine.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                  onTap: () async {
+                    await navigator.push(const AppRouteInfo.reportPage());
+                  },
+                ),
+                buildButton(
                   S.current.log_out,
                   Assets.svg.logout.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
                   onTap: () {

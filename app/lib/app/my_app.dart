@@ -43,7 +43,6 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
         ),
         builder: (context, child) {
           final MediaQueryData data = MediaQuery.of(context);
-          DevicePreview.appBuilder(context, child);
 
           return MediaQuery(
             data: data.copyWith(textScaleFactor: 1.0),

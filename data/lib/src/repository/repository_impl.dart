@@ -433,6 +433,13 @@ class RepositoryImpl implements Repository {
   }
 
   @override
+  Future<BaseEntryData> createFeedback({required Map<String, dynamic> request}) async {
+    final response = await _appApiService.createFeedBack(request);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
   Future<BaseEntryData> donateAmai(
       {required int receiveId, required int amountAmais, required int donateType, required String note}) async {
     final response = await _appApiService.donateAmai(receiveId, amountAmais, donateType, note);

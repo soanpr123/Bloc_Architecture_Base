@@ -51,6 +51,8 @@ class ValidationUtils {
     return true;
   }
 
+  static final spaceOrNewLine = RegExp(r'[ \s]+');
+
   /// Check if a string is empty date time.
   /// Return true if it is valid.
   static bool isEmptyDateTime(String dateTime) {
