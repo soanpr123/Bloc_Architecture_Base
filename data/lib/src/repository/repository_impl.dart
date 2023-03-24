@@ -13,6 +13,7 @@ import 'mapper/data_list_store_mapper.dart';
 import 'mapper/detail_wiki_mapper.dart';
 
 import 'mapper/order_data_mapper.dart';
+import 'mapper/popup_donate_mapper.dart';
 import 'mapper/upload_image_mapper.dart';
 import 'mapper/wiki_data_mapper.dart';
 
@@ -41,6 +42,8 @@ class RepositoryImpl implements Repository {
     this._memberDataMapper,
     this._listBlogsDataMapper,
     this._listResourceDataMapper,
+    this._popUpDonateMapper,
+    this._qrcodeScanDataMapper,
   );
   final BlogsDetailDataMapper _blogsDetailDataMapper;
   final AppApiService _appApiService;
@@ -64,6 +67,8 @@ class RepositoryImpl implements Repository {
   final MemberDataMapper _memberDataMapper;
   final ListBlogsDataMapper _listBlogsDataMapper;
   final ListResourceDataMapper _listResourceDataMapper;
+  final PopUpDonateMapper _popUpDonateMapper;
+  final QrcodeScanDataMapper _qrcodeScanDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -421,10 +426,31 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<ResourceDataEntry> getResource() async {
-    final response = await _appApiService.getResource();
+  Future<ResourceDataEntry> getResource(String type) async {
+    final response = await _appApiService.getResource(type);
 
     return _listResourceDataMapper.mapToEntity(response.data);
-    
+  }
+
+  @override
+  Future<BaseEntryData> donateAmai(
+      {required int receiveId, required int amountAmais, required int donateType, required String note}) async {
+    final response = await _appApiService.donateAmai(receiveId, amountAmais, donateType, note);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<PopUpDonateEntry> getPopUpDonate() async {
+    final response = await _appApiService.getPopUpdonate();
+
+    return _popUpDonateMapper.mapToEntity(response.data);
+  }
+
+  @override
+  Future<QrcodeScanDataEntry> qrCodeScan(String token) async {
+    final response = await _appApiService.qrCodeScan(token);
+
+    return _qrcodeScanDataMapper.mapToEntity(response.data);
   }
 }

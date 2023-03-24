@@ -17,7 +17,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
 
       announcementDetail: (s) => AnnouncementDetailRoute(slungs: s),
       qrCode: () => const QrCodeRoute(),
-      paymentAmai: () => const PaymentAmaiRoute(),
+      paymentAmai: (int amount) => PaymentAmaiRoute(amountAmai: amount),
       paymentResult: () => const AmaiStoreRoute(),
       changePassWord: () => const ChangePassRoute(),
       announmentPage: () => const AnnounmentRoute(),
@@ -27,6 +27,9 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       blogsDetail: (slungs) => BlogsDetailRoute(slungs: slungs),
       amaiMember: () => const AmaiMemberRoute(),
       listBlogsPage: () => const ListBlogsRoute(),
+      sendAmai: (int userId) => SendAmaiRoute(userId: userId.toString()),
+      doneSendAmaiPage: (int userId) => DoneSendAmaiRoute(userId: userId),
+      myQrCodePage: (qrCode, name) => MyQrCodeRoute(qrCode: qrCode, name: name),
       // itemDetail: (user) => ItemDetailRoute(user: user),
     );
   }

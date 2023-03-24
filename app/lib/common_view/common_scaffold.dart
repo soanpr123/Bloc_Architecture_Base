@@ -29,6 +29,7 @@ class CommonScaffold extends StatelessWidget {
       appBar: appBar,
       drawer: drawer,
       floatingActionButton: floatingActionButton,
+      resizeToAvoidBottomInset: true, // this i
     );
 
     return hideKeyboardWhenTouchOutside

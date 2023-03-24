@@ -55,3 +55,7 @@ class AppReloadHistory extends AppEvent with _$AppReloadHistory {
     @Default(false) bool reloadHis,
   }) = _AppReloadHistory;
 }
+@freezed
+class AppGetPopUpDonate extends AppEvent with _$AppGetPopUpDonate {
+  const factory AppGetPopUpDonate() = _AppGetPopUpDonate;
+}

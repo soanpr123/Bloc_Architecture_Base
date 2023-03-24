@@ -1,6 +1,4 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 
 import '../../../base/bloc/base_event.dart';
 
@@ -12,5 +10,7 @@ abstract class PaymentAmaiEvent extends BaseBlocEvent {
 
 @freezed
 class PaymentAmaiInitiated extends PaymentAmaiEvent with _$PaymentAmaiInitiated {
-  const factory PaymentAmaiInitiated() = _PaymentAmaiInitiated;
+  const factory PaymentAmaiInitiated({
+    required int amount,
+  }) = _PaymentAmaiInitiated;
 }

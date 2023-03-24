@@ -11,6 +11,7 @@ import '../../model/amai_store_data.dart';
 import '../../model/announcement_detail_data.dart';
 import '../../model/blogs_model_data.dart';
 import '../../model/history_amai_data.dart';
+import '../../model/pop_up_donate.dart';
 import '../../model/profile_data.dart';
 import '../../model/upload_image_data.dart';
 
@@ -354,11 +355,11 @@ class AppApiService {
         method: RestMethod.get, path: 'order-lunch/menu', decoder: AmaiStoreData.fromJson);
   }
 
-  Future<DataResponse<ResourceData>> getResource() async {
+  Future<DataResponse<ResourceData>> getResource(String type) async {
     return await _authAppServerApiClient.request(
       method: RestMethod.get,
       path: 'master-data',
-      queryParameters: {'resources[category_posts]': ''},
+      queryParameters: {'resources[$type]': ''},
       decoder: ResourceData.fromJson,
     );
   }
@@ -371,12 +372,44 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<PopUpDonateData>> getPopUpdonate() async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'donate-amai/popup',
+      decoder: PopUpDonateData.fromJson,
+    );
+  }
+
+  Future<DataResponse<QrCodeData>> qrCodeScan(String token) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'qrcode/scan',
+      body: {
+        'token': token,
+      },
+      decoder: QrCodeData.fromJson,
+    );
+  }
+
   Future<DataResponse<dynamic>> orderStore(String id) async {
     return await _authAppServerApiClient.request(
       method: RestMethod.post,
       path: 'order-lunch',
       body: {
         'lunch_menus_id': id,
+      },
+    );
+  }
+
+  Future<DataResponse<dynamic>> donateAmai(int receiveId, int amountAmais, int donateType, String note) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'donate-amai',
+      body: {
+        'receive_id': receiveId,
+        'amount_amais': amountAmais,
+        'donate_type': donateType,
+        'note': note,
       },
     );
   }

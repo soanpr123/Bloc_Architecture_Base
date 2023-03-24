@@ -67,6 +67,7 @@ class ProfileData with _$ProfileData {
     String? gender,
     String? dob,
     String? avatar,
+    @JsonKey(name: 'qrcode') String? qrCode,
     String? address,
     dynamic about,
     @JsonKey(name: 'citizen_id') String? citizenId,

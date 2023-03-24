@@ -15,5 +15,6 @@ class AppState extends BaseBlocState with _$AppState {
     @Default(false) bool reload,
     @Default(false) bool reloadHis,
     @Default(Profile()) Profile users,
+    @Default(PopUpDonateEntry()) PopUpDonateEntry popUpDonateEntry,
   }) = _AppState;
 }

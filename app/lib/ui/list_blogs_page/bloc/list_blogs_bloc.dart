@@ -239,7 +239,7 @@ class ListBlogsBloc extends BaseBloc<ListBlogsEvent, ListBlogsState> {
   }) async {
     return runBlocCatching(
       action: () async {
-        final out = await _getResourceUseCase.execute(const GetResourceInput());
+        final out = await _getResourceUseCase.execute(const GetResourceInput(type: 'category_posts'));
         if (out.category != null && out.category!.isNotEmpty) {
           listCate.addAll(out.category!);
           emit(state.copyWith(

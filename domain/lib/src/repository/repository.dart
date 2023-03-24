@@ -44,7 +44,7 @@ abstract class Repository {
   Future<bool> saveIsFirstLogin(bool isFirstLogin);
 
   Future<bool> saveIsFirstLaunchApp(bool isFirstLaunchApp);
-   Future<PagedList<BlogsDataEntry>> getListPost({
+  Future<PagedList<BlogsDataEntry>> getListPost({
     required int page,
     required int? limit,
     required String? categorySlug,
@@ -54,8 +54,8 @@ abstract class Repository {
     required String? search,
   });
 
-    Future<ResourceDataEntry> getResource();
-
+  Future<ResourceDataEntry> getResource(String type);
+  Future<PopUpDonateEntry> getPopUpDonate();
   Future<PagedList<Profile>> getUsers({
     required int page,
     required int? limit,
@@ -94,6 +94,7 @@ abstract class Repository {
   Future<BaseEntryData> getTotalNotificationUnread();
   Future<BaseEntryData> readNotification(String id);
   Future<BaseEntryData> readAllNotification();
+  Future<QrcodeScanDataEntry> qrCodeScan(String token);
   Future<BaseEntryData> paymentAmai(int amai, String note);
   Future<ListDataStoreEntry> getDataStore();
 
@@ -132,8 +133,14 @@ abstract class Repository {
   Future<BaseEntryData> sendAmai({
     required String slungs,
   });
-   Future<PagedList<MemberDataEntry>> getListMember({
-     required int page,
+  Future<PagedList<MemberDataEntry>> getListMember({
+    required int page,
     required int? limit,
+  });
+  Future<BaseEntryData> donateAmai({
+    required int receiveId,
+    required int amountAmais,
+    required int donateType,
+    required String note,
   });
 }

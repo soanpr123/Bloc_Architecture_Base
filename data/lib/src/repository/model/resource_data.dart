@@ -14,12 +14,21 @@ class CategoryPosts with _$CategoryPosts {
 }
 
 @freezed
+class DonationRecipient with _$DonationRecipient {
+  const factory DonationRecipient({
+    int? id,
+    String? name,
+  }) = _DonationRecipient;
+
+  factory DonationRecipient.fromJson(Map<String, dynamic> json) => _$DonationRecipientFromJson(json);
+}
+
+@freezed
 class ResourceData with _$ResourceData {
   const factory ResourceData({
     @JsonKey(name: 'category_posts') List<CategoryPosts>? categoryPosts,
+    @JsonKey(name: 'donation_recipient') List<DonationRecipient>? donationRecipient,
   }) = _ResourceData;
 
   factory ResourceData.fromJson(Map<String, dynamic> json) => _$ResourceDataFromJson(json);
 }
-
-

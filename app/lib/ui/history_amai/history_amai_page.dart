@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import 'package:resources/resources.dart';
@@ -119,7 +120,7 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                   child: GestureDetector(
                                     onTap: () async {},
                                     child: ListTile(
-                                      leading: Assets.svg.chicken.svg(),
+                                      leading: e.type == 1 ? Assets.svg.chicken.svg() : Assets.svg.giftHistory.svg(),
                                       minLeadingWidth: Dimens.d5.responsive(),
                                       title: Align(
                                         alignment: const Alignment(-1.2, 0),
@@ -129,34 +130,54 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    e.note ?? '',
-                                                    style: typoInterNomal14.copyWith(
-                                                      color: colorTextDark,
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 1.5,
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Flexible(
+                                                          child: HtmlWidget(
+                                                            e.note ?? '',
+                                                            textStyle: typoInterNomal14.copyWith(
+                                                              height: 1.5,
+                                                            ),
+                                                            customStylesBuilder: (element) {
+                                                              if (element.className == 'text-notification-bold') {
+                                                                return {
+                                                                  'font-family': 'Inter',
+                                                                  'font-style': 'normal',
+                                                                  'color': '#1F2937',
+                                                                  'font-weight': '600',
+                                                                  'font-size': ' 14px',
+                                                                  'line-height': '150%',
+                                                                };
+                                                              }
+
+                                                              return null;
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                  // SizedBox(
-                                                  //   height: Dimens.d18.responsive(),
-                                                  // ),
-                                                  Text(
-                                                    e.createdAt ?? '',
-                                                    style: typoInterNomal14.copyWith(
-                                                      color: colorTextBland,
-                                                      height: 1.5,
-                                                      fontSize: Dimens.d12.responsive(),
+                                                    // SizedBox(
+                                                    //   height: Dimens.d18.responsive(),
+                                                    // ),
+                                                    Text(
+                                                      e.createdAt ?? '',
+                                                      style: typoInterNomal14.copyWith(
+                                                        color: colorTextBland,
+                                                        height: 1.5,
+                                                        fontSize: Dimens.d12.responsive(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                               Row(
                                                 children: [
                                                   Text(
-                                                    '-${e.amountAmais} ',
+                                                    e.type == 3 ? '+${e.amountAmais} ' : '-${e.amountAmais} ',
                                                     style: typoInterNomal14.copyWith(
                                                       color: colorTextMedium,
                                                       fontWeight: FontWeight.w600,
