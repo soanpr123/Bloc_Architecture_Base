@@ -106,6 +106,9 @@ build_app_l10n:
 build_domain_app:
 	@melos run build_domain
 	@melos run build_app
+build_data_app:
+	@melos run build_data
+	@melos run build_app
 build_data:
 	@melos run build_data
 build_shared:

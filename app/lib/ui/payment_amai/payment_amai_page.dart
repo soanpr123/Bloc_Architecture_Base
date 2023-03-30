@@ -5,10 +5,9 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 
-
 class PaymentAmaiPage extends StatefulWidget {
-  const PaymentAmaiPage({Key? key}) : super(key: key);
-
+  const PaymentAmaiPage({required this.amountAmai, Key? key}) : super(key: key);
+  final int amountAmai;
   @override
   _PaymentAmaiPageState createState() => _PaymentAmaiPageState();
 }
@@ -58,7 +57,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= widget.amountAmai
                           ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                               buildWhen: (previous, current) => previous.status != current.status,
                               builder: (context, statePay) {
@@ -69,8 +68,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                         .svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive());
                               },
                             )
-                          : Assets.svg.paymentEr
-                              .svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive());
+                          : Assets.svg.paymentEr.svg(width: Dimens.d200.responsive(), height: Dimens.d200.responsive());
                     },
                   ),
                   SizedBox(
@@ -93,7 +91,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= widget.amountAmai
                           ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                               buildWhen: (previous, current) => previous.status != current.status,
                               builder: (context, statePay) {
@@ -107,7 +105,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                             width: Dimens.d8.responsive(),
                                           ),
                                           Text(
-                                            '${SymbolConstants.amaipayment} ${S.current.amai_point('').replaceAll(':', '')}',
+                                            '${widget.amountAmai} ${S.current.amai_point('').replaceAll(':', '')}',
                                             style: typoInterNomal18.copyWith(
                                               color: colorTextMedium,
                                               fontSize: Dimens.d24.responsive(),
@@ -159,7 +157,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                   BlocBuilder<AppBloc, AppState>(
                     bloc: appBloc,
                     builder: (context, state) {
-                      return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
+                      return (state.users.totalAmais ?? 0) >= widget.amountAmai
                           ? Container()
                           : Text(
                               S.current.amai_noti,
@@ -195,7 +193,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
               BlocBuilder<AppBloc, AppState>(
                 bloc: appBloc,
                 builder: (context, state) {
-                  return (state.users.totalAmais ?? 0) >= SymbolConstants.amaipayment
+                  return (state.users.totalAmais ?? 0) >= widget.amountAmai
                       ? BlocBuilder<PaymentAmaiBloc, PaymentAmaiState>(
                           buildWhen: (previous, current) =>
                               previous.status != current.status || previous.buttonState != current.buttonState,
@@ -240,7 +238,7 @@ class _PaymentAmaiPageState extends BasePageState<PaymentAmaiPage, PaymentAmaiBl
                                           child: AppElevatedButton(
                                             state: statePay.buttonState,
                                             onPressed: () {
-                                              bloc.add(const PaymentAmaiInitiated());
+                                              bloc.add(PaymentAmaiInitiated(amount: widget.amountAmai));
                                             },
                                             buttonTitle: S.current.payment,
                                             mainColor: colorBrandPrimary,

@@ -10,5 +10,6 @@ class HistoryAmai with _$HistoryAmai {
     @Default('') String? note,
     @Default('') String? createdAt,
     @Default('') String? groub,
+    @Default(1) int? type,
   }) = _HistoryAmai;
 }

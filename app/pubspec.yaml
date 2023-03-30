@@ -64,6 +64,10 @@ dependencies:
   flutter_highlighter: ^0.1.1
   modal_bottom_sheet: ^3.0.0-pre
   badges: ^3.0.2
+  dropdown_button2: ^2.0.0
+  gallery_saver: ^2.3.2
+  flutter_share: ^2.0.0
+
   # mobile_scanner: ^3.0.0
 
 dev_dependencies:

@@ -9,5 +9,6 @@ part 'qr_code_state.freezed.dart';
 class QrCodeState extends BaseBlocState with _$QrCodeState {
   const factory QrCodeState({
     @Default(CameraPermission.permisionApeect) CameraPermission cameraPermission,
+    @Default(2) int amountAmai,
   }) = _QrCodeState;
 }

@@ -18,6 +18,7 @@ class Profile with _$Profile {
     @Default('') String? gender,
     @Default('') String? dob,
     @Default('') String? avatar,
+    @Default('') String? qrCode,
     @Default('') String? address,
     @Default('') dynamic about,
     @Default('') String? citizenId,

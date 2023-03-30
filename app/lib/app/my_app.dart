@@ -32,6 +32,9 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
   Widget buildPage(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(DeviceConstants.designDeviceWidth, DeviceConstants.designDeviceHeight),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      rebuildFactor: RebuildFactors.all,
       builder: (context, _) => MaterialApp.router(
         useInheritedMediaQuery: true,
         theme: ThemeData(

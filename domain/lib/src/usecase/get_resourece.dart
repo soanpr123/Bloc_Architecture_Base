@@ -15,11 +15,11 @@ class GetResourceUseCase extends BaseFutureResUseCase<GetResourceInput, Resource
   @protected
   @override
   Future<ResourceDataEntry> buildUseCase(GetResourceInput input) {
-    return _repository.getResource();
+    return _repository.getResource(input.type);
   }
 }
 
 @freezed
 class GetResourceInput extends BaseInput with _$GetResourceInput {
-  const factory GetResourceInput() = _GetResourceInput;
+  const factory GetResourceInput({required String type}) = _GetResourceInput;
 }

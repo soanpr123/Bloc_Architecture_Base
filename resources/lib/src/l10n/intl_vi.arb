@@ -112,5 +112,15 @@
   "outstanding":"Nổi bật",
   "all":"Tất cả",
   "reset_fillter":"Đặt lại",
-  "fillter":"Lọc"
+  "fillter":"Lọc",
+  "send_amai":"Tặng amai",
+  "user_send":"Người nhận",
+  "amai_number":"Số amai tặng",
+  "message":"Lời nhắn",
+  "send_private":"Tặng ẩn danh",
+  "send_public":"Tặng công khai",
+  "send_content":"Hãy tặng Amai cho nhưng người đã giúp đỡ bạn hay cho một người nào đó bạn ngưỡng mộ, yêu quý. Bạn có thể tặng Amai ẩn danh nếu muốn nên đừng ngần ngại nhé.",
+  "send_amai_private":"Tặng Amai ẩn danh",
+  "send_amai_private_content":"Bạn đang tặng Amai ở chế độ ẩn danh. Hãy chắc chắn rằng bạn đã chọn đúng chế độ nhé.",
+  "send_amai_noti":"Bạn đã tặng Amai thành công, đối phương chắc đang rất bất ngờ vì được bạn tặng Amai rồi. Bạn có thể tiếp tục tặng hoặc quay về trang chủ."
 }

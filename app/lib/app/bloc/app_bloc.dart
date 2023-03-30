@@ -17,6 +17,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     this._clearCurrentUserDataUseCase,
     this._getUsersUseCase,
     this._totalNotificationUseCase,
+    this._getPopUpDonateUseCase,
   ) : super(const AppState()) {
     on<IsLoggedInStatusChanged>(
       _onIsLoggedInStatusChanged,
@@ -41,6 +42,10 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
       _onAppInitiated,
       transformer: log(),
     );
+    on<AppGetPopUpDonate>(
+      _onAppGetPopUp,
+      transformer: log(),
+    );
   }
 
   // final GetInitialAppDataUseCase _getInitialAppDataUseCase;
@@ -50,7 +55,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   final GetTotalNotificationUseCase _totalNotificationUseCase;
   final ClearCurrentUserDataUseCase _clearCurrentUserDataUseCase;
   final IsLoggedInUseCase _isLoggedInUseCase;
-
+  final GetPopUpDonateUseCase _getPopUpDonateUseCase;
   bool get _isLoggedIn => runCatching(action: () => _isLoggedInUseCase.execute(const IsLoggedInInput())).when(
         success: (output) => output.isLoggedIn,
         failure: (e) => false,
@@ -82,7 +87,6 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
 
   Future<void> _onReloadHist(AppReloadHistory event, Emitter<AppState> emit) async {
     emit(state.copyWith(reloadHis: !event.reloadHis));
-   
   }
 
   // Future<void> _onAppLanguageChanged(AppLanguageChanged event, Emitter<AppState> emit) async {
@@ -114,15 +118,18 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
         },
         handleLoading: false,
         handleError: event.handleErr,
-        doOnError: (e) async {
-         
-        },
-        doOnSuccessOrError: () async {
-        
-        },
+        doOnError: (e) async {},
+        doOnSuccessOrError: () async {},
       );
 
       await _getUsers(emit: emit);
+    }
+  }
+
+  Future<void> _onAppGetPopUp(AppGetPopUpDonate event, Emitter<AppState> emit) async {
+    if (_isLoggedIn) {
+      await _getPopUpDonate(
+          emit: emit, doOnSubscribe: () async => emit(state.copyWith(popUpDonateEntry: const PopUpDonateEntry())));
     }
   }
 
@@ -143,6 +150,30 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
           await _clearCurrentUserDataUseCase.execute(const ClearCurrentUserDataInput());
           await Future<void>.delayed(const Duration(seconds: 2));
           await GetIt.instance.get<AppNavigator>().replace(const AppRouteInfo.login());
+        }
+      },
+      doOnError: (e) async {},
+      doOnSubscribe: doOnSubscribe,
+      doOnSuccessOrError: doOnSuccessOrError,
+      handleLoading: false,
+      handleError: false,
+    );
+  }
+
+  Future<void> _getPopUpDonate({
+    required Emitter<AppState> emit,
+    Future<void> Function()? doOnSubscribe,
+    Future<void> Function()? doOnSuccessOrError,
+  }) async {
+    return runBlocCatching(
+      action: () async {
+        final output = await _getPopUpDonateUseCase.execute(
+          const GetPopUpDonateUseInput(),
+        );
+        if (output.donor != '') {
+          emit(state.copyWith(popUpDonateEntry: output));
+        } else {
+          emit(state.copyWith(popUpDonateEntry: const PopUpDonateEntry()));
         }
       },
       doOnError: (e) async {},

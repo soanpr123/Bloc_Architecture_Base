@@ -279,6 +279,13 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                   },
                 ),
                 buildButton(
+                  'QR của tôi',
+                  Assets.svg.qrCodeLine.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
+                  onTap: () async {
+                    await navigator.push(AppRouteInfo.myQrCodePage(state.users.qrCode ?? '', state.users.name ?? ''));
+                  },
+                ),
+                buildButton(
                   S.current.change_password,
                   Assets.svg.lock.svg(width: Dimens.d20.responsive(), height: Dimens.d20.responsive()),
                   onTap: () async {

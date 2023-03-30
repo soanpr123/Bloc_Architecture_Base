@@ -70,8 +70,8 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
                 }
                 tabsRouter.setActiveIndex(i);
                 if (i == 0) {
-                 
                   appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));
+                 
                 }
                 if (i == 1) {
                   appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));

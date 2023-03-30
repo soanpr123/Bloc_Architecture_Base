@@ -1,3 +1,4 @@
+import 'package:app/ui/home/widget/dialog_donate.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,10 +49,17 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'name': S.current.blogs,
       'onTap': const AppRouteInfo.listBlogsPage(),
     },
+    {
+      'id': 5,
+      'icon': Assets.png.icSendAmai.path,
+      'name': S.current.send_amai,
+      'onTap': const AppRouteInfo.sendAmai(-1),
+    },
   ];
   @override
   void initState() {
     super.initState();
+    appBloc.add(const AppGetPopUpDonate());
     // GetIt.instance.get<AnnounmentBloc>().add(const AnnounmentPageInitiated());
   }
 
@@ -64,6 +72,20 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
           listener: (context, state) {
             print("reload");
             appBloc.add(const AppInitiated(handleErr: false));
+          },
+        ),
+        BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) =>
+              previous.popUpDonateEntry != current.popUpDonateEntry || previous.reloadHis != current.reloadHis,
+          listener: (context, state) {
+            appBloc.add(const AppGetPopUpDonate());
+            if (state.popUpDonateEntry.donor != '') {
+              print(state.popUpDonateEntry.donor);
+              navigator.showDialog(AppPopupInfo.bottomSheet(
+                  child: DialogDonate(
+                popUpDonateEntry: state.popUpDonateEntry,
+              )));
+            }
           },
         ),
       ],
@@ -212,7 +234,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                       onTap: () async {
                         // context.router.push(AmaiStoreRoute());
                         await navigator.push(item['onTap'] as AppRouteInfo);
-                        appBloc.add(const AppInitiated(handleErr: false));
+                        appBloc.add(AppReloadHistory(reloadHis: appBloc.state.reloadHis));
                       },
                       child: Column(
                         children: [

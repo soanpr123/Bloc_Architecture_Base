@@ -9,6 +9,7 @@ class Data2HistoryAmai with _$Data2HistoryAmai {
     @JsonKey(name: 'amount_amais') int? amountAmais,
     String? note,
     @JsonKey(name: 'created_at') String? createdAt,
+    int? type,
   }) = _Data2HistoryAmai;
 
   factory Data2HistoryAmai.fromJson(Map<String, dynamic> json) => _$Data2HistoryAmaiFromJson(json);

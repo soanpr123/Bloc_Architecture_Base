@@ -24,7 +24,7 @@ class PaymentAmaiBloc extends BaseBloc<PaymentAmaiEvent, PaymentAmaiState> {
         emit(state.copyWith(buttonState: AppElevatedButtonState.loading));
       },
       action: () async {
-        final output = await _paymentUseCase.execute(PaymentInput(amai: SymbolConstants.amaipayment));
+        final output = await _paymentUseCase.execute(PaymentInput(amai: event.amount));
         if (output.data['status_code'] == 200) {
           emit(state.copyWith(buttonState: AppElevatedButtonState.active, status: true));
         } else {

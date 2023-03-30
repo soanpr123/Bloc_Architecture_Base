@@ -12,7 +12,7 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.amaiStore() = _AmaiStorePage;
   const factory AppRouteInfo.announcementDetail(String slungs) = _AnnouncementDetailPage;
   const factory AppRouteInfo.qrCode() = _QrCode;
-  const factory AppRouteInfo.paymentAmai() = _Payment;
+  const factory AppRouteInfo.paymentAmai(int amount) = _Payment;
   const factory AppRouteInfo.paymentResult() = _PaymentResult;
   const factory AppRouteInfo.changePassWord() = _ChangePassWord;
   const factory AppRouteInfo.announmentPage() = _AnnounmentPage;
@@ -22,5 +22,8 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.blogsDetail(String slungs) = _BlogsDetail;
   const factory AppRouteInfo.amaiMember() = _AmaiMember;
   const factory AppRouteInfo.listBlogsPage() = _ListBlogsPage;
+  const factory AppRouteInfo.sendAmai(int userId) = _SendAmai;
+  const factory AppRouteInfo.doneSendAmaiPage(int userId) = _DoneSendAmaiPage;
+  const factory AppRouteInfo.myQrCodePage(String qrCode, String name) = _MyQrCodePage;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

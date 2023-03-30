@@ -56,6 +56,7 @@ class UserDataMapper extends BaseDataMapper<ProfileData, Profile> {
       haveLunchMenu: data?.haveLunchMenu,
       haveInternalAnnouncement: data?.haveInternalAnnouncement,
       currentLunchTotalPayment: data?.currentLunchTotalPayment,
+      qrCode: data?.qrCode,
     );
   }
 }
