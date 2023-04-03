@@ -109,7 +109,7 @@ void successToast(String msg) {
             ToastMes.current.fToast.removeCustomToast();
           },
           child: const Icon(
-            Icons.close,
+            Icons.check,
             size: 20,
             color: Colors.white,
           ),

@@ -6,6 +6,7 @@ Color colorBrandPrimary = HexColor('47b475');
 Color colorSupportInfo = HexColor('3B82F6');
 Color colorHoverPrimary = HexColor('13926e');
 Color colorDisabled = HexColor('CAEAD7');
+// Color colorDisabledPrimary=HexColor(#CAEAD7)
 Color colorTextDark = HexColor('1F2937');
 Color colorTextBland = HexColor('9CA3AF');
 Color colorBoder01 = HexColor('D1D5DB');

@@ -42,169 +42,170 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
             previous.buttonStateDelete != current.buttonStateDelete ||
             previous.apirequestNoti != current.apirequestNoti,
         builder: (context, state) {
-          return BodyBuilder(
-            isStore: true,
-            apiRequestStatus: state.apirequestNoti,
-            image: Assets.png.icNodataStore.image(width: 150, height: 150),
-            reload: () {
-              bloc.add(const AmaiStoreInitiated());
-            },
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Dimens.d24.responsive(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tiền ăn tháng này:',
-                        style:
-                            typoInterNomal14.copyWith(fontWeight: FontWeight.w600, height: 1.5, color: colorTextDark),
-                      ),
-                      BlocBuilder<AppBloc, AppState>(
-                        buildWhen: (previous, current) =>
-                            previous.users.currentLunchTotalPayment != current.users.currentLunchTotalPayment,
-                        builder: (context, stateApp) {
-                          return Text(
-                            stateApp.users.currentLunchTotalPayment ?? '0 VND',
-                            style: typoInterNomal14.copyWith(
-                                fontWeight: FontWeight.w600, height: 1.5, color: colorBrandPrimary),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Dimens.d24.responsive(),
-                  ),
-                  Text(
-                    S.current.amaistore_content,
-                    style: typoInterNomal14.copyWith(
-                      height: 1.5,
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Dimens.d24.responsive(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Tiền ăn tháng này:',
+                      style: typoInterNomal14.copyWith(fontWeight: FontWeight.w600, height: 1.5, color: colorTextDark),
                     ),
-                  ),
-                  SizedBox(
-                    height: Dimens.d8.responsive(),
-                  ),
-                  Text(
-                    S.current.time_amai,
-                    style: typoInterNomal14.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
-                      height: 1.5,
+                    BlocBuilder<AppBloc, AppState>(
+                      buildWhen: (previous, current) =>
+                          previous.users.currentLunchTotalPayment != current.users.currentLunchTotalPayment,
+                      builder: (context, stateApp) {
+                        return Text(
+                          stateApp.users.currentLunchTotalPayment ?? '0 VND',
+                          style: typoInterNomal14.copyWith(
+                              fontWeight: FontWeight.w600, height: 1.5, color: colorBrandPrimary),
+                        );
+                      },
                     ),
+                  ],
+                ),
+                SizedBox(
+                  height: Dimens.d24.responsive(),
+                ),
+                Text(
+                  S.current.amaistore_content,
+                  style: typoInterNomal14.copyWith(
+                    height: 1.5,
                   ),
-                  SizedBox(
-                    height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                        ? Dimens.d24.responsive()
-                        : Dimens.d12.responsive(),
+                ),
+                SizedBox(
+                  height: Dimens.d8.responsive(),
+                ),
+                Text(
+                  S.current.time_amai,
+                  style: typoInterNomal14.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FontStyle.italic,
+                    height: 1.5,
                   ),
-                  state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                      ? Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Dimens.d12.responsive(),
-                            vertical: Dimens.d12.responsive(),
-                          ),
-                          decoration: BoxDecoration(
-                            color: colorAmber100,
-                            boxShadow: boxShadow,
-                            borderRadius: const BorderRadius.all(Radius.circular(5)),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Bạn đã đặt',
-                                  style: typoInterNomal14.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: colorTextDark,
-                                    fontSize: Dimens.d16.responsive(),
-                                    height: 1.5,
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: state.amaiOrder.type == 0
-                                          ? ' Thực đơn ${state.canteen[state.canteen.indexWhere((element) => element.id == state.amaiOrder.lunchMenusId)].orderNo}'
-                                          : ' ${state.amaiOrder.menuName}',
-                                      style: typoInterNomal14.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: Dimens.d16.responsive(),
-                                        color: colorBrandPrimary,
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' cho bữa trưa hôm nay.',
-                                      style: typoInterNomal14.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: colorTextDark,
-                                        fontSize: Dimens.d16.responsive(),
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: Dimens.d4.responsive(),
-                              ),
-                              Text(
-                                S.current.amai_note_order,
-                                style: typoInterNomal14.copyWith(
-                                  color: colorSupportDanger,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Dimens.d14.responsive(),
-                                  height: 1.5,
-                                ),
-                              ),
-                              SizedBox(
-                                height: Dimens.d4.responsive(),
-                              ),
-                              Text(
-                                S.current.amai_congaru,
-                                style: typoInterNomal14.copyWith(
+                ),
+                SizedBox(
+                  height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                      ? Dimens.d24.responsive()
+                      : Dimens.d12.responsive(),
+                ),
+                state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Dimens.d12.responsive(),
+                          vertical: Dimens.d12.responsive(),
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorAmber100,
+                          boxShadow: boxShadow,
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: 'Bạn đã đặt',
+                                style: typoInterNomal16.copyWith(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: Dimens.d16.responsive(),
                                   color: colorTextDark,
+                                  fontSize: Dimens.d16.responsive(),
                                   height: 1.5,
                                 ),
-                              ),
-                              SizedBox(
-                                height: Dimens.d24.responsive(),
-                              ),
-                              DateTimeUtils.checkTime()
-                                  ? Container()
-                                  : Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: Dimens.d40.responsive(),
-                                          ),
-                                          child: AppElevatedButton(
-                                            state: state.buttonStateDelete,
-                                            buttonTitle: S.current.amai_cance,
-                                            onPressed: () {
-                                              bloc.add(const AmaiStoreDeleteOrderPress());
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: state.amaiOrder.type == 0
+                                        ? ' Thực đơn ${(state.canteen[state.canteen.indexWhere((element) => element.id == state.amaiOrder.lunchMenusId)].orderNo ?? 0) + 1}'
+                                        : ' ${state.amaiOrder.menuName}',
+                                    style: typoInterNomal14.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: Dimens.d16.responsive(),
+                                      color: colorBrandPrimary,
+                                      height: 1.5,
                                     ),
-                            ],
-                          ),
-                        )
-                      : Container(),
-                  SizedBox(
-                    height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
-                        ? Dimens.d24.responsive()
-                        : Dimens.d12.responsive(),
-                  ),
-                  RefreshIndicator(
+                                  ),
+                                  TextSpan(
+                                    text: ' cho bữa trưa hôm nay.',
+                                    style: typoInterNomal14.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: colorTextDark,
+                                      fontSize: Dimens.d16.responsive(),
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Dimens.d4.responsive(),
+                            ),
+                            Text(
+                              S.current.amai_note_order,
+                              style: typoInterNomal14.copyWith(
+                                color: colorSupportDanger,
+                                fontWeight: FontWeight.w400,
+                                fontSize: Dimens.d14.responsive(),
+                                height: 1.5,
+                              ),
+                            ),
+                            SizedBox(
+                              height: Dimens.d4.responsive(),
+                            ),
+                            Text(
+                              S.current.amai_congaru,
+                              style: typoInterNomal16.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: Dimens.d16.responsive(),
+                                color: colorTextDark,
+                                height: 1.5,
+                              ),
+                            ),
+                            SizedBox(
+                              height: Dimens.d24.responsive(),
+                            ),
+                            DateTimeUtils.checkTime()
+                                ? Container()
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: Dimens.d40.responsive(),
+                                        ),
+                                        child: AppElevatedButton(
+                                          state: state.buttonStateDelete,
+                                          buttonTitle: S.current.amai_cance,
+                                          onPressed: () {
+                                            bloc.add(const AmaiStoreDeleteOrderPress());
+                                            appBloc.add(const AppInitiated(handleErr: false));
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                SizedBox(
+                  height: state.amaiOrder.id != -1 && state.amaiOrder.id != null
+                      ? Dimens.d24.responsive()
+                      : Dimens.d12.responsive(),
+                ),
+                BodyBuilder(
+                  isStore: true,
+                  apiRequestStatus: state.apirequestNoti,
+                  image: Assets.png.icNodataStore.image(width: 150, height: 150),
+                  reload: () {
+                    bloc.add(const AmaiStoreInitiated());
+                  },
+                  isLoadingNew: false,
+                  child: RefreshIndicator(
                     onRefresh: () async {
                       bloc.add(const AmaiStoreInitiated());
                     },
@@ -256,7 +257,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                                 ),
                                                                 children: <TextSpan>[
                                                                   TextSpan(
-                                                                    text: ' Thực đơn ${item.orderNo}',
+                                                                    text: ' Thực đơn ${(item.orderNo ?? 0) + 1}',
                                                                     style: typoInterNomal14.copyWith(
                                                                       fontWeight: FontWeight.w600,
                                                                       color: colorTextDark,
@@ -279,6 +280,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                         onPress: () {
                                                           if (state.amaiOrder.id == -1 || state.amaiOrder.id == null) {
                                                             bloc.add(AmaiStoreOrderPress(id: item.id ?? 0));
+                                                            appBloc.add(const AppInitiated(handleErr: false));
                                                           }
                                                         },
                                                       ));
@@ -319,7 +321,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                  'Thực đơn ${item.orderNo}',
+                                                                  'Thực đơn ${(item.orderNo ?? 0) + 1}',
                                                                   style: typoInterNomal16.copyWith(
                                                                     height: 1.5,
                                                                   ),
@@ -333,7 +335,7 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                                                               item.name ?? '',
                                                               style: typoInterNomal14.copyWith(
                                                                 height: 1.5,
-                                                                letterSpacing: 1,
+                                                                // letterSpacing: 1,
                                                               ),
                                                             ),
                                                           ],
@@ -500,8 +502,8 @@ class _AmaiStorePageState extends BasePageState<AmaiStorePage, AmaiStoreBloc> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

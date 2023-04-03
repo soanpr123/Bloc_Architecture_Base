@@ -208,9 +208,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
 
   FutureOr<void> likeComment(LikeComment event, Emitter<BlogsDetailState> emit) async {
     return runBlocCatching(
-      doOnSubscribe: () async {
-        emit(state.copyWith(likeStatus: APIRequestStatus.loading));
-      },
+      doOnSubscribe: () async {},
       action: () async {
         final output = await _likeComentUseCase.execute(LikeComentInput(slungs: event.slungs, id: event.id));
         if (output.data['status_code'] == 200) {

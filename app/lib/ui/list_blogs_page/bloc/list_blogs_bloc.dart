@@ -59,6 +59,12 @@ class ListBlogsBloc extends BaseBloc<ListBlogsEvent, ListBlogsState> {
       id: -1,
       slug: '',
     ));
+    print(event.tag);
+    emit(
+      state.copyWith(
+        search: event.tag,
+      ),
+    );
     await getListBlogs(
       postType: state.curentTab,
       orderKey: state.orders,

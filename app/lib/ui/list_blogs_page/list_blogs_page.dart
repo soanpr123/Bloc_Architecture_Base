@@ -11,8 +11,8 @@ import 'package:badges/badges.dart' as badges;
 import '../../app.dart';
 
 class ListBlogsPage extends StatefulWidget {
-  const ListBlogsPage({Key? key}) : super(key: key);
-
+  const ListBlogsPage({required this.tag, Key? key}) : super(key: key);
+  final String tag;
   @override
   _ListBlogsPageState createState() => _ListBlogsPageState();
 }
@@ -25,7 +25,9 @@ class _ListBlogsPageState extends BasePageState<ListBlogsPage, ListBlogsBloc> wi
   void initState() {
     super.initState();
     tabController = TabController(length: 4, vsync: this);
-    bloc.add(const ListBlogsPageInitiated());
+    search.text = widget.tag;
+    bloc.add(ListBlogsPageInitiated(tag: widget.tag));
+
     _pagingController.listen(
       onLoadMore: () => bloc.add(const ListBlogsLoadMore()),
     );
@@ -157,15 +159,12 @@ class _ListBlogsPageState extends BasePageState<ListBlogsPage, ListBlogsBloc> wi
                   children: [
                     badges.Badge(
                       badgeStyle: const badges.BadgeStyle(padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6)),
-
                       badgeAnimation: const badges.BadgeAnimation.fade(
                         animationDuration: Duration(milliseconds: 200),
                         loopAnimation: false,
                       ),
-                     
                       showBadge: stateFill.categorySelect.id != -1,
                       ignorePointer: false,
-                     
                       position: badges.BadgePosition.topEnd(top: -4, end: -4),
                       child: GestureDetector(
                         onTap: () async {

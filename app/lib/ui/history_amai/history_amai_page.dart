@@ -48,84 +48,85 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
         elevation: 1,
         // height: MediaQuery.of(context).padding.top + Dimens.d56.responsive(),
       ),
-      body: BlocBuilder<AppBloc, AppState>(
-        buildWhen: (previous, current) => previous.reloadHis != current.reloadHis,
-        builder: (context, stateapp) {
-          return BlocBuilder<HistoryAmaiBloc, HistoryAmaiState>(
-            buildWhen: (previous, current) =>
-                previous.history != current.history ||
-                previous.isShimmerLoading != current.isShimmerLoading ||
-                previous.enablePullNotifi != current.enablePullNotifi ||
-                previous.page != current.page ||
-                previous.apirequest != current.apirequest,
-            builder: (context, state) {
-              return BodyBuilder(
-                apiRequestStatus: state.apirequest,
-                reload: () {
-                  bloc.add(const HistoryPageInitiated());
-                },
-                image: Assets.png.noData.image(
-                  width: Dimens.d265.responsive(),
-                  height: Dimens.d200.responsive(),
-                  fit: BoxFit.contain,
-                ),
-                child: RefreshIndicator(
-                  onRefresh: () {
+      body: SafeArea(
+        child: BlocBuilder<AppBloc, AppState>(
+          buildWhen: (previous, current) => previous.reloadHis != current.reloadHis,
+          builder: (context, stateapp) {
+            return BlocBuilder<HistoryAmaiBloc, HistoryAmaiState>(
+              buildWhen: (previous, current) =>
+                  previous.history != current.history ||
+                  previous.isShimmerLoading != current.isShimmerLoading ||
+                  previous.enablePullNotifi != current.enablePullNotifi ||
+                  previous.page != current.page ||
+                  previous.apirequest != current.apirequest,
+              builder: (context, state) {
+                return BodyBuilder(
+                  apiRequestStatus: state.apirequest,
+                  reload: () {
                     bloc.add(const HistoryPageInitiated());
-
-                    return Future.value();
                   },
-                  child: state.isShimmerLoading
-                      ? const ListViewLoader()
-                      : state.history.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const CommonNoItemsFoundIndicator(),
-                              ],
-                            )
-                          : GroupedListView(
-                              // physics: const NeverScrollableScrollPhysics(),
-                              elements: state.history,
-                              // physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              order: GroupedListOrder.DESC,
-                              padding: const EdgeInsets.all(0.0),
-                              useStickyGroupSeparators: true,
-                              groupBy: (element) => element.groub ?? '',
+                  image: Assets.png.noData.image(
+                    width: Dimens.d265.responsive(),
+                    height: Dimens.d200.responsive(),
+                    fit: BoxFit.contain,
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: () {
+                      bloc.add(const HistoryPageInitiated());
 
-                              groupSeparatorBuilder: (String value) => Container(
-                                width: double.infinity,
-                                color: colorUiBg05,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Dimens.d24.responsive(),
-                                  vertical: Dimens.d8.responsive(),
-                                ),
-                                child: Text(
-                                  'Tháng $value',
-                                  style: typoInterNomal14.copyWith(
-                                    color: colorTextMedium,
-                                    fontSize: Dimens.d12.responsive(),
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
+                      return Future.value();
+                    },
+                    child: state.isShimmerLoading
+                        ? const ListViewLoader()
+                        : state.history.isEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const CommonNoItemsFoundIndicator(),
+                                ],
+                              )
+                            : GroupedListView(
+                                // physics: const NeverScrollableScrollPhysics(),
+                                elements: state.history,
+                                // physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                // order: GroupedListOrder.DESC,
+                                padding: const EdgeInsets.all(0.0),
+                                useStickyGroupSeparators: true,
+                                groupBy: (element) => element.groub ?? '',
+                                itemComparator: (item1, item2) => (item2.createdAt ?? '')
+                                    .split(' ')[1]
+                                    .compareTo((item1.createdAt ?? '').split(' ')[1]),
+                                groupSeparatorBuilder: (String value) => Container(
+                                  width: double.infinity,
+                                  color: colorUiBg05,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: Dimens.d24.responsive(),
+                                    vertical: Dimens.d8.responsive(),
+                                  ),
+                                  child: Text(
+                                    'Tháng $value',
+                                    style: typoInterNomal14.copyWith(
+                                      color: colorTextMedium,
+                                      fontSize: Dimens.d12.responsive(),
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.5,
+                                    ),
                                   ),
                                 ),
-                              ),
 
-                              itemBuilder: (context, e) {
-                                return ShimmerLoading(
-                                  isLoading: state.isShimmerLoading,
-                                  loadingWidget: const LoadingItem(),
-                                  child: GestureDetector(
-                                    onTap: () async {},
-                                    child: ListTile(
-                                      leading: e.type == 1 ? Assets.svg.chicken.svg() : Assets.svg.giftHistory.svg(),
-                                      minLeadingWidth: Dimens.d5.responsive(),
-                                      title: Align(
-                                        alignment: const Alignment(-1.2, 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(vertical: Dimens.d12.responsive()),
+                                itemBuilder: (context, e) {
+                                  return ShimmerLoading(
+                                    isLoading: state.isShimmerLoading,
+                                    loadingWidget: const LoadingItem(),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: Dimens.d12.responsive()),
+                                      child: ListTile(
+                                        leading: e.type == 1 ? Assets.svg.chicken.svg() : Assets.svg.giftHistory.svg(),
+                                        minLeadingWidth: Dimens.d5.responsive(),
+                                        title: Align(
+                                          alignment: const Alignment(-1.2, 0),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,6 +136,8 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Flexible(
                                                           child: HtmlWidget(
@@ -147,9 +150,9 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                                                 return {
                                                                   'font-family': 'Inter',
                                                                   'font-style': 'normal',
-                                                                  'color': '#1F2937',
+                                                                  // 'color': '#1F2937',
                                                                   'font-weight': '600',
-                                                                  'font-size': ' 14px',
+                                                                  // 'font-size': ' 14px',
                                                                   'line-height': '150%',
                                                                 };
                                                               }
@@ -157,6 +160,23 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                                               return null;
                                                             },
                                                           ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: Dimens.d24.responsive(),
+                                                        ),
+                                                        Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                          children: [
+                                                            Text(
+                                                              e.type == 3 ? '+${e.amountAmais} ' : '-${e.amountAmais} ',
+                                                              style: typoInterNomal14.copyWith(
+                                                                color: colorTextMedium,
+                                                                fontWeight: FontWeight.w600,
+                                                                height: 1.5,
+                                                              ),
+                                                            ),
+                                                            Assets.svg.logoamai.svg(width: 20, height: 20),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
@@ -174,33 +194,20 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                                   ],
                                                 ),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    e.type == 3 ? '+${e.amountAmais} ' : '-${e.amountAmais} ',
-                                                    style: typoInterNomal14.copyWith(
-                                                      color: colorTextMedium,
-                                                      fontWeight: FontWeight.w600,
-                                                      height: 1.5,
-                                                    ),
-                                                  ),
-                                                  Assets.svg.logoamai.svg(width: 20, height: 20),
-                                                ],
-                                              ),
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                ),
-              );
-            },
-          );
-        },
+                                  );
+                                },
+                              ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

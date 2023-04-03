@@ -48,16 +48,38 @@ class _MyQrCodePageState extends BasePageState<MyQrCodePage, MyQrCodeBloc> {
                     ),
                     Text(
                       widget.name,
-                      style: typoInterNomal16.copyWith(color: colorTextDark, fontSize: 20, height: 1.5),
+                      style: typoInterNomal16.copyWith(
+                          color: colorTextDark, fontSize: Dimens.d20.responsive(), height: 1.5),
                     ),
                     SizedBox(
                       height: Dimens.d24.responsive(),
                     ),
-                    SizedBox(
-                      width: Dimens.d300.responsive(),
-                      height: Dimens.d300.responsive(),
-                      child: AppNetworkImage(
-                        source: widget.qrCode,
+                    Container(
+                      width: Dimens.d222.responsive(),
+                      height: Dimens.d222.responsive(),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        boxShadow: boxShadow,
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: Dimens.d8.responsive(),
+                          ),
+                          Image.asset(
+                            Assets.png.logoSplash.path,
+                            fit: BoxFit.contain,
+                            height: Dimens.d18.responsive(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(Dimens.d21.responsive(), Dimens.d4.responsive(),
+                                Dimens.d21.responsive(), Dimens.d12.responsive()),
+                            child: AppNetworkImage(
+                              source: widget.qrCode,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
