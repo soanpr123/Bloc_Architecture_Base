@@ -21,7 +21,7 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.wikiDetailPage(String slungs) = _WikiDetailPage;
   const factory AppRouteInfo.blogsDetail(String slungs) = _BlogsDetail;
   const factory AppRouteInfo.amaiMember() = _AmaiMember;
-  const factory AppRouteInfo.listBlogsPage() = _ListBlogsPage;
+  const factory AppRouteInfo.listBlogsPage(String tag) = _ListBlogsPage;
   const factory AppRouteInfo.sendAmai(int userId) = _SendAmai;
   const factory AppRouteInfo.doneSendAmaiPage(int userId) = _DoneSendAmaiPage;
   const factory AppRouteInfo.myQrCodePage(String qrCode, String name) = _MyQrCodePage;

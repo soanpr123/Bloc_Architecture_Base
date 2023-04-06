@@ -65,3 +65,25 @@ class DonateButton extends SendAmaiEvent with _$DonateButton {
     required int id,
   }) = _DonateButton;
 }
+
+@freezed
+class ChangeFocus extends SendAmaiEvent with _$ChangeFocus {
+  const factory ChangeFocus({
+    required bool focus,
+  }) = _ChangeFocus;
+}
+
+@freezed
+class ChangeFocusInput extends SendAmaiEvent with _$ChangeFocusInput {
+  const factory ChangeFocusInput({
+    required bool focus,
+  }) = _ChangeFocusInput;
+}
+
+@freezed
+class CheckValid extends SendAmaiEvent with _$CheckValid {
+  const factory CheckValid({
+    required int type,
+    required int id,
+  }) = _CheckValid;
+}

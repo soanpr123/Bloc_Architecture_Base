@@ -15,6 +15,7 @@ abstract class ListBlogsEvent extends BaseBlocEvent {
 class ListBlogsPageInitiated extends ListBlogsEvent with _$ListBlogsPageInitiated {
   const factory ListBlogsPageInitiated({
     @Default(true) bool isIntinalLoad,
+    @Default('') String tag,
   }) = _ListBlogsPageInitiated;
 }
 

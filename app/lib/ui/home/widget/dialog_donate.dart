@@ -14,7 +14,7 @@ class DialogDonate extends StatelessWidget {
         minimum: EdgeInsets.all(16),
         child: Column(
           children: [
-            Assets.png.gifPopup.image(),
+            Assets.svg.notifiPopup.svg(),
             SizedBox(
               height: Dimens.d24.responsive(),
             ),
@@ -24,7 +24,7 @@ class DialogDonate extends StatelessWidget {
                 style: typoInterNomal16.copyWith(
                   color: colorTextMedium,
                   fontWeight: FontWeight.w700,
-                  fontSize: 24,
+                  fontSize: Dimens.d24.responsive(),
                   height: 1.5,
                 ),
                 children: <TextSpan>[
@@ -33,7 +33,7 @@ class DialogDonate extends StatelessWidget {
                     style: typoInterNomal16.copyWith(
                       color: colorBrandPrimary,
                       fontWeight: FontWeight.w700,
-                      fontSize: 24,
+                      fontSize: Dimens.d24.responsive(),
                       height: 1.5,
                     ),
                   ),
@@ -49,7 +49,7 @@ class DialogDonate extends StatelessWidget {
                 style: typoInterNomal14.copyWith(
                   color: colorTextMedium,
                   fontWeight: FontWeight.w400,
-                  fontSize: 14,
+                  fontSize: Dimens.d14.responsive(),
                   height: 1.5,
                 ),
                 children: <TextSpan>[
@@ -58,18 +58,29 @@ class DialogDonate extends StatelessWidget {
                     style: typoInterNomal14.copyWith(
                       color: colorBrandPrimary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: Dimens.d14.responsive(),
                       height: 1.5,
                     ),
                   ),
                   TextSpan(
-                    text: ' tặng Amai với lời nhắn:“${popUpDonateEntry.note}"',
+                    text: ' tặng Amai với lời nhắn:',
                     style: typoInterNomal14.copyWith(
                       color: colorTextMedium,
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: Dimens.d14.responsive(),
                       height: 1.5,
                     ),
+                    children: [
+                      TextSpan(
+                        text: ' “${popUpDonateEntry.note}”',
+                        style: typoInterNomal16.copyWith(
+                          color: colorTextMedium,
+                          fontWeight: FontWeight.w600,
+                          fontSize: Dimens.d14.responsive(),
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

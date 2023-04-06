@@ -11,6 +11,7 @@ import '../../utils/max_word_text_input.dart';
 class SendAmaiPage extends StatefulWidget {
   const SendAmaiPage({required this.userId, Key? key}) : super(key: key);
   final String userId;
+
   @override
   _SendAmaiPageState createState() => _SendAmaiPageState();
 }
@@ -23,11 +24,25 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
     'Tôi khó có bạn, bạn đói có tôi',
     'Amai khi đói bằng 1 gói khi no',
   };
+  FocusNode _focus = FocusNode();
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
     super.initState();
+    _focus.addListener(_onFocusChange);
     bloc.add(GetMemberSend(id: int.parse(widget.userId)));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focus.removeListener(_onFocusChange);
+    _focus.dispose();
+  }
+
+  void _onFocusChange() {
+    print("Focus: ${_focus.hasFocus.toString()}");
+    bloc.add(ChangeFocus(focus: _focus.hasFocus));
   }
 
   @override
@@ -92,10 +107,17 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                           ),
                           BlocBuilder<SendAmaiBloc, SendAmaiState>(
                             buildWhen: (previous, current) =>
-                                previous.member != current.member || previous.selectedMember != current.selectedMember,
+                                previous.member != current.member ||
+                                previous.selectedMember != current.selectedMember ||
+                                previous.focusInput != current.focusInput ||
+                                previous.errUser != current.errUser,
                             builder: (context, statem) {
-                              return statem.member.isNotEmpty
-                                  ? DropdownButtonHideUnderline(
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: Dimens.d40.responsive(),
+                                    child: DropdownButtonHideUnderline(
                                       child: DropdownButton2(
                                         isExpanded: true,
                                         hint: Row(
@@ -125,20 +147,29 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                             bloc.add(SelectedMember(selectedMember: value));
                                           }
                                         },
+                                        onMenuStateChange: (v) {
+                                          bloc.add(ChangeFocusInput(focus: v));
+                                        },
                                         buttonStyleData: ButtonStyleData(
-                                          height: 50,
-                                          padding: const EdgeInsets.only(left: 0, right: 8),
+                                          padding: EdgeInsets.only(left: 0, right: 8, bottom: Dimens.d4.responsive()),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(5),
                                             border: Border.all(
-                                              color: colorBoder01,
+                                              color: statem.focusInput
+                                                  ? colorBrandPrimary
+                                                  : statem.errUser != ''
+                                                      ? colorSupportDanger
+                                                      : colorBoder01,
                                             ),
                                           ),
                                           elevation: 0,
                                         ),
                                         iconStyleData: IconStyleData(
-                                          icon: const Icon(
-                                            Icons.keyboard_arrow_down_rounded,
+                                          icon: Padding(
+                                            padding: EdgeInsets.only(top: Dimens.d4.responsive()),
+                                            child: const Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                            ),
                                           ),
                                           iconSize: 20,
                                           iconEnabledColor: colorGray600,
@@ -156,13 +187,29 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                             thumbVisibility: MaterialStateProperty.all<bool>(true),
                                           ),
                                         ),
-                                        menuItemStyleData: const MenuItemStyleData(
-                                          height: 40,
-                                          padding: EdgeInsets.only(left: 14, right: 14),
+                                        menuItemStyleData: MenuItemStyleData(
+                                          height: Dimens.d40.responsive(),
+                                          padding: EdgeInsets.only(
+                                            left: Dimens.d8.responsive(),
+                                            right: Dimens.d8.responsive(),
+                                          ),
                                         ),
                                       ),
-                                    )
-                                  : Container();
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: Dimens.d4.responsive(),
+                                  ),
+                                  Text(
+                                    statem.errUser,
+                                    style: typoInterNomal14.copyWith(
+                                      fontSize: 12,
+                                      height: 1.5,
+                                      color: colorSupportDanger,
+                                    ),
+                                  ),
+                                ],
+                              );
                             },
                           ),
                           SizedBox(
@@ -255,61 +302,99 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                             height: Dimens.d4.responsive(),
                           ),
                           BlocBuilder<SendAmaiBloc, SendAmaiState>(
-                            buildWhen: (previous, current) => previous.controller != current.controller,
+                            buildWhen: (previous, current) =>
+                                previous.controller != current.controller ||
+                                previous.focus != current.focus ||
+                                previous.errSend != current.errSend,
                             builder: (context, stateC) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: colorUiBg02),
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                ),
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                child: TextField(
-                                  controller: _controller,
-                                  maxLines: 4,
-                                  textInputAction: TextInputAction.done,
-                                  onChanged: (v) {
-                                    bloc.add(InputChange(input: v));
-                                  },
-                                  inputFormatters: [
-                                    MaxWordTextInputFormater(
-                                      maxWords: 300,
-                                      currentLength: (v) {
-                                        bloc.add(ChangeCount(count: v));
-                                      },
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: stateC.focus
+                                            ? colorBrandPrimary
+                                            : stateC.errSend != ''
+                                                ? colorSupportDanger
+                                                : colorBoder01,
+                                      ),
+                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                                     ),
-                                  ],
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                                    counter: BlocBuilder<SendAmaiBloc, SendAmaiState>(
-                                      buildWhen: (previous, current) =>
-                                          previous.count != current.count || previous.controller != current.controller,
-                                      builder: (context, stater) {
-                                        return Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            RichText(
-                                              text: TextSpan(
-                                                style: typoInterNomal14.copyWith(color: colorTextBland, fontSize: 12),
-                                                children: [
-                                                  const TextSpan(text: '('),
-                                                  TextSpan(
-                                                    text: stater.count.toString(),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    child: TextField(
+                                      controller: _controller,
+                                      focusNode: _focus,
+                                      maxLines: 4,
+                                      textInputAction: TextInputAction.done,
+                                      style: typoInterNomal14.copyWith(
+                                        fontSize: Dimens.d14.responsive(),
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.5,
+                                        color: colorTextDark,
+                                      ),
+                                      strutStyle: const StrutStyle(
+                                        forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
+                                        height: 1.5, // Khoảng cách giữa các dòng
+                                      ),
+                                      onChanged: (v) {
+                                        bloc.add(InputChange(input: v));
+                                      },
+                                      inputFormatters: [
+                                        MaxWordTextInputFormater(
+                                          maxWords: 300,
+                                          currentLength: (v) {
+                                            bloc.add(ChangeCount(count: v));
+                                          },
+                                        ),
+                                      ],
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                                        counter: BlocBuilder<SendAmaiBloc, SendAmaiState>(
+                                          buildWhen: (previous, current) =>
+                                              previous.count != current.count ||
+                                              previous.controller != current.controller,
+                                          builder: (context, stater) {
+                                            return Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                RichText(
+                                                  text: TextSpan(
                                                     style:
                                                         typoInterNomal14.copyWith(color: colorTextBland, fontSize: 12),
+                                                    children: [
+                                                      const TextSpan(text: '('),
+                                                      TextSpan(
+                                                        text: stater.count.toString(),
+                                                        style: typoInterNomal14.copyWith(
+                                                            color: colorTextBland, fontSize: 12),
+                                                      ),
+                                                      const TextSpan(
+                                                        text: '/300)',
+                                                      ),
+                                                    ],
                                                   ),
-                                                  const TextSpan(
-                                                    text: '/300)',
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: Dimens.d4.responsive(),
+                                  ),
+                                  Text(
+                                    stateC.errSend,
+                                    style: typoInterNomal14.copyWith(
+                                      fontSize: 12,
+                                      height: 1.5,
+                                      color: colorSupportDanger,
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),
@@ -377,7 +462,9 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                 buildWhen: (previous, current) =>
                     previous.privateStatus != current.privateStatus ||
                     previous.publicStatus != current.publicStatus ||
-                    previous.errAmai != current.errAmai,
+                    previous.errAmai != current.errAmai ||
+                    previous.errSend != current.errSend ||
+                    previous.errUser != current.errUser,
                 builder: (context, stateB) {
                   return Row(
                     children: [
@@ -387,24 +474,28 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: colorBrandPrimary),
+                            border: Border.all(
+                              color: stateB.privateStatus == APIRequestStatus.error ? colorDisabled : colorBrandPrimary,
+                            ),
                           ),
                           child: TextButton(
                             style: ButtonStyle(
                               overlayColor: MaterialStateProperty.all(colorDisabled),
                             ),
-                            onPressed: () {
-                              navigator.showDialog(AppPopupInfo.dialogConfirmComon(
-                                message: S.current.send_amai_private,
-                                title: S.current.send_amai_private_content,
-                                titleButton: 'Tặng',
-                                onPress: () {
-                                  if (stateB.errAmai == '') {
-                                    bloc.add(DonateButton(type: 2, id: int.parse(widget.userId)));
-                                  }
-                                },
-                              ));
-                            },
+                            onPressed: stateB.privateStatus == APIRequestStatus.error
+                                ? null
+                                : () {
+                                    navigator.showDialog(AppPopupInfo.dialogConfirmComon(
+                                      message: S.current.send_amai_private,
+                                      title: S.current.send_amai_private_content,
+                                      titleButton: 'Tặng',
+                                      onPress: () {
+                                        if (stateB.errAmai == '') {
+                                          bloc.add(DonateButton(type: 2, id: int.parse(widget.userId)));
+                                        }
+                                      },
+                                    ));
+                                  },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -424,7 +515,9 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                 Text(
                                   S.current.send_private,
                                   style: typoInterNomal14.copyWith(
-                                    color: colorBrandPrimary,
+                                    color: stateB.privateStatus == APIRequestStatus.error
+                                        ? colorDisabled
+                                        : colorBrandPrimary,
                                     fontWeight: FontWeight.w600,
                                     height: 1.5,
                                   ),
@@ -465,7 +558,7 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
       decoration: BoxDecoration(
         color: selected ? colorUiBg03 : Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(30)),
-        border: Border.all(color: selected ? colorBrandPrimary : colorUiBg02),
+        border: Border.all(color: selected ? colorBrandPrimary : colorBoder01),
       ),
       child: Wrap(
         children: List.generate(

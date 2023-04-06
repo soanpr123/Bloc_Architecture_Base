@@ -46,6 +46,18 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
       _inputChange,
       transformer: log(),
     );
+    on<ChangeFocus>(
+      _onChangeFocus,
+      transformer: log(),
+    );
+    on<ChangeFocusInput>(
+      _onChangeFocusInput,
+      transformer: log(),
+    );
+    on<CheckValid>(
+      _onChangeValid,
+      transformer: log(),
+    );
   }
   final GetResourceUseCase _getResourceUseCase;
   final DonateAmaiUseCase _donateAmaiUseCase;
@@ -82,19 +94,83 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
   }
 
   FutureOr<void> _onSelectedMember(SelectedMember event, Emitter<SendAmaiState> emit) async {
-    emit(state.copyWith(selectedMember: event.selectedMember));
+    emit(state.copyWith(
+      selectedMember: event.selectedMember,
+      errUser: '',
+    ));
+    if (event.selectedMember.id == -1 || state.note == '') {
+      emit(state.copyWith(publicStatus: AppElevatedButtonState.inactive, privateStatus: APIRequestStatus.error));
+    } else {
+      emit(state.copyWith(publicStatus: AppElevatedButtonState.active, privateStatus: APIRequestStatus.loaded));
+    }
   }
 
   FutureOr<void> _onChangeCount(ChangeCount event, Emitter<SendAmaiState> emit) async {
-    emit(state.copyWith(count: event.count));
+    emit(state.copyWith(
+      count: event.count,
+    ));
+    if (state.count > 0) {
+      emit(state.copyWith(
+        errSend: '',
+      ));
+    }
+    if (state.selectedMember.id == -1 || event.count == 0) {
+      emit(state.copyWith(publicStatus: AppElevatedButtonState.inactive, privateStatus: APIRequestStatus.error));
+    } else {
+      emit(state.copyWith(publicStatus: AppElevatedButtonState.active, privateStatus: APIRequestStatus.loaded));
+    }
+  }
+
+  FutureOr<void> _onChangeFocus(ChangeFocus event, Emitter<SendAmaiState> emit) async {
+    emit(state.copyWith(focus: event.focus));
+  }
+
+  FutureOr<void> _onChangeFocusInput(ChangeFocusInput event, Emitter<SendAmaiState> emit) async {
+    emit(state.copyWith(focusInput: event.focus));
+  }
+
+  FutureOr<void> _onChangeValid(CheckValid event, Emitter<SendAmaiState> emit) async {
+    if (state.selectedMember.id == -1) {
+      emit(state.copyWith(
+        errUser: 'Người nhận không được để trống',
+      ));
+
+      return;
+    }
+    if (state.note.isEmpty) {
+      emit(state.copyWith(
+        errSend: 'Không được để trống',
+        errUser: '',
+      ));
+
+      return;
+    }
   }
 
   FutureOr<void> _onDonateButton(DonateButton event, Emitter<SendAmaiState> emit) async {
+    if (state.selectedMember.id == -1) {
+      emit(state.copyWith(
+        errUser: 'Người nhận không được để trống',
+      ));
+
+      return;
+    }
+    if (state.note.isEmpty) {
+      emit(state.copyWith(
+        errSend: 'Không được để trống',
+        errUser: '',
+      ));
+
+      return;
+    }
+
     await runBlocCatching(
       doOnSubscribe: () async {
         emit(state.copyWith(
           publicStatus: event.type == 1 ? AppElevatedButtonState.loading : AppElevatedButtonState.active,
           privateStatus: event.type == 1 ? APIRequestStatus.loaded : APIRequestStatus.loading,
+          errSend: '',
+          errUser: '',
         ));
       },
       action: () async {

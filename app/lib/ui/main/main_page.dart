@@ -32,6 +32,7 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return AutoTabsScaffold(
+      resizeToAvoidBottomInset: false,
       extendBody: true,
       routes: (navigator as AppNavigatorImpl).tabRoutes,
       floatingActionButton: FloatingActionButton(
@@ -71,7 +72,6 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
                 tabsRouter.setActiveIndex(i);
                 if (i == 0) {
                   appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));
-                 
                 }
                 if (i == 1) {
                   appBloc.add(AppReloadHistory(reloadHis: state.reloadHis));

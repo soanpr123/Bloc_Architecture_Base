@@ -18,8 +18,12 @@ class SendAmaiState extends BaseBlocState with _$SendAmaiState {
     @Default(0) int index,
     @Default(1) int amaiCount,
     @Default('') String errAmai,
+    @Default(false) bool focus,
+    @Default(false) bool focusInput,
+    @Default('') String errSend,
+    @Default('') String errUser,
     @Default('') String note,
-    @Default(APIRequestStatus.loaded) APIRequestStatus privateStatus,
-    @Default(AppElevatedButtonState.active) AppElevatedButtonState publicStatus,
+    @Default(APIRequestStatus.error) APIRequestStatus privateStatus,
+    @Default(AppElevatedButtonState.inactive) AppElevatedButtonState publicStatus,
   }) = _SendAmaiState;
 }

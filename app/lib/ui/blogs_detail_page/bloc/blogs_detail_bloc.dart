@@ -157,11 +157,13 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apiRequestStatus: APIRequestStatus.connectionError,
+              likeStatus: APIRequestStatus.loaded,
             ));
           }
         } else {
           emit(state.copyWith(
             apiRequestStatus: APIRequestStatus.error,
+            likeStatus: APIRequestStatus.loaded,
           ));
         }
       },
@@ -171,7 +173,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   FutureOr<void> voteAmai(SendAmai event, Emitter<BlogsDetailState> emit) async {
     return runBlocCatching(
       doOnSubscribe: () async {
-        emit(state.copyWith(likeStatus: APIRequestStatus.loading));
+        emit(state.copyWith(sendAmaiStatus: APIRequestStatus.loading));
       },
       action: () async {
         final output = await _sendAmaiUseCase.execute(SendAmaiInput(slungs: event.slungs));
@@ -179,11 +181,11 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
           emit(state.copyWith(
             isAmaiVotes: 1,
             totalAmaiVotes: state.totalAmaiVotes + 1,
-            apiRequestStatus: APIRequestStatus.loaded,
+            sendAmaiStatus: APIRequestStatus.loaded,
           ));
         } else {
           errorToast(msg: output.data['message']);
-          emit(state.copyWith(likeStatus: APIRequestStatus.loaded));
+          emit(state.copyWith(sendAmaiStatus: APIRequestStatus.loaded));
         }
       },
       handleLoading: false,
@@ -195,11 +197,13 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
           if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
             emit(state.copyWith(
               apiRequestStatus: APIRequestStatus.connectionError,
+              sendAmaiStatus: APIRequestStatus.loaded,
             ));
           }
         } else {
           emit(state.copyWith(
             apiRequestStatus: APIRequestStatus.error,
+            sendAmaiStatus: APIRequestStatus.loaded,
           ));
         }
       },
@@ -208,9 +212,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
 
   FutureOr<void> likeComment(LikeComment event, Emitter<BlogsDetailState> emit) async {
     return runBlocCatching(
-      doOnSubscribe: () async {
-        emit(state.copyWith(likeStatus: APIRequestStatus.loading));
-      },
+      doOnSubscribe: () async {},
       action: () async {
         final output = await _likeComentUseCase.execute(LikeComentInput(slungs: event.slungs, id: event.id));
         if (output.data['status_code'] == 200) {

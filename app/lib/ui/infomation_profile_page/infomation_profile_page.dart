@@ -4,6 +4,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 import '../../app.dart';
+import '../../utils/max_word_text_input.dart';
 import 'bloc/infomation_profile_page_bloc.dart';
 import 'bloc/infomation_profile_page_event.dart';
 import 'bloc/infomation_profile_page_state.dart';
@@ -38,7 +39,7 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
       body: BlocBuilder<AppBloc, AppState>(
         buildWhen: (previous, current) => previous.users != current.users,
         builder: (context, state) {
-          aboutCtrl.text = state.users.incognito?.about ?? '';
+          aboutCtrl.text = state.users.about.toString();
 
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -80,11 +81,11 @@ class _InfomationProfilePageState extends BasePageState<InfomationProfilePage, I
                 BlocBuilder<InfomationProfileBloc, InfomationProfilePageState>(
                   buildWhen: (previous, current) => previous.showEdit != current.showEdit,
                   builder: (context, stateInfo) {
-                    aboutCtrl.text = state.users.incognito?.about ?? '';
+                    aboutCtrl.text = state.users.about.toString();
 
                     return !stateInfo.showEdit
                         ? Text(
-                            state.users.incognito?.about ?? 'Không có giới thiệu',
+                            state.users.about.toString(),
                             style: typoInterNomal14.copyWith(height: 1.5, fontWeight: FontWeight.w400),
                           )
                         : InfoWidget(
@@ -339,11 +340,49 @@ class InfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppTextFormField(
-          borderRadius: 5,
+        TextField(
           controller: aboutCtrl,
-          maxLines: 10,
-          onChanged: (v) => bloc.add(InfomationProfilePageTextfieldInput(text: v)),
+          maxLines: 5,
+          textInputAction: TextInputAction.done,
+          style: typoInterNomal14.copyWith(
+            fontSize: Dimens.d14.responsive(),
+            fontWeight: FontWeight.w400,
+            height: 1.5,
+            color: colorTextDark,
+          ),
+          strutStyle: const StrutStyle(
+            forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
+            height: 1.5, // Khoảng cách giữa các dòng
+          ),
+          onChanged: (v) {
+            bloc.add(InfomationProfilePageTextfieldInput(text: v));
+          },
+          inputFormatters: [
+            MaxWordTextInputFormater(
+              maxWords: 300,
+              currentLength: (v) {
+                // bloc.add(ChangeCount(count: v));
+              },
+            ),
+          ],
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: colorBrandPrimary),
+              borderRadius: BorderRadius.circular(
+                5,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: colorBoder01,
+              ),
+              borderRadius: BorderRadius.circular(
+                5,
+              ),
+            ),
+          ),
         ),
         SizedBox(
           height: Dimens.d24.responsive(),

@@ -47,15 +47,38 @@ class _DoneSendAmaiState extends BasePageState<DoneSendAmaiPage, DoneSendAmaiBlo
                 SizedBox(
                   height: Dimens.d24.responsive(),
                 ),
-                Text(
-                  S.current.send_amai_noti,
-                  textAlign: TextAlign.center,
-                  // softWrap: true,
-                  style: typoInterNomal14.copyWith(
-                    fontSize: Dimens.d14.responsive(),
-                    fontWeight: FontWeight.w400,
-                    height: 1.5,
-                    color: colorTextDark,
+                // Text(
+                //   S.current.send_amai_noti,
+                //   textAlign: TextAlign.center,
+                //   softWrap: true,
+                //   // softWrap: true,
+                //   style: typoInterNomal14.copyWith(
+                //     fontSize: Dimens.d14.responsive(),
+                //     fontWeight: FontWeight.w400,
+                //     height: 1.5,
+                //     color: colorTextDark,
+                //   ),
+                //   strutStyle: const StrutStyle(
+                //     forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
+                //     height: 1.5, // Khoảng cách giữa các dòng
+                //   ),
+
+                //   textDirection: TextDirection.ltr, // Hướng văn bản từ trái sang phải
+                //   overflow: TextOverflow.visible, // Hiển thị văn bản đầy đủ, không bị cắt
+                // ),
+                RichText(
+                  text: TextSpan(
+                    style: typoInterNomal14.copyWith(
+                      fontSize: Dimens.d14.responsive(),
+                      fontWeight: FontWeight.w400,
+                      height: 1.5,
+                      color: colorTextDark,
+                    ),
+                    children: <TextSpan>[
+                      const TextSpan(text: 'Bạn đã tặng Amai thành công, đối phương chắc\n'),
+                      const TextSpan(text: '  đang rất bất ngờ vì được bạn tặng Amai rồi.\n'),
+                      const TextSpan(text: 'Bạn có thể tiếp tục tặng hoặc quay về trang chủ.\n'),
+                    ],
                   ),
                 ),
               ],

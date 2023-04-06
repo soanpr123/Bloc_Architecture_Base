@@ -47,7 +47,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'id': 4,
       'icon': Assets.png.icBlogs.path,
       'name': S.current.blogs,
-      'onTap': const AppRouteInfo.listBlogsPage(),
+      'onTap': const AppRouteInfo.listBlogsPage(''),
     },
     {
       'id': 5,

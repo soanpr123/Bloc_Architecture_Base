@@ -26,7 +26,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       wikiDetailPage: (slungs) => WikiDetailRoute(slungs: slungs),
       blogsDetail: (slungs) => BlogsDetailRoute(slungs: slungs),
       amaiMember: () => const AmaiMemberRoute(),
-      listBlogsPage: () => const ListBlogsRoute(),
+      listBlogsPage: (String tag) => ListBlogsRoute(tag: tag),
       sendAmai: (int userId) => SendAmaiRoute(userId: userId.toString()),
       doneSendAmaiPage: (int userId) => DoneSendAmaiRoute(userId: userId),
       myQrCodePage: (qrCode, name) => MyQrCodeRoute(qrCode: qrCode, name: name),

@@ -51,7 +51,7 @@ class QrCodeBloc extends BaseBloc<QrCodeEvent, QrCodeState> {
           await navigator.push(AppRouteInfo.sendAmai(output.data.receiveUserId ?? -1));
           await event.controller.resumeCamera();
         } else {
-          errorToast(msg: 'Mã Qr không khớp với hệ thống');
+          errorToast(msg: 'Mã Qr không hợp lệ');
           await navigator.pop();
         }
       },
