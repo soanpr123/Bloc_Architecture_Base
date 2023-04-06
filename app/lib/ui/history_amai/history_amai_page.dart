@@ -91,13 +91,13 @@ class _HistoryAmaiState extends BasePageState<HistoryAmaiPage, HistoryAmaiBloc> 
                                 elements: state.history,
                                 // physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                // order: GroupedListOrder.DESC,
+                                order: GroupedListOrder.DESC,
                                 padding: const EdgeInsets.all(0.0),
                                 useStickyGroupSeparators: true,
                                 groupBy: (element) => element.groub ?? '',
-                                itemComparator: (item1, item2) => (item2.createdAt ?? '')
+                                itemComparator: (item1, item2) => (item1.createdAt ?? '')
                                     .split(' ')[1]
-                                    .compareTo((item1.createdAt ?? '').split(' ')[1]),
+                                    .compareTo((item2.createdAt ?? '').split(' ')[1]),
                                 groupSeparatorBuilder: (String value) => Container(
                                   width: double.infinity,
                                   color: colorUiBg05,

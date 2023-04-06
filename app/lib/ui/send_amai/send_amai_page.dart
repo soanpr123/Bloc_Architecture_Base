@@ -165,8 +165,11 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                           elevation: 0,
                                         ),
                                         iconStyleData: IconStyleData(
-                                          icon: const Icon(
-                                            Icons.keyboard_arrow_down_rounded,
+                                          icon: Padding(
+                                            padding: EdgeInsets.only(top: Dimens.d4.responsive()),
+                                            child: const Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                            ),
                                           ),
                                           iconSize: 20,
                                           iconEnabledColor: colorGray600,
@@ -189,7 +192,6 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                           padding: EdgeInsets.only(
                                             left: Dimens.d8.responsive(),
                                             right: Dimens.d8.responsive(),
-                                            bottom: Dimens.d4.responsive(),
                                           ),
                                         ),
                                       ),

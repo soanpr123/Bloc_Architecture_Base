@@ -70,6 +70,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
               child: Stack(
                 children: [
                   SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
                     controller: _scrollController,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +143,9 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                             p: typoInterNomal14.copyWith(height: 1.5),
                             a: typoInterNomal14.copyWith(
                               color: colorBrandPrimary,
+                            ),
+                            blockquoteDecoration: BoxDecoration(
+                              color: colorAmber100,
                             ),
                           ),
                           onTapLink: (text, href, title) {
@@ -356,7 +360,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                                 onPressed: () {
                                   if (stateb.isAmaiVotes == 0) {
                                     navigator.showDialog(AppPopupInfo.dialogConfirmComon(
-                                      title: S.current.send_amai,
+                                      title: S.current.send_amai_warning,
                                       message: S.current.send_amai_title,
                                       titleButton: 'Tặng',
                                       onPress: () {
@@ -366,6 +370,27 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                                   }
                                 },
                                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      stateb.sendAmaiStatus == APIRequestStatus.loading
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(right: 8.0),
+                                              child: SizedBox(
+                                                height: 12,
+                                                width: 12,
+                                                child: CircularProgressIndicator(
+                                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                                    colorBrandPrimary,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox(
+                                              height: 0,
+                                            ),
+                                    ],
+                                  ),
                                   Assets.svg.logoamai.svg(
                                     width: Dimens.d20.responsive(),
                                     height: Dimens.d20.responsive(),
