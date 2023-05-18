@@ -7,8 +7,7 @@ class DialogConfirm extends StatelessWidget {
   const DialogConfirm({
     required this.title,
     required this.message,
-    this.buttonState,
-    required this.onPressed,
+    required this.onPressed, this.buttonState,
     Key? key,
   }) : super(key: key);
   final String title;

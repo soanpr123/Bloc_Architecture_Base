@@ -1,9 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/resources.dart';
 
 import '../../app.dart';
-
+@RoutePage()
 class DoneSendAmaiPage extends StatefulWidget {
   const DoneSendAmaiPage({required this.userId, Key? key}) : super(key: key);
   final int userId;

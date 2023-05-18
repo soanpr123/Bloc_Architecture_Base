@@ -1,5 +1,6 @@
 import 'package:app/ui/blogs_detail_page/widget/hightlight_code.dart';
 import 'package:app/ui/blogs_detail_page/widget/item_comment.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/src/entity/coment_data_entry.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 import '../../shared_view/app_netword_image.dart';
-
+@RoutePage()
 class BlogsDetailPage extends StatefulWidget {
   const BlogsDetailPage({required this.slungs, Key? key}) : super(key: key);
   final String slungs;

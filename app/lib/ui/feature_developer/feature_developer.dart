@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -5,7 +6,7 @@ import 'package:resources/resources.dart';
 
 import '../../app.dart';
 import '../../resource/generated/assets.gen.dart';
-
+@RoutePage()
 class FeatureDeveloperPage extends StatelessWidget {
   const FeatureDeveloperPage({Key? key}) : super(key: key);
 

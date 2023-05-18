@@ -45,17 +45,17 @@ class SelectContent extends SendAmaiEvent with _$SelectContent {
 }
 
 @freezed
-class ChangeCount extends SendAmaiEvent with _$ChangeCount {
-  const factory ChangeCount({
+class ChangeCounts extends SendAmaiEvent with _$ChangeCounts {
+  const factory ChangeCounts({
     @Default(0) int count,
-  }) = _ChangeCount;
+  }) = _ChangeCounts;
 }
 
 @freezed
-class InputChange extends SendAmaiEvent with _$InputChange {
-  const factory InputChange({
+class InputChanges extends SendAmaiEvent with _$InputChanges {
+  const factory InputChanges({
     @Default('') String input,
-  }) = _InputChange;
+  }) = _InputChanges;
 }
 
 @freezed

@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain.dart';
 import 'base/future/base_future_use_case_response.dart';
-import '../../../domain.dart';
+
 
 part 'get_me_use_case.freezed.dart';
 

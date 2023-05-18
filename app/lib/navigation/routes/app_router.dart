@@ -1,77 +1,83 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:auto_route/empty_router_widgets.dart';
+import 'package:get_it/get_it.dart';
+
 // import 'package:auto_route/empty_router_widgets.dart';
 
 import '../../app.dart';
-import '../../ui/infomation_profile_page/infomation_profile_page.dart';
 
-// ignore_for_file:avoid-dynamic
-@MaterialAutoRouter(
+
+@AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    AutoRoute<dynamic>(page: SplashPage, initial: true),
-    AutoRoute<dynamic>(
-      page: LoginPage,
-    ),
-    mainScreenRouter,
-    AutoRoute<dynamic>(
-      page: QrCodePage,
-    ),
-    AutoRoute<dynamic>(
-      page: PaymentAmaiPage,
-    ),
-    AutoRoute<dynamic>(page: AnnouncementDetailPage),
-    AutoRoute<dynamic>(page: FeatureDeveloperPage),
-    AutoRoute<dynamic>(page: WikiDetailPage),
-    AutoRoute<dynamic>(page: BlogsDetailPage),
-    AutoRoute<dynamic>(page: AmaiMemberPage),
-    AutoRoute<dynamic>(page: ListBlogsPage),
-    AutoRoute<dynamic>(page: SendAmaiPage),
-    AutoRoute<dynamic>(page: DoneSendAmaiPage),
-    AutoRoute<dynamic>(page: MyQrCodePage),
-  ],
 )
-class $AppRouter {}
+class AppRouter extends $AppRouter {
+    @override
+  final List<AutoRoute> routes = [
+    AutoRoute(page: SplashRoute.page, path: '/'),
+    AutoRoute(page: LoginRoute.page),
+    CustomRoute(
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+      durationInMilliseconds: 200,
+      page: MainRoute.page,
+      guards: [
+        GetIt.instance.get<RouteGuard>(),
+      ],
+      children: [
+        AutoRoute(page: TabHomeRouter.page, children: [
+          AutoRoute(page: HomeRoute.page, path: ''),
+          AutoRoute(page: AmaiStoreRoute.page, path: ''),
+          AutoRoute(page: AnnounmentRoute.page, path: ''),
+          AutoRoute(page: WikiRoute.page, path: ''),
+        ]),
+        AutoRoute(page: TabHistoryRouter.page, children: [
+          AutoRoute(page: HistoryAmaiRoute.page, path: ''),
+        ]),
+        AutoRoute(page: TabNotifiRouter.page, children: [
+          AutoRoute(page: NotificationRoute.page, path: ''),
+          AutoRoute(page: AmaiStoreRoute.page, path: ''),
+        ]),
+        AutoRoute(page: TabProfileRouter.page, children: [
+          AutoRoute(page: ProfileRoute.page, path: ''),
+          AutoRoute(page: InfomationProfileRoute.page, path: ''),
+          AutoRoute(page: ChangePassRoute.page, path: ''),
+        ]),
+      ],
+    ),
+    AutoRoute(page: QrCodeRoute.page),
+    AutoRoute(page: PaymentAmaiRoute.page),
+    AutoRoute(page: AnnouncementDetailRoute.page),
+    AutoRoute(page: FeatureDeveloperRoute.page),
+    AutoRoute(page: WikiDetailRoute.page),
+    AutoRoute(page: BlogsDetailRoute.page),
+    AutoRoute(page: AmaiMemberRoute.page),
+    AutoRoute(page: ReportRoute.page),
+    AutoRoute(page: ListBlogsRoute.page),
+    AutoRoute(page: SendAmaiRoute.page),
+    AutoRoute(page: DoneSendAmaiRoute.page),
+    AutoRoute(page: MyQrCodeRoute.page),
+  ];
+  @override
+  RouteType get defaultRouteType => const RouteType.material();
 
-const mainScreenRouter = CustomRoute<dynamic>(
-  transitionsBuilder: TransitionsBuilders.fadeIn,
-  durationInMilliseconds: 200,
-  page: MainPage,
-  guards: [RouteGuard],
-  children: [
-    AutoRoute<dynamic>(
-      name: 'BottomTabHomeRouter',
-      page: EmptyRouterPage,
-      children: [
-        AutoRoute<dynamic>(page: HomePage, initial: true),
-        AutoRoute<dynamic>(page: AmaiStorePage, initial: true),
-        AutoRoute<dynamic>(page: AnnounmentPage, initial: true),
-        AutoRoute<dynamic>(page: WikiPage, initial: true),
-      ],
-    ),
-    AutoRoute<dynamic>(
-      name: 'BottomTabHistoryRouter',
-      page: EmptyRouterPage,
-      children: [
-        AutoRoute<dynamic>(page: HistoryAmaiPage, initial: true),
-      ],
-    ),
-    AutoRoute<dynamic>(
-      name: 'BottomTabNotifiRouter',
-      page: EmptyRouterPage,
-      children: [
-        AutoRoute<dynamic>(page: NotificationPage, initial: true),
-        AutoRoute<dynamic>(page: AmaiStorePage, initial: true),
-      ],
-    ),
-    AutoRoute<dynamic>(
-      name: 'BottomTabProfileRouter',
-      page: EmptyRouterPage,
-      children: [
-        AutoRoute<dynamic>(page: ProfilePage, initial: true),
-        AutoRoute<dynamic>(page: InfomationProfilePage, initial: true),
-        AutoRoute<dynamic>(page: ChangePassPage, initial: true),
-      ],
-    ),
-  ],
-);
+
+  
+}
+
+@RoutePage(name: 'TabHomeRouter')
+class BottomTabHomeRouter extends AutoRouter {
+  const BottomTabHomeRouter({super.key});
+}
+
+@RoutePage(name: 'TabHistoryRouter')
+class BottomTabHistoryRouter extends AutoRouter {
+  const BottomTabHistoryRouter({super.key});
+}
+
+@RoutePage(name: 'TabNotifiRouter')
+class BottomTabNotifiRouter extends AutoRouter {
+  const BottomTabNotifiRouter({super.key});
+}
+
+@RoutePage(name: 'TabProfileRouter')
+class BottomTabProfileRouter extends AutoRouter {
+  const BottomTabProfileRouter({super.key});
+}

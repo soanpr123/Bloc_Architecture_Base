@@ -17,7 +17,7 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
       _onMainPageInitiated,
       transformer: log(),
     );
-    on<ChangeCount>(
+    on<ChangeCounts>(
       _onChangeCount,
       transformer: log(),
     );
@@ -42,7 +42,7 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
       _onDonateButton,
       transformer: log(),
     );
-    on<InputChange>(
+    on<InputChanges>(
       _inputChange,
       transformer: log(),
     );
@@ -89,7 +89,7 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
     }
   }
 
-  FutureOr<void> _inputChange(InputChange event, Emitter<SendAmaiState> emit) async {
+  FutureOr<void> _inputChange(InputChanges event, Emitter<SendAmaiState> emit) async {
     emit(state.copyWith(note: event.input));
   }
 
@@ -105,7 +105,7 @@ class SendAmaiBloc extends BaseBloc<SendAmaiEvent, SendAmaiState> {
     }
   }
 
-  FutureOr<void> _onChangeCount(ChangeCount event, Emitter<SendAmaiState> emit) async {
+  FutureOr<void> _onChangeCount(ChangeCounts event, Emitter<SendAmaiState> emit) async {
     emit(state.copyWith(
       count: event.count,
     ));

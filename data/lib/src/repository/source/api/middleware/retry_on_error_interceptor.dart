@@ -40,5 +40,5 @@ class RetryOnErrorInterceptor extends BaseInterceptor {
   }
 
   bool shouldRetry(DioError error) =>
-      error.type != DioErrorType.cancel && error.type != DioErrorType.response;
+      error.type != DioErrorType.cancel && error.type != DioErrorType.badResponse;
 }

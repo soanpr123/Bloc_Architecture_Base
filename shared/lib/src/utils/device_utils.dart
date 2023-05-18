@@ -18,7 +18,7 @@ class DeviceUtils {
     } else {
       final androidDeviceInfo = await deviceInfo.androidInfo;
 
-      return androidDeviceInfo.androidId ?? '';
+      return androidDeviceInfo.id ?? '';
     }
   }
 

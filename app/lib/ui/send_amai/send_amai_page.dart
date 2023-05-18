@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:resources/resources.dart';
 
 import '../../app.dart';
 import '../../utils/max_word_text_input.dart';
-
+@RoutePage()
 class SendAmaiPage extends StatefulWidget {
   const SendAmaiPage({required this.userId, Key? key}) : super(key: key);
   final String userId;
@@ -338,13 +339,13 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                         height: 1.5, // Khoảng cách giữa các dòng
                                       ),
                                       onChanged: (v) {
-                                        bloc.add(InputChange(input: v));
+                                        bloc.add(InputChanges(input: v));
                                       },
                                       inputFormatters: [
                                         MaxWordTextInputFormater(
                                           maxWords: 300,
                                           currentLength: (v) {
-                                            bloc.add(ChangeCount(count: v));
+                                            bloc.add(ChangeCounts(count: v));
                                           },
                                         ),
                                       ],
@@ -382,6 +383,7 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
                                         ),
                                       ),
                                     ),
+                                 
                                   ),
                                   SizedBox(
                                     height: Dimens.d4.responsive(),
@@ -413,8 +415,8 @@ class _SendAmaiPageState extends BasePageState<SendAmaiPage, SendAmaiBloc> {
 
                                         _controller.selection =
                                             TextSelection.fromPosition(TextPosition(offset: '$e. '.length));
-                                        bloc.add(ChangeCount(count: '$e. '.length));
-                                        bloc.add(InputChange(input: _controller.text));
+                                        bloc.add(ChangeCounts(count: '$e. '.length));
+                                        bloc.add(InputChanges(input: _controller.text));
                                         bloc.add(SelectContent(controller: _controller));
                                       },
                                       child: Container(

@@ -7,6 +7,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as s;
 import 'package:shared/shared.dart';
 
 import '../app.dart';
+import '../utils/toast_message.dart';
 
 @LazySingleton(as: AppNavigator)
 class AppNavigatorImpl extends AppNavigator with LogMixin {
@@ -17,10 +18,10 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
   );
 
   final tabRoutes = const [
-    BottomTabHomeRouter(),
-    BottomTabHistoryRouter(),
-    BottomTabNotifiRouter(),
-    BottomTabProfileRouter(),
+    TabHomeRouter(),
+    TabHistoryRouter(),
+    TabNotifiRouter(),
+    TabProfileRouter(),
   ];
 
   TabsRouter? tabsRouter;
@@ -342,6 +343,26 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
       useRootNavigator: useRootNavigator,
       backgroundColor: backgroundColor,
       barrierColor: barrierColor,
+    );
+  }
+
+  @override
+  void showErrorToast(String message) {
+    ToastMessage.showErrorToast(
+      _rootRouterContext,
+      message,
+
+      // backgroundColor: AppColors.current.primaryColor,
+    );
+  }
+
+  @override
+  void showSuccessToast(String message) {
+    ToastMessage.showScusscessToast(
+      _rootRouterContext,
+      message,
+
+      // backgroundColor: AppColors.current.primaryColor,
     );
   }
 }

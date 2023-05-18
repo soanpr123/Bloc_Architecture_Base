@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -7,7 +8,7 @@ import 'package:resources/resources.dart';
 
 import '../../app.dart';
 import '../../shared_view/loadingview.dart';
-
+@RoutePage()
 class HistoryAmaiPage extends StatefulWidget {
   const HistoryAmaiPage({Key? key}) : super(key: key);
 
