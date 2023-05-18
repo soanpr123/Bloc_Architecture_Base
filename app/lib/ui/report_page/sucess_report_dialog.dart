@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:resources/resources.dart';
 
 import '../../app.dart';
-import '../../app/bloc/app_bloc.dart';
+
 import '../../shared_view/app_netword_image.dart';
-import 'bloc/report_page_bloc.dart';
+
 
 class SucessReportDialog extends StatelessWidget {
   const SucessReportDialog({required this.reportPageBloc, required this.appNavigator, Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class SucessReportDialog extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(50)),
                 child: AppNetworkImageAvatar(
-                    source: reportPageBloc.state.users.incognito?.avatar ?? '', fit: BoxFit.cover),
+                    source: reportPageBloc.state.users.incognito?.avatar ?? '', fit: BoxFit.cover,),
               ),
             ),
             SizedBox(
@@ -38,7 +38,7 @@ class SucessReportDialog extends StatelessWidget {
               S.current.report_content_success,
               textAlign: TextAlign.center,
               style: typoInterNomal14.copyWith(
-                  fontWeight: FontWeight.w400, height: 1.5, color: colorTextMedium, fontSize: Dimens.d14.responsive()),
+                  fontWeight: FontWeight.w400, height: 1.5, color: colorTextMedium, fontSize: Dimens.d14.responsive(),),
             ),
             SizedBox(
               height: Dimens.d24.responsive(),

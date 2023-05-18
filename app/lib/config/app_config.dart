@@ -1,4 +1,5 @@
 
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // import 'package:get_it/get_it.dart';
@@ -25,7 +26,7 @@ class AppConfig extends ApplicationConfig {
     await ViewUtils.setPreferredOrientations(
       DeviceUtils.deviceType == DeviceType.mobile ? UiConstants.mobileOrientation : UiConstants.tabletOrientation,
     );
-    // ViewUtils.setsetEnabledSystemUIOverlays(SystemUiMode.edgeToEdge);
+    ViewUtils.setsetEnabledSystemUIOverlays(SystemUiMode.immersive);
 
     // await LocalPushNotificationHelper.init();
   }

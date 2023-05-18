@@ -79,10 +79,10 @@ class BodyBuilder extends StatelessWidget {
         return child ?? Container();
 
       default:
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(child: LoadingWidget()),
+            Center(child: LoadingWidget()),
           ],
         );
     }

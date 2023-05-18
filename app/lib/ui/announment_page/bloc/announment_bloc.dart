@@ -10,7 +10,7 @@ import '../../../app.dart';
 
 @Injectable()
 class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
-  AnnounmentBloc(this._getAnnounmentCase, this._readNotificationUseCase) : super(AnnounmentState()) {
+  AnnounmentBloc(this._getAnnounmentCase) : super(AnnounmentState()) {
     on<AnnounmentPageInitiated>(
       _onAnnoumentInitiated,
       transformer: log(),
@@ -29,7 +29,6 @@ class AnnounmentBloc extends BaseBloc<AnnounmentEvent, AnnounmentState> {
     );
   }
   final GetAnnoumentnUseCase _getAnnounmentCase;
-  final ReadNotificationUseCase _readNotificationUseCase;
   FutureOr<void> _onAnnoumentInitiated(AnnounmentPageInitiated event, Emitter<AnnounmentState> emit) async {
     await _getAnnounment(
       emit: emit,

@@ -6,10 +6,9 @@ import '../../app.dart';
 class DialogConfirmCommon extends StatelessWidget {
   const DialogConfirmCommon({
     required this.title,
-    this.message,
+    required this.onPressed, this.message,
     this.buttonState,
     this.tileButton,
-    required this.onPressed,
     Key? key,
   }) : super(key: key);
   final String title;

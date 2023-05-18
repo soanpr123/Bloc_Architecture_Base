@@ -51,8 +51,8 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
         },
         routerDelegate: _appRouter.delegate(
           // deepLinkBuilder: _mapRouteToPageRouteInfo(widget.initialResource),
-          initialRoutes: _mapRouteToPageRouteInfo(widget.initialResource),
-          // deepLinkBuilder: (deepLink) => DeepLink(_mapRouteToPageRouteInfo(widget.initialResource)),
+          // initialRoutes: _mapRouteToPageRouteInfo(widget.initialResource),
+          deepLinkBuilder: (deepLink) => DeepLink(_mapRouteToPageRouteInfo(widget.initialResource)),
           navigatorObservers: () => [AppNavigatorObserver()],
         ),
         routeInformationParser: _appRouter.defaultRouteParser(),

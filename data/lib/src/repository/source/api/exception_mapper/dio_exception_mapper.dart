@@ -18,6 +18,8 @@ class DioExceptionMapper extends ExceptionMapper<RemoteException> {
           return const RemoteException(kind: RemoteExceptionKind.cancellation);
         case DioErrorType.connectionTimeout:
         case DioErrorType.receiveTimeout:
+        case DioErrorType.badCertificate:
+        case DioErrorType.connectionError:
         case DioErrorType.sendTimeout:
           return RemoteException(
             kind: RemoteExceptionKind.timeout,
@@ -53,6 +55,8 @@ class DioExceptionMapper extends ExceptionMapper<RemoteException> {
             return exception.error as RemoteException;
           }
           
+      
+         
       }
     }
 

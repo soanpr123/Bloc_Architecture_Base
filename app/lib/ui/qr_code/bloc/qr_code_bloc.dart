@@ -4,8 +4,7 @@ import 'dart:io';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:resources/resources.dart';
-import 'package:shared/shared.dart';
+
 
 import '../../../app.dart';
 

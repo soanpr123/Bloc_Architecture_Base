@@ -1,15 +1,14 @@
-import 'package:app/ui/home/widget/dialog_donate.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get_it/get_it.dart';
 import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 import '../../app.dart';
 import 'bloc/home_bloc.dart';
+import 'widget/dialog_donate.dart';
 @RoutePage()
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -71,7 +70,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
         BlocListener<AppBloc, AppState>(
           listenWhen: (previous, current) => previous.reloadHis != current.reloadHis,
           listener: (context, state) {
-            print("reload");
+           
             appBloc.add(const AppInitiated(handleErr: false));
           },
         ),
@@ -81,11 +80,11 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
           listener: (context, state) {
             appBloc.add(const AppGetPopUpDonate());
             if (state.popUpDonateEntry.donor != '') {
-              print(state.popUpDonateEntry.donor);
+   
               navigator.showDialog(AppPopupInfo.bottomSheet(
                   child: DialogDonate(
                 popUpDonateEntry: state.popUpDonateEntry,
-              )));
+              ),),);
             }
           },
         ),
@@ -127,7 +126,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        state.users.name != ""
+                        state.users.name != ''
                             ? Text(
                                 "Chào ${(state.users.name ?? "").split(' ').last}!",
                                 style: typoInterNomal14.copyWith(

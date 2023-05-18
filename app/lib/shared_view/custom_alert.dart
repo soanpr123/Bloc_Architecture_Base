@@ -17,7 +17,7 @@ class CustomAlert extends StatelessWidget {
 
     deviceWidth = orientation == Orientation.portrait ? viewsSize.width : viewsSize.height;
     deviceHeight = orientation == Orientation.portrait ? viewsSize.height : viewsSize.width;
-    dialogHeight = deviceHeight! * (0.50);
+    dialogHeight = deviceHeight! * (0.5);
 
     return SafeArea(
       

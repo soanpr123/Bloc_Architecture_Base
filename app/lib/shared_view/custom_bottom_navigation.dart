@@ -7,6 +7,7 @@ class CustomBottomNavigation extends StatelessWidget {
     Key? key,
     // ignore: always_put_required_named_parameters_first
     required this.items,
+     required this.total,
     this.currentIndex = 0,
     this.onTap,
     this.selectedItemColor,
@@ -17,7 +18,7 @@ class CustomBottomNavigation extends StatelessWidget {
     this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.easeOutQuint,
-    required this.total,
+   
   }) : super(key: key);
 
   /// A list of tabs to display, ie `Home`, `Likes`, etc
@@ -141,6 +142,14 @@ class CustomBottomNavigation extends StatelessWidget {
 }
 
 class CustomBottomBarItem {
+    CustomBottomBarItem({
+    required this.icon,
+    required this.title,
+    this.selectedColor,
+    this.unselectedColor,
+    this.iconSize,
+    this.activeIcon,
+  });
   /// An icon to display.
   final String icon;
 
@@ -156,12 +165,5 @@ class CustomBottomBarItem {
   /// The color to display when this tab is not selected.
   final Color? unselectedColor;
   final double? iconSize;
-  CustomBottomBarItem({
-    required this.icon,
-    required this.title,
-    this.selectedColor,
-    this.unselectedColor,
-    this.iconSize,
-    this.activeIcon,
-  });
+
 }

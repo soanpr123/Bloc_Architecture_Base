@@ -4,7 +4,7 @@ import '../app.dart';
 
 class AppCheckBox extends StatelessWidget {
   const AppCheckBox(
-      {required this.value, required this.onChanged, this.avatar = "", this.label, this.isOnLeft = true, Key? key})
+      {required this.value, required this.onChanged, this.avatar = '', this.label, this.isOnLeft = true, Key? key,})
       : super(key: key);
   final bool value;
   final String? avatar;

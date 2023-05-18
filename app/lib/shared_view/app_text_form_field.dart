@@ -23,33 +23,38 @@ class AppTextFormField extends StatefulWidget {
   final double? borderRadius;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
+  final int? minLines;
   final Color? colorErr;
+  final bool? expans;
   final InputCounterWidgetBuilder? counterInput;
   // ignore: member-ordering
-  const AppTextFormField(
-      {super.key,
-      this.controller,
-      this.hintText,
-      this.inputFormatters,
-      this.errorText,
-      this.obscureText,
-      this.keyboardType,
-      this.textInputAction,
-      this.maxLength,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.autofocus,
-      this.readOnly,
-      this.onEditingComplete,
-      this.onChanged,
-      this.onTap,
-      this.onSubmitted,
-      this.colorBorderFocus,
-      this.borderRadius,
-      this.colorBorderEnable,
-      this.maxLines,
-      this.colorErr,
-      this.counterInput});
+  const AppTextFormField({
+    super.key,
+    this.controller,
+    this.hintText,
+    this.inputFormatters,
+    this.errorText,
+    this.obscureText,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLength,
+    this.minLines,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.autofocus,
+    this.readOnly,
+    this.onEditingComplete,
+    this.onChanged,
+    this.onTap,
+    this.onSubmitted,
+    this.colorBorderFocus,
+    this.borderRadius,
+    this.colorBorderEnable,
+    this.maxLines,
+    this.colorErr,
+    this.counterInput,
+    this.expans = false,
+  });
 
   @override
   _AppTextFormFieldState createState() => _AppTextFormFieldState();
@@ -77,7 +82,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       maxLength: widget.maxLength,
       autofocus: widget.autofocus ?? false,
       autocorrect: false,
-      maxLines: widget.keyboardType == TextInputType.multiline ? 4 : widget.maxLines ?? 1,
+      expands: widget.expans ?? false,
+      minLines: widget.minLines ?? 1,
+      maxLines: widget.maxLines ?? 1,
       onEditingComplete: widget.onEditingComplete,
       onChanged: widget.onChanged,
       inputFormatters: widget.inputFormatters,
