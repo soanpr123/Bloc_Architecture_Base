@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 import '../../shared_view/app_netword_image.dart';
-
+@RoutePage()
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -78,7 +79,7 @@ class _ProfilePageState extends BasePageState<ProfilePage, ProfileBloc> {
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(50)),
                               child: Center(
-                                child: Lottie.asset(Assets.json.loadmore,
+                                child: Lottie.asset(Assets.json.loadmore.path,
                                     width: 100, height: 100, frameRate: FrameRate.max, repeat: true),
                               ),
                             ),

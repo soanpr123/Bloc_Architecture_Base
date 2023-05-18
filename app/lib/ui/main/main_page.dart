@@ -13,7 +13,7 @@ import '../../app.dart';
 import '../../shared_view/custom_bottom_navigation.dart';
 import 'bloc/main_bloc.dart';
 import 'bloc/main_event.dart';
-
+@RoutePage()
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 

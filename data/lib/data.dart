@@ -25,6 +25,7 @@ export 'src/repository/mapper/blogs_data_mapper.dart';
 export 'src/repository/mapper/category_blogs_mapper.dart';
 export 'src/repository/mapper/coment_data_mapper.dart';
 export 'src/repository/mapper/data_annoument_mapper.dart';
+export 'src/repository/mapper/error_type_mapper.dart';
 export 'src/repository/mapper/donationRecipient_mapper.dart';
 export 'src/repository/mapper/gender_data_mapper.dart';
 export 'src/repository/mapper/language_code_data_mapper.dart';

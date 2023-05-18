@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/ui/list_blogs_page/widget/bottom_sheet_view.dart';
 import 'package:app/ui/list_blogs_page/widget/item.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 import 'package:badges/badges.dart' as badges;
 import '../../app.dart';
-
+@RoutePage()
 class ListBlogsPage extends StatefulWidget {
   const ListBlogsPage({required this.tag, Key? key}) : super(key: key);
   final String tag;

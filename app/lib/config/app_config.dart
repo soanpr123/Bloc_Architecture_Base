@@ -1,6 +1,6 @@
-import 'package:flutter/services.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+
 // import 'package:get_it/get_it.dart';
 import 'package:initializer/initializer.dart';
 import 'package:shared/shared.dart';
@@ -20,7 +20,7 @@ class AppConfig extends ApplicationConfig {
   @override
   Future<void> config() async {
     await di.configureInjection();
-    di.getIt.registerSingleton<AppRouter>(AppRouter(routeGuard: GetIt.instance.get<RouteGuard>()));
+    di.getIt.registerSingleton<AppRouter>(AppRouter());
     Bloc.observer = AppBlocObserver();
     await ViewUtils.setPreferredOrientations(
       DeviceUtils.deviceType == DeviceType.mobile ? UiConstants.mobileOrientation : UiConstants.tabletOrientation,

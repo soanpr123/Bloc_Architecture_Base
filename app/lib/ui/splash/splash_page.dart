@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared/shared.dart';
@@ -5,7 +6,7 @@ import 'package:shared/shared.dart';
 import '../../app.dart';
 import 'bloc/splash_bloc.dart';
 import 'bloc/splash_event.dart';
-
+@RoutePage()
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 

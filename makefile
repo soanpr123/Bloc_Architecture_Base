@@ -85,7 +85,8 @@ test_coverage:
 
 check_unused_files:
 	@melos run check_unused_files
-
+pub_get_all: 
+		 @melos bootstrap
 sync:
 	@melos bootstrap
 	@melos run l10n

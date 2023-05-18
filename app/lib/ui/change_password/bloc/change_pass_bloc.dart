@@ -180,14 +180,14 @@ class ChangePassBloc extends BaseBloc<ChangePassEvent, ChangePassState> {
           );
           if (out.data['status_code'] == 200) {
             emit(state.copyWith(buttonState: AppElevatedButtonState.inactive));
-            successToast(out.data['message']);
+            successToast(out.data['message'].toString());
             await navigator.pop();
           } else {
             emit(state.copyWith(buttonState: AppElevatedButtonState.active));
             if (out.data['data'] != null && out.data['data']['current_password'] != null) {
-              errorToast(msg: out.data['data']['current_password'].join('.'));
+              errorToast(msg: out.data['data']['current_password'].join('.').toString());
             } else {
-              errorToast(msg: out.data['message']);
+              errorToast(msg: out.data['message'].toString());
             }
           }
         },

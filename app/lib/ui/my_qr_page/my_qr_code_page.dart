@@ -1,4 +1,5 @@
 import 'package:app/shared_view/app_netword_image.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -6,7 +7,7 @@ import 'package:resources/resources.dart';
 
 import '../../app.dart';
 import '../../utils/toast_message.dart';
-
+@RoutePage()
 class MyQrCodePage extends StatefulWidget {
   const MyQrCodePage({required this.qrCode, required this.name, Key? key}) : super(key: key);
   final String qrCode;

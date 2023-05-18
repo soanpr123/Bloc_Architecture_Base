@@ -99,7 +99,7 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
 
   Widget buildPageLoading() => Center(
         child: Lottie.asset(
-          Assets.json.loading,
+          Assets.json.loading.path,
           width: Dimens.d100.responsive(),
           height: Dimens.d100.responsive(),
           frameRate: FrameRate.max,

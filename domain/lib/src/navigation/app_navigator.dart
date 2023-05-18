@@ -87,4 +87,9 @@ abstract class AppNavigator {
   void showErrorSnackBar(String message, {Duration? duration});
 
   void showSuccessSnackBar(String message, {Duration? duration});
+  void showErrorToast(String message);
+
+  void showSuccessToast(
+    String message,
+  );
 }

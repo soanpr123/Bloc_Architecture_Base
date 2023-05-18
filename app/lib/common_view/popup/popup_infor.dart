@@ -7,6 +7,7 @@ import 'package:resources/resources.dart';
 import '../../app.dart';
 import '../../shared_view/app_netword_image.dart';
 
+// ignore: must_be_immutable
 class DialogInfo extends StatelessWidget {
   DialogInfo({
     required this.user,
@@ -25,7 +26,7 @@ class DialogInfo extends StatelessWidget {
 
     deviceWidth = orientation == Orientation.portrait ? viewsSize.width : viewsSize.height;
     deviceHeight = orientation == Orientation.portrait ? viewsSize.height : viewsSize.width;
-    dialogHeight = deviceHeight! * (0.50);
+    dialogHeight = deviceHeight! * (0.5);
 
     return SafeArea(
       minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -61,7 +62,7 @@ class DialogInfo extends StatelessWidget {
                               Text(
                                 user.name ?? '',
                                 style: typoInterNomal18.copyWith(
-                                    color: colorGray800, height: 1.5, fontWeight: FontWeight.w700),
+                                    color: colorGray800, height: 1.5, fontWeight: FontWeight.w700,),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: Dimens.d8.responsive()),
@@ -134,7 +135,7 @@ class DialogInfo extends StatelessWidget {
                                       Text(
                                         user.position ?? '',
                                         style: typoInterNomal14.copyWith(
-                                            color: colorTextMedium, fontSize: 14, height: 1.5),
+                                            color: colorTextMedium, fontSize: 14, height: 1.5,),
                                       ),
                                     ],
                                   ),
@@ -150,7 +151,7 @@ class DialogInfo extends StatelessWidget {
                                       Text(
                                         user.dob ?? '',
                                         style: typoInterNomal14.copyWith(
-                                            color: colorTextMedium, fontSize: 14, height: 1.5),
+                                            color: colorTextMedium, fontSize: 14, height: 1.5,),
                                       ),
                                     ],
                                   ),
@@ -166,7 +167,7 @@ class DialogInfo extends StatelessWidget {
                                       Text(
                                         user.email ?? '',
                                         style: typoInterNomal14.copyWith(
-                                            color: colorTextMedium, fontSize: 14, height: 1.5),
+                                            color: colorTextMedium, fontSize: 14, height: 1.5,),
                                       ),
                                     ],
                                   ),
@@ -178,7 +179,7 @@ class DialogInfo extends StatelessWidget {
                                     style: typoInterNomal14.copyWith(
                                         color: user.about == '' ? colorTextBland : colorTextMedium,
                                         fontSize: 14,
-                                        height: 1.5),
+                                        height: 1.5,),
                                   ),
                                 ],
                               ),

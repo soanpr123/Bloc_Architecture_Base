@@ -47,7 +47,7 @@ class AppNetworkImage extends StatelessWidget {
             ),
             fit: fit,
             errorWidget: (context, url, dynamic error) {
-              return Lottie.asset(Assets.json.noImage, fit: BoxFit.cover, repeat: false);
+              return Lottie.asset(Assets.json.noImage.path, fit: BoxFit.cover, repeat: false);
             },
           );
   }

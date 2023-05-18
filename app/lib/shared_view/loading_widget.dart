@@ -14,12 +14,12 @@ class LoadingWidget extends StatelessWidget {
     return Center(
       child: isLoadingNew
           ? Lottie.asset(
-              Assets.json.loading,
+              Assets.json.loading.path,
               frameRate: FrameRate.max,
               repeat: true,
             )
           : Lottie.asset(
-              Assets.json.loadmore,
+              Assets.json.loadmore.path,
               frameRate: FrameRate.max,
               repeat: true,
               width: 100,

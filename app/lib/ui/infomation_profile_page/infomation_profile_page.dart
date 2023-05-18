@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resources/resources.dart';
@@ -8,7 +9,7 @@ import '../../utils/max_word_text_input.dart';
 import 'bloc/infomation_profile_page_bloc.dart';
 import 'bloc/infomation_profile_page_event.dart';
 import 'bloc/infomation_profile_page_state.dart';
-
+@RoutePage()
 class InfomationProfilePage extends StatefulWidget {
   const InfomationProfilePage({Key? key}) : super(key: key);
 

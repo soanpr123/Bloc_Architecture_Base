@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:device_preview/device_preview.dart';
+
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,7 +36,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
       splitScreenMode: true,
       rebuildFactor: RebuildFactors.all,
       builder: (context, _) => MaterialApp.router(
-        useInheritedMediaQuery: true,
+        // routerConfig: _appRouter.config(),
         theme: ThemeData(
           primaryColor: colorBrandPrimary,
           // canvasColor: Colors.transparent,
@@ -51,7 +51,9 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
           );
         },
         routerDelegate: _appRouter.delegate(
+          // deepLinkBuilder: _mapRouteToPageRouteInfo(widget.initialResource),
           initialRoutes: _mapRouteToPageRouteInfo(widget.initialResource),
+          // deepLinkBuilder: (deepLink) => DeepLink(_mapRouteToPageRouteInfo(widget.initialResource)),
           navigatorObservers: () => [AppNavigatorObserver()],
         ),
         routeInformationParser: _appRouter.defaultRouteParser(),

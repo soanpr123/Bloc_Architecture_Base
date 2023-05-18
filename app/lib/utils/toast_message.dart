@@ -129,7 +129,7 @@ void successToast(String msg) {
 
   ToastMes.current.fToast.showToast(
     child: toast,
-    toastDuration: const Duration(seconds: 2),
+    toastDuration: const Duration(seconds: 3),
     positionedToastBuilder: (context, child) {
       return Positioned(
         child: child,
@@ -140,4 +140,126 @@ void successToast(String msg) {
       );
     },
   );
+}
+
+class ToastMessage {
+  const ToastMessage._();
+  static void showScusscessToast(
+    BuildContext context,
+    String message,
+  ) {
+    final ftoast = FToast().init(context);
+    if (ftoast == null) {
+      return;
+    }
+    final toast = Container(
+      // width: double.infinity,
+      padding: EdgeInsets.fromLTRB(
+        Dimens.d24.responsive(),
+        Platform.isIOS ? Dimens.d38.responsive() : Dimens.d12.responsive(),
+        Dimens.d24.responsive(),
+        Dimens.d12.responsive(),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(0),
+        color: colorBrandPrimary,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              ToastMes.current.fToast.removeCustomToast();
+            },
+            child: const Icon(
+              Icons.check,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            width: 12.0,
+          ),
+          Flexible(
+            child: Text(
+              message,
+              style: typoInterNomal14.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+    ftoast.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+      positionedToastBuilder: (context, child) {
+        return Positioned(
+          child: child,
+          top: 0.0,
+          // left: 16.0,
+          right: 0,
+          left: 0,
+        );
+      },
+    );
+  }
+   static void showErrorToast(
+    BuildContext context,
+    String message,
+  ) {
+    final ftoast = FToast().init(context);
+    if (ftoast == null) {
+      return;
+    }
+    final toast = Container(
+      // width: double.infinity,
+      padding: EdgeInsets.fromLTRB(
+        Dimens.d24.responsive(),
+        Platform.isIOS ? Dimens.d38.responsive() : Dimens.d12.responsive(),
+        Dimens.d24.responsive(),
+        Dimens.d12.responsive(),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(0),
+        color: colorBrandPrimary,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              ToastMes.current.fToast.removeCustomToast();
+            },
+            child: const Icon(
+              Icons.check,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            width: 12.0,
+          ),
+          Flexible(
+            child: Text(
+              message,
+              style: typoInterNomal14.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+    ftoast.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+      positionedToastBuilder: (context, child) {
+        return Positioned(
+          child: child,
+          top: 0.0,
+          // left: 16.0,
+          right: 0,
+          left: 0,
+        );
+      },
+    );
+  }
 }

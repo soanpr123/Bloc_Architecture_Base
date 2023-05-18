@@ -23,9 +23,9 @@ class RestApiClient {
   }) : _dio = DioBuilder.createDio(
           options: BaseOptions(
             baseUrl: baseUrl,
-            connectTimeout: connectTimeoutInMs,
-            sendTimeout: sendTimeoutInMs,
-            receiveTimeout: receiveTimeoutInMs,
+            connectTimeout: Duration(milliseconds: connectTimeoutInMs ?? 30000),
+            sendTimeout: Duration(milliseconds: sendTimeoutInMs ?? 30000),
+            receiveTimeout: Duration(milliseconds: receiveTimeoutInMs ?? 30000),
           ),
         ) {
     final sortedInterceptors = [
@@ -69,13 +69,12 @@ class RestApiClient {
         path: path.startsWith(baseUrl) ? path.substring(baseUrl.length) : path,
         queryParameters: queryParameters,
         body: body,
-        
         options: Options(
           headers: headers,
           contentType: contentType,
           responseType: responseType,
-          sendTimeout: sendTimeoutInMs,
-          receiveTimeout: receiveTimeoutInMs,
+          sendTimeout: Duration(milliseconds: sendTimeoutInMs ?? 30000),
+          receiveTimeout: Duration(milliseconds: receiveTimeoutInMs ?? 30000),
         ),
       );
 

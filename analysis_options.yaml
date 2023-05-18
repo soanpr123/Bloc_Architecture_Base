@@ -14,7 +14,6 @@ analyzer:
     - "resources/lib/src/generated/*.dart"
   strong-mode:
     implicit-casts: true
-    implicit-dynamic: false
   errors:
     unused_import: warning
     # invalid_annotation_target: ignore

@@ -10,9 +10,9 @@ class DioBuilder {
     return Dio(
       BaseOptions(
         headers: {'Accept': 'application/json'},
-        connectTimeout: options?.connectTimeout ?? ServerTimeoutConstants.connectTimeoutInMs,
-        receiveTimeout: options?.receiveTimeout ?? ServerTimeoutConstants.receiveTimeoutInMs,
-        sendTimeout: options?.sendTimeout ?? ServerTimeoutConstants.sendTimeoutInMs,
+        connectTimeout: options?.connectTimeout ?? const Duration(milliseconds: ServerTimeoutConstants.connectTimeoutInMs),
+        receiveTimeout: options?.receiveTimeout ?? const Duration(milliseconds: ServerTimeoutConstants.receiveTimeoutInMs),
+        sendTimeout: options?.sendTimeout ?? const Duration(milliseconds: ServerTimeoutConstants.sendTimeoutInMs),
         baseUrl: options?.baseUrl ?? UrlConstants.appApiBaseUrl,
       ),
     );

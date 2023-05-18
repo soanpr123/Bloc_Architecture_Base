@@ -144,7 +144,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
             ));
           }
         } else {
-          errorToast(msg: output.data['message']);
+          errorToast(msg: output.data['message'].toString());
           emit(state.copyWith(likeStatus: APIRequestStatus.loaded));
         }
       },

@@ -18,7 +18,7 @@ class CommonNoItemsFoundIndicator extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.asset(Assets.json.nodata, width: 150, height: 150, frameRate: FrameRate.max, repeat: true),
+                  Lottie.asset(Assets.json.nodata.path, width: 150, height: 150, frameRate: FrameRate.max, repeat: true),
                 ],
               ),
         const SizedBox(

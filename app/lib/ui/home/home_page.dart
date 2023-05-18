@@ -1,4 +1,5 @@
 import 'package:app/ui/home/widget/dialog_donate.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,7 @@ import 'package:shared/shared.dart';
 
 import '../../app.dart';
 import 'bloc/home_bloc.dart';
-
+@RoutePage()
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
