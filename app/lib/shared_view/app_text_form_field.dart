@@ -24,31 +24,32 @@ class AppTextFormField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
   final Color? colorErr;
+  final InputCounterWidgetBuilder? counterInput;
   // ignore: member-ordering
-  const AppTextFormField({
-    super.key,
-    this.controller,
-    this.hintText,
-    this.inputFormatters,
-    this.errorText,
-    this.obscureText,
-    this.keyboardType,
-    this.textInputAction,
-    this.maxLength,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.autofocus,
-    this.readOnly,
-    this.onEditingComplete,
-    this.onChanged,
-    this.onTap,
-    this.onSubmitted,
-    this.colorBorderFocus,
-    this.borderRadius,
-    this.colorBorderEnable,
-    this.maxLines,
-    this.colorErr,
-  });
+  const AppTextFormField(
+      {super.key,
+      this.controller,
+      this.hintText,
+      this.inputFormatters,
+      this.errorText,
+      this.obscureText,
+      this.keyboardType,
+      this.textInputAction,
+      this.maxLength,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.autofocus,
+      this.readOnly,
+      this.onEditingComplete,
+      this.onChanged,
+      this.onTap,
+      this.onSubmitted,
+      this.colorBorderFocus,
+      this.borderRadius,
+      this.colorBorderEnable,
+      this.maxLines,
+      this.colorErr,
+      this.counterInput});
 
   @override
   _AppTextFormFieldState createState() => _AppTextFormFieldState();
@@ -80,13 +81,13 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       onEditingComplete: widget.onEditingComplete,
       onChanged: widget.onChanged,
       inputFormatters: widget.inputFormatters,
+      buildCounter: widget.counterInput,
       onFieldSubmitted: (text) {
         widget.onSubmitted ?? (text) {};
         _focusNode.unfocus();
       },
       onTap: widget.onTap,
       decoration: decorTextField.copyWith(
-        
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: widget.colorBorderFocus ?? colorBrandPrimary),
           borderRadius: BorderRadius.circular(

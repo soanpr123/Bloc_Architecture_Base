@@ -113,15 +113,15 @@
   "all":"Tất cả",
   "reset_fillter":"Đặt lại",
   "fillter":"Lọc",
-<<<<<<< Updated upstream
-=======
+
   "report":"Báo lỗi",
   "report_content":"Hãy thông báo với chúng tôi ngay khi bạn có trải nghiệm không tốt nhé.",
   "report_lable_issure":"Loại vấn đề",
   "report_lable_content":"Mô tả vấn đề",
   "report_image":"Hình ảnh",
+
   "report_upload":"Tải ảnh lên",
->>>>>>> Stashed changes
+
   "send_amai":"Tặng amai",
   "user_send":"Người nhận",
   "amai_number":"Số amai tặng",
@@ -131,10 +131,6 @@
   "send_content":"Hãy tặng Amai cho nhưng người đã giúp đỡ bạn hay cho một người nào đó bạn ngưỡng mộ, yêu quý. Bạn có thể tặng Amai ẩn danh nếu muốn nên đừng ngần ngại nhé.",
   "send_amai_private":"Tặng Amai ẩn danh",
   "send_amai_private_content":"Bạn đang tặng Amai ở chế độ ẩn danh. Hãy chắc chắn rằng bạn đã chọn đúng chế độ nhé.",
-<<<<<<< Updated upstream
-    "send_amai_noti":"Bạn đã tặng Amai thành công, đối phương chắc đang rất bất ngờ vì được bạn tặng Amai rồi. Bạn có thể tiếp tục tặng hoặc quay về trang chủ."
-=======
     "send_amai_noti":"Bạn đã tặng Amai thành công, đối phương chắc đang rất bất ngờ vì được bạn tặng Amai rồi. Bạn có thể tiếp tục tặng hoặc quay về trang chủ.",
     "report_content_success":"Cám ơn những đóng góp hữu ích của bạn.Chúng tôi sẽ không ngừng cải tiến hệ thống để bạn có trải nghiệm tuyệt vời nhất."
->>>>>>> Stashed changes
 }

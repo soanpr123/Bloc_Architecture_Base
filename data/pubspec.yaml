@@ -21,12 +21,7 @@ dependencies:
   dio_cookie_manager: ^3.0.0
   domain:
     path: ../domain
-<<<<<<< Updated upstream
-  encrypted_shared_preferences: 2.0.0
-=======
   encrypted_shared_preferences: ^3.0.1
-
->>>>>>> Stashed changes
   flutter:
     sdk: flutter
   get_it: ^7.6.0
