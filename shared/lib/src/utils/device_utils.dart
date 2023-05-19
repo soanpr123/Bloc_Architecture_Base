@@ -18,7 +18,7 @@ class DeviceUtils {
     } else {
       final androidDeviceInfo = await deviceInfo.androidInfo;
 
-      return androidDeviceInfo.id ?? '';
+      return androidDeviceInfo.id;
     }
   }
 
@@ -27,7 +27,7 @@ class DeviceUtils {
     if (Platform.isIOS) {
       final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
-      return iosInfo.name ?? '';
+      return iosInfo.name;
     } else {
       final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 

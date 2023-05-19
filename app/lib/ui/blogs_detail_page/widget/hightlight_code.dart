@@ -1,11 +1,10 @@
-import 'package:app/ui/blogs_detail_page/widget/higilht_ligihtter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_highlighter/flutter_highlighter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:markdown/markdown.dart' as md;
-
 import 'package:shared/shared.dart';
+
+import 'higilht_ligihtter.dart';
 
 class CodeElementBuilder extends MarkdownElementBuilder {
   @override

@@ -69,10 +69,10 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
   FutureOr<void> _onInputChange(InputChange event, Emitter<ReportPageState> emit) async {
     if (issueSelect.isEmpty || event.input.isEmpty) {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.inactive, issueSelect: [...state.issueSelect], input: event.input));
+          buttonState: AppElevatedButtonState.inactive, issueSelect: [...state.issueSelect], input: event.input,));
     } else {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.active, issueSelect: [...state.issueSelect], input: event.input));
+          buttonState: AppElevatedButtonState.active, issueSelect: [...state.issueSelect], input: event.input,));
     }
   }
 
@@ -102,13 +102,13 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
     }
     if (issueSelect.isEmpty || state.input.isEmpty) {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.inactive, issueSelect: [...issueSelect], input: state.input));
+          buttonState: AppElevatedButtonState.inactive, issueSelect: [...issueSelect], input: state.input,));
     } else {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.active, issueSelect: [...issueSelect], input: state.input));
+          buttonState: AppElevatedButtonState.active, issueSelect: [...issueSelect], input: state.input,));
     }
 
-    print(state.issueSelect.length);
+
   }
 
   FutureOr<void> _onPickImage(PickImage event, Emitter<ReportPageState> emit) async {
@@ -169,7 +169,6 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
     return runBlocCatching(
       doOnSubscribe: () async => emit(state.copyWith(loadingImage: APIRequestStatus.loading)),
       action: () async {
-        final List<ImageUpload> images = [];
         final out = await _uploadImageuseCase.execute(UploadImageInput(file: avt, type: 'avatar'));
 
         if (out.statusCode == 200) {
@@ -210,7 +209,7 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
         }
         request.addAll({'error_type': type});
         request.addAll({'content': state.input});
-        print(request);
+   
         // final List<ImageUpload> images = [];:
         final out = await _createFeedBackUseCase.execute(CreateFeedBackInput(request: request));
 
@@ -225,7 +224,7 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
                   appNavigator: navigator,
                 ),
               ),
-              barrierDismissible: true);
+              barrierDismissible: true,);
         } else {
           errorToast(msg: out.data['message']);
           emit(state.copyWith(buttonState: AppElevatedButtonState.active));

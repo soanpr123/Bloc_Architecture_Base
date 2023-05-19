@@ -129,7 +129,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   Future<void> _onAppGetPopUp(AppGetPopUpDonate event, Emitter<AppState> emit) async {
     if (_isLoggedIn) {
       await _getPopUpDonate(
-          emit: emit, doOnSubscribe: () async => emit(state.copyWith(popUpDonateEntry: const PopUpDonateEntry())));
+          emit: emit, doOnSubscribe: () async => emit(state.copyWith(popUpDonateEntry: const PopUpDonateEntry(),),),);
     }
   }
 

@@ -445,4 +445,24 @@ class AppApiService {
       decoder: ComentDataModel.fromJson,
     );
   }
+
+  Future<DataResponse<dynamic>> createComment(String slungs, String comment) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'posts/$slungs/comment',
+      body: {
+        'content': comment,
+      },
+    );
+  }
+
+  Future<DataResponse<dynamic>> createRepplyComment(String id, String slungs, String comment) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'posts/$slungs/$id/comment',
+      body: {
+        'content': comment,
+      },
+    );
+  }
 }

@@ -113,6 +113,21 @@ class ItemComent extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              TextButton(
+                                onPressed: () {
+                                  bloc.add(SelectComent(id: cmt.id??-1,name: cmt.name??''));
+                                },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(colorDisabled),
+                                ),
+                                child: Text(
+                                  'Phản hồi',
+                                  style: typoInterNomal14.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: colorBrandSecondary,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           cmt.reply != null

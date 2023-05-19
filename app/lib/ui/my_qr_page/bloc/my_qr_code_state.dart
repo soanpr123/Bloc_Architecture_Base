@@ -1,4 +1,4 @@
-import 'package:domain/domain.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../base/bloc/base_state.dart';

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:domain/domain.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
@@ -11,8 +12,14 @@ import '../../../utils/toast_message.dart';
 @Injectable()
 class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   BlogsDetailBloc(
-      this._blogsDetailUseCase, this._comentUseCase, this._blogsUseCase, this._likeComentUseCase, this._sendAmaiUseCase)
-      : super(const BlogsDetailState()) {
+    this._blogsDetailUseCase,
+    this._comentUseCase,
+    this._blogsUseCase,
+    this._likeComentUseCase,
+    this._sendAmaiUseCase,
+    this._createCommentUseCase,
+    this._createReppllyCommentInput,
+  ) : super(const BlogsDetailState()) {
     on<BlogsDetailPageInitiated>(
       _onMainPageInitiated,
       transformer: log(),
@@ -37,6 +44,26 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
       likeComment,
       transformer: log(),
     );
+    on<CreateComment>(
+      _createComment,
+      transformer: log(),
+    );
+    on<SelectComent>(
+      _selectCmt,
+      transformer: log(),
+    );
+    on<DeleteSelectCmt>(
+      _deleteselectCmt,
+      transformer: log(),
+    );
+    on<RepplyComment>(
+      _createRepplyComment,
+      transformer: log(),
+    );
+    on<OnChangeCmt>(
+      _onChangeCmt,
+      transformer: log(),
+    );
   }
 
   final BlogsDetailUseCase _blogsDetailUseCase;
@@ -44,16 +71,45 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   final LikeBlogsUseCase _blogsUseCase;
   final LikeComentUseCase _likeComentUseCase;
   final SendAmaiUseCase _sendAmaiUseCase;
+  final CreateCommentUseCase _createCommentUseCase;
+  final CreateRepplyCommentUseCase _createReppllyCommentInput;
   double _last = 0;
 
   FutureOr<void> _onMainPageInitiated(BlogsDetailPageInitiated event, Emitter<BlogsDetailState> emit) async {
     await getDetailBlogs(slungs: event.slungs, emit: emit);
   }
 
-  Future<void> getDetailBlogs({required String slungs, required Emitter<BlogsDetailState> emit}) async {
+  FutureOr<void> _createComment(CreateComment event, Emitter<BlogsDetailState> emit) async {
+    await createComment(slungs: event.slungs, comment: event.comment, emit: emit, event: event);
+  }
+
+  FutureOr<void> _createRepplyComment(RepplyComment event, Emitter<BlogsDetailState> emit) async {
+    await createRepplyComment(id: event.id, slungs: event.slungs, comment: event.content, emit: emit,event: event);
+  }
+
+  FutureOr<void> _selectCmt(SelectComent event, Emitter<BlogsDetailState> emit) async {
+    emit(state.copyWith(cmtSelect: event.id, name: event.name));
+  }
+
+  FutureOr<void> _onChangeCmt(OnChangeCmt event, Emitter<BlogsDetailState> emit) async {
+    if (event.cmt.isNotEmpty) {
+      emit(state.copyWith(buttonSendState: AppElevatedButtonState.active));
+    } else {
+      emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
+    }
+  }
+
+  FutureOr<void> _deleteselectCmt(DeleteSelectCmt event, Emitter<BlogsDetailState> emit) async {
+    emit(state.copyWith(cmtSelect: -1));
+  }
+
+  Future<void> getDetailBlogs(
+      {required String slungs, bool isLoading = false, required Emitter<BlogsDetailState> emit}) async {
     return runBlocCatching(
       doOnSubscribe: () async {
-        emit(state.copyWith(apiRequestStatus: APIRequestStatus.loading));
+        if (!isLoading) {
+          emit(state.copyWith(apiRequestStatus: APIRequestStatus.loading));
+        }
       },
       action: () async {
         final output = await _blogsDetailUseCase.execute(BlogsDetailInput(slungs: slungs));
@@ -97,12 +153,109 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
       action: () async {
         final output = await _comentUseCase.execute(GetComentUseCaseInput(slungs: slungs));
         if (output.isNotEmpty) {
+          output.sort(
+            (a, b) => a.id!.compareTo(b.id!),
+          );
           emit(state.copyWith(comment: output));
         }
       },
       handleLoading: false,
       handleError: false,
       doOnError: (e) async {
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              apiRequestStatus: APIRequestStatus.connectionError,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            apiRequestStatus: APIRequestStatus.error,
+          ));
+        }
+      },
+    );
+  }
+
+  Future<void> createComment(
+      {required String slungs,
+      required String comment,
+      required Emitter<BlogsDetailState> emit,
+      required CreateComment event,}) async {
+    return runBlocCatching(
+      doOnSubscribe: () async {
+        emit(state.copyWith(buttonSendState: AppElevatedButtonState.loading));
+      },
+      action: () async {
+        final output = await _createCommentUseCase.execute(CreateCommentInput(slugs: slungs, comment: comment));
+        if (output.data['status_code'] == 200) {
+          // emit(state.copyWith(comment: output));
+          event.textEdt.clear();
+          emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
+          await getDetailBlogs(slungs: slungs, isLoading: true, emit: emit);
+          await getComment(slungs: slungs, emit: emit);
+          await event.scrollController.animateTo(
+            event.scrollController.position.maxScrollExtent,
+            duration: const Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
+          );
+        } else {
+          errorToast(msg: output.data['message']);
+          emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
+        }
+      },
+      handleLoading: false,
+      handleError: false,
+      doOnError: (e) async {
+        emit(state.copyWith(buttonSendState: AppElevatedButtonState.active));
+        if (e.appExceptionType == AppExceptionType.remote) {
+          final exception = e as RemoteException;
+
+          if (exception.kind == RemoteExceptionKind.noInternet || exception.kind == RemoteExceptionKind.network) {
+            emit(state.copyWith(
+              apiRequestStatus: APIRequestStatus.connectionError,
+            ));
+          }
+        } else {
+          emit(state.copyWith(
+            apiRequestStatus: APIRequestStatus.error,
+          ));
+        }
+      },
+    );
+  }
+
+  Future<void> createRepplyComment(
+      {required String id,
+      required String slungs,
+      required String comment,
+      required Emitter<BlogsDetailState> emit,
+    required RepplyComment event,
+  }) async {
+    return runBlocCatching(
+      doOnSubscribe: () async {
+        emit(state.copyWith(buttonSendState: AppElevatedButtonState.loading));
+      },
+      action: () async {
+        final output = await _createReppllyCommentInput
+            .execute(CreateReppllyCommentInput(id: id, slugs: slungs, comment: comment));
+        if (output.data['status_code'] == 200) {
+          // emit(state.copyWith(comment: output));
+           event.textEdt.clear();
+          emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
+          await getDetailBlogs(slungs: slungs, isLoading: true, emit: emit);
+          await getComment(slungs: slungs, emit: emit);
+        } else {
+          errorToast(msg: output.data['message']);
+          emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
+        }
+      },
+      handleLoading: false,
+      handleError: false,
+      doOnError: (e) async {
+        emit(state.copyWith(buttonSendState: AppElevatedButtonState.active));
         if (e.appExceptionType == AppExceptionType.remote) {
           final exception = e as RemoteException;
 

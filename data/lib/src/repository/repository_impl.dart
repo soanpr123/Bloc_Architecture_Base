@@ -144,9 +144,7 @@ class RepositoryImpl implements Repository {
     required int page,
     required int? limit,
   }) async {
-    final response = await _appApiService.getUsers(page: page, limit: limit);
-
-    return PagedList(data: []);
+    return const PagedList(data: []);
   }
 
   @override
@@ -459,5 +457,19 @@ class RepositoryImpl implements Repository {
     final response = await _appApiService.qrCodeScan(token);
 
     return _qrcodeScanDataMapper.mapToEntity(response.data);
+  }
+
+  @override
+  Future<BaseEntryData> createComent(String slugs, String comment) async {
+    final response = await _appApiService.createComment(slugs, comment);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+  
+  @override
+  Future<BaseEntryData> createRepplyComent(String id, String slugs, String comment) async{
+    final response = await _appApiService.createRepplyComment(id,slugs, comment);
+
+    return _baseResponseDataMapper.mapToEntity(response);
   }
 }

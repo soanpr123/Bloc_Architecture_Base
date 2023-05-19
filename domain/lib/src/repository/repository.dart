@@ -103,7 +103,7 @@ abstract class Repository {
   Future<BaseEntryData> orderStore(String id);
 
   Future<BaseEntryData> deleteOrderStore();
-  Future<BaseEntryData> createFeedback({ required Map<String,dynamic> request});
+  Future<BaseEntryData> createFeedback({required Map<String, dynamic> request});
   Future<List<HistoryAmai>> getHistory({
     required int page,
     required int? limit,
@@ -143,4 +143,6 @@ abstract class Repository {
     required int donateType,
     required String note,
   });
+  Future<BaseEntryData> createComent(String slugs, String comment);
+  Future<BaseEntryData> createRepplyComent(String id, String slugs, String comment);
 }

@@ -1,11 +1,10 @@
-import 'package:app/shared_view/app_netword_image.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:resources/resources.dart';
 
 import '../../app.dart';
+import '../../shared_view/app_netword_image.dart';
 import '../../utils/toast_message.dart';
 @RoutePage()
 class MyQrCodePage extends StatefulWidget {
@@ -50,7 +49,7 @@ class _MyQrCodePageState extends BasePageState<MyQrCodePage, MyQrCodeBloc> {
                     Text(
                       widget.name,
                       style: typoInterNomal16.copyWith(
-                          color: colorTextDark, fontSize: Dimens.d20.responsive(), height: 1.5),
+                          color: colorTextDark, fontSize: Dimens.d20.responsive(), height: 1.5,),
                     ),
                     SizedBox(
                       height: Dimens.d24.responsive(),
@@ -75,7 +74,7 @@ class _MyQrCodePageState extends BasePageState<MyQrCodePage, MyQrCodeBloc> {
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(Dimens.d21.responsive(), Dimens.d4.responsive(),
-                                Dimens.d21.responsive(), Dimens.d12.responsive()),
+                                Dimens.d21.responsive(), Dimens.d12.responsive(),),
                             child: AppNetworkImage(
                               source: widget.qrCode,
                             ),

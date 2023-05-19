@@ -132,11 +132,11 @@ void successToast(String msg) {
     toastDuration: const Duration(seconds: 3),
     positionedToastBuilder: (context, child) {
       return Positioned(
-        child: child,
         top: 0.0,
         // left: 16.0,
         right: 0,
         left: 0,
+        child: child,
       );
     },
   );
@@ -149,9 +149,7 @@ class ToastMessage {
     String message,
   ) {
     final ftoast = FToast().init(context);
-    if (ftoast == null) {
-      return;
-    }
+    
     final toast = Container(
       // width: double.infinity,
       padding: EdgeInsets.fromLTRB(
@@ -194,11 +192,11 @@ class ToastMessage {
       toastDuration: const Duration(seconds: 3),
       positionedToastBuilder: (context, child) {
         return Positioned(
-          child: child,
           top: 0.0,
           // left: 16.0,
           right: 0,
           left: 0,
+          child: child,
         );
       },
     );
@@ -208,9 +206,7 @@ class ToastMessage {
     String message,
   ) {
     final ftoast = FToast().init(context);
-    if (ftoast == null) {
-      return;
-    }
+    
     final toast = Container(
       // width: double.infinity,
       padding: EdgeInsets.fromLTRB(
@@ -253,11 +249,11 @@ class ToastMessage {
       toastDuration: const Duration(seconds: 3),
       positionedToastBuilder: (context, child) {
         return Positioned(
-          child: child,
           top: 0.0,
           // left: 16.0,
           right: 0,
           left: 0,
+          child: child,
         );
       },
     );
