@@ -1,4 +1,5 @@
 
+import 'package:app/config/firebase_message_config.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +28,8 @@ class AppConfig extends ApplicationConfig {
       DeviceUtils.deviceType == DeviceType.mobile ? UiConstants.mobileOrientation : UiConstants.tabletOrientation,
     );
     ViewUtils.setsetEnabledSystemUIOverlays(SystemUiMode.immersive);
-
+    await FirebaseMessageConfig().initFirebaseMessageConfig();
+      await FirebaseMessageConfig().handleMessage();
     // await LocalPushNotificationHelper.init();
   }
 }
