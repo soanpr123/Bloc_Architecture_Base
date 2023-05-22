@@ -132,5 +132,8 @@
   "send_amai_private":"Tặng Amai ẩn danh",
   "send_amai_private_content":"Bạn đang tặng Amai ở chế độ ẩn danh. Hãy chắc chắn rằng bạn đã chọn đúng chế độ nhé.",
     "send_amai_noti":"Bạn đã tặng Amai thành công, đối phương chắc đang rất bất ngờ vì được bạn tặng Amai rồi. Bạn có thể tiếp tục tặng hoặc quay về trang chủ.",
-    "report_content_success":"Cám ơn những đóng góp hữu ích của bạn.Chúng tôi sẽ không ngừng cải tiến hệ thống để bạn có trải nghiệm tuyệt vời nhất."
+    "report_content_success":"Cám ơn những đóng góp hữu ích của bạn.Chúng tôi sẽ không ngừng cải tiến hệ thống để bạn có trải nghiệm tuyệt vời nhất.",
+    "ranking":"Bảng xếp hạng",
+    "congratulations":"Xin chúc mừng",
+    "monthRank":"BXH tháng {month}"
 }

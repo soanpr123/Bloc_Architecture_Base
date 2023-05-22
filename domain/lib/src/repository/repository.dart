@@ -145,4 +145,5 @@ abstract class Repository {
   });
   Future<BaseEntryData> createComent(String slugs, String comment);
   Future<BaseEntryData> createRepplyComent(String id, String slugs, String comment);
+  Future<List<RankingDataEntry>> getLeaderboard();
 }

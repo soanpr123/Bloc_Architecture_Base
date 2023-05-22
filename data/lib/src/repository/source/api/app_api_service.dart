@@ -446,6 +446,15 @@ class AppApiService {
     );
   }
 
+  Future<DataListResponse<RankingData>> getLeaderboard() async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.get,
+      path: 'monthly-report/leaderboard',
+      successResponseMapperType: SuccessResponseMapperType.dataJsonArray,
+      decoder: RankingData.fromJson,
+    );
+  }
+
   Future<DataResponse<dynamic>> createComment(String slungs, String comment) async {
     return await _authAppServerApiClient.request(
       method: RestMethod.post,
