@@ -5,12 +5,11 @@ import 'package:get_it/get_it.dart';
 
 import '../../app.dart';
 
-
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
 )
 class AppRouter extends $AppRouter {
-    @override
+  @override
   final List<AutoRoute> routes = [
     AutoRoute(page: SplashRoute.page, path: '/'),
     AutoRoute(page: LoginRoute.page),
@@ -47,6 +46,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: AnnouncementDetailRoute.page),
     AutoRoute(page: FeatureDeveloperRoute.page),
     AutoRoute(page: WikiDetailRoute.page),
+    AutoRoute(page: RankingRoute.page),
     AutoRoute(page: BlogsDetailRoute.page),
     AutoRoute(page: AmaiMemberRoute.page),
     AutoRoute(page: ReportRoute.page),
@@ -57,9 +57,6 @@ class AppRouter extends $AppRouter {
   ];
   @override
   RouteType get defaultRouteType => const RouteType.material();
-
-
-  
 }
 
 @RoutePage(name: 'TabHomeRouter')

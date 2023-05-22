@@ -30,6 +30,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       sendAmai: (int userId) => SendAmaiRoute(userId: userId.toString()),
       doneSendAmaiPage: (int userId) => DoneSendAmaiRoute(userId: userId),
       myQrCodePage: (qrCode, name) => MyQrCodeRoute(qrCode: qrCode, name: name),
+      leaderBroad: () => const RankingRoute(),
       // itemDetail: (user) => ItemDetailRoute(user: user),
     );
   }

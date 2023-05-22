@@ -26,5 +26,6 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.sendAmai(int userId) = _SendAmai;
   const factory AppRouteInfo.doneSendAmaiPage(int userId) = _DoneSendAmaiPage;
   const factory AppRouteInfo.myQrCodePage(String qrCode, String name) = _MyQrCodePage;
+  const factory AppRouteInfo.leaderBroad() = _LeaderBroad;
   // const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
 }

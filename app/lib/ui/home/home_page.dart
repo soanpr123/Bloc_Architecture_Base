@@ -55,6 +55,12 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
       'name': S.current.send_amai,
       'onTap': const AppRouteInfo.sendAmai(-1),
     },
+    {
+      'id': 6,
+      'icon': Assets.png.icRanking.path,
+      'name': S.current.ranking,
+      'onTap': const AppRouteInfo.leaderBroad(),
+    },
   ];
   @override
   void initState() {

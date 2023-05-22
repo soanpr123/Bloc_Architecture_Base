@@ -14,6 +14,7 @@ import 'mapper/detail_wiki_mapper.dart';
 
 import 'mapper/order_data_mapper.dart';
 import 'mapper/popup_donate_mapper.dart';
+import 'mapper/ranking_data_mapper.dart';
 import 'mapper/upload_image_mapper.dart';
 import 'mapper/wiki_data_mapper.dart';
 
@@ -44,6 +45,7 @@ class RepositoryImpl implements Repository {
     this._listResourceDataMapper,
     this._popUpDonateMapper,
     this._qrcodeScanDataMapper,
+    this._rankingDataMapper,
   );
   final BlogsDetailDataMapper _blogsDetailDataMapper;
   final AppApiService _appApiService;
@@ -69,6 +71,7 @@ class RepositoryImpl implements Repository {
   final ListResourceDataMapper _listResourceDataMapper;
   final PopUpDonateMapper _popUpDonateMapper;
   final QrcodeScanDataMapper _qrcodeScanDataMapper;
+  final RankingDataMapper _rankingDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -471,5 +474,12 @@ class RepositoryImpl implements Repository {
     final response = await _appApiService.createRepplyComment(id,slugs, comment);
 
     return _baseResponseDataMapper.mapToEntity(response);
+  }
+  
+  @override
+  Future<List<RankingDataEntry>> getLeaderboard()async {
+     final response = await _appApiService.getLeaderboard();
+
+    return _rankingDataMapper.mapToListEntity(response.data);
   }
 }
