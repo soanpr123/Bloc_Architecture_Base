@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "855518654690",
+    "project_id": "amaisoft-internal",
+    "storage_bucket": "amaisoft-internal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855518654690:android:d75d7bc52e10ac2aa76ebb",
+        "android_client_info": {
+          "package_name": "com.internal.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855518654690-v2sl88rrc5k1dusduak6s10dpdrq7pn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYjdW7oR67sN7rHa6-p6ZJo77IopX1-Tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855518654690-v2sl88rrc5k1dusduak6s10dpdrq7pn4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855518654690-15actou03ois6t209819nbb319nvf956.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amaisoft.internal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855518654690:android:d57d8f57486b2a13a76ebb",
+        "android_client_info": {
+          "package_name": "com.internal.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855518654690-v2sl88rrc5k1dusduak6s10dpdrq7pn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYjdW7oR67sN7rHa6-p6ZJo77IopX1-Tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855518654690-v2sl88rrc5k1dusduak6s10dpdrq7pn4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855518654690-15actou03ois6t209819nbb319nvf956.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amaisoft.internal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
