@@ -19,6 +19,10 @@ class AppPreferences with LogMixin {
     return _sharedPreference.getBool(SharedPreferenceKeys.isDarkMode) ?? false;
   }
 
+  Future<String> get fcmToken {
+    return _encryptedSharedPreferences.getString(SharedPreferenceKeys.fcmToken);
+  }
+
   String get deviceToken {
     return _sharedPreference.getString(SharedPreferenceKeys.deviceToken) ?? '';
   }
@@ -27,8 +31,7 @@ class AppPreferences with LogMixin {
 
   bool get isFirstLogin => _sharedPreference.getBool(SharedPreferenceKeys.isFirstLogin) ?? true;
 
-  bool get isFirstLaunchApp =>
-      _sharedPreference.getBool(SharedPreferenceKeys.isFirstLaunchApp) ?? true;
+  bool get isFirstLaunchApp => _sharedPreference.getBool(SharedPreferenceKeys.isFirstLaunchApp) ?? true;
 
   Future<String> get accessToken {
     return _encryptedSharedPreferences.getString(SharedPreferenceKeys.accessToken);
@@ -74,6 +77,15 @@ class AppPreferences with LogMixin {
     return success;
   }
 
+  Future<bool> saveFcmToken(String token) async {
+    final success = await _encryptedSharedPreferences.setString(
+      SharedPreferenceKeys.fcmToken,
+      token,
+    );
+
+    return success;
+  }
+
   Future<bool> saveRefreshToken(String token) async {
     final success = await _encryptedSharedPreferences.setString(
       SharedPreferenceKeys.refreshToken,
@@ -104,6 +116,7 @@ class AppPreferences with LogMixin {
         _sharedPreference.remove(SharedPreferenceKeys.currentUser),
         _sharedPreference.remove(SharedPreferenceKeys.accessToken),
         _sharedPreference.remove(SharedPreferenceKeys.refreshToken),
+        _sharedPreference.remove(SharedPreferenceKeys.fcmToken),
       ],
     );
   }

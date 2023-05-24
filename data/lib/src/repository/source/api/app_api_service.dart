@@ -465,6 +465,17 @@ class AppApiService {
     );
   }
 
+  Future<DataResponse<dynamic>> updateFcm(String fcmKey, String deviceType) async {
+    return await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      path: 'auth/fcmtoken',
+      body: {
+        'device_token': fcmKey,
+        'device_type': deviceType,
+      },
+    );
+  }
+
   Future<DataResponse<dynamic>> createRepplyComment(String id, String slungs, String comment) async {
     return await _authAppServerApiClient.request(
       method: RestMethod.post,
