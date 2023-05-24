@@ -10,6 +10,7 @@ import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 import 'package:badges/badges.dart' as badges;
 import '../../app.dart';
+
 @RoutePage()
 class ListBlogsPage extends StatefulWidget {
   const ListBlogsPage({required this.tag, Key? key}) : super(key: key);
@@ -179,13 +180,22 @@ class _ListBlogsPageState extends BasePageState<ListBlogsPage, ListBlogsBloc> wi
                             // backgroundColor: Colors.transparent,
                             expaned: false,
                             isDismissible: false,
+                            shape: const RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                            ),
                             useRootNavigator: true,
+                            backgroundColor: Colors.white,
                           );
                         },
                         child: Container(
+                          height: Dimens.d32.responsive(),
                           padding: EdgeInsets.symmetric(
                             horizontal: Dimens.d16.responsive(),
-                            vertical: Dimens.d8.responsive(),
+                            vertical: Dimens.d4.responsive(),
                           ),
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -195,14 +205,21 @@ class _ListBlogsPageState extends BasePageState<ListBlogsPage, ListBlogsBloc> wi
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Assets.svg.filterFill.svg(width: 20, height: 20),
+                              Container(
+                                width: Dimens.d20.responsive(),
+                                height: Dimens.d20.responsive(),
+                                padding: EdgeInsets.symmetric(vertical: Dimens.d5.responsive(), horizontal: 2.5),
+                                child: Assets.svg.filterFill
+                                    .svg(width: Dimens.d15.responsive(), height: Dimens.d10.responsive()),
+                              ),
                               const SizedBox(
                                 width: 8,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 2.0),
+                                padding: EdgeInsets.only(bottom: Dimens.d2.responsive()),
                                 child: Text(
                                   S.current.fillter,
+                                  textAlign: TextAlign.center,
                                   style: typoInterNomal14.copyWith(
                                     color: colorBrandPrimary,
                                     fontWeight: FontWeight.w600,

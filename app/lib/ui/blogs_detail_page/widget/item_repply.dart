@@ -141,9 +141,10 @@ class ItemRepply extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                                TextButton(
+                              TextButton(
                                 onPressed: () {
-                                  bloc.add(SelectComent(id: cmt.id??-1,name: cmt.name??''));
+                                  bloc.add(const ForcusComment(isComment: true));
+                                  bloc.add(SelectComent(id: cmt.id ?? -1, name: cmt.name ?? ''));
                                 },
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(colorDisabled),

@@ -98,6 +98,13 @@ class RepplyComment extends BlogsDetailEvent with _$RepplyComment {
 }
 
 @freezed
+class ForcusComment extends BlogsDetailEvent with _$ForcusComment {
+  const factory ForcusComment({
+    @Default(false) bool isComment,
+  }) = _ForcusComment;
+}
+
+@freezed
 class OnChangeCmt extends BlogsDetailEvent with _$OnChangeCmt {
   const factory OnChangeCmt({
     @Default('') String cmt,

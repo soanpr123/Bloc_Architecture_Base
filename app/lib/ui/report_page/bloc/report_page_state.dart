@@ -20,6 +20,7 @@ class ReportPageState extends BaseBlocState with _$ReportPageState {
     @Default('') String errIssue,
     @Default('') String errNote,
     @Default(false) bool focusInput,
+      @Default(false) bool closePopUp,
     @Default(APIRequestStatus.nodata) APIRequestStatus loadingImage,
   }) = _ReportPageState;
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared/shared.dart';
 
@@ -298,11 +299,13 @@ class FirebaseMessageConfig {
       Log.d('TOKEN FIREBASE CHANGE: $token', name: 'FirebaseConfig');
       // firebaseToken = token;
       // await updateProfile(token);
+
       await updateFcmToken(token);
     });
   }
 
   Future<void> updateFcmToken(String tokenFcm) async {
+    // await Clipboard.setData(ClipboardData(text: tokenFcm));
     // final response = await HomeProvider.instance.upLoadFcmToken(tokenFcm: tokenFcm);
     // if (response.error.isEmpty) {
     //   Get.log("Token upload to server successfully");

@@ -22,6 +22,7 @@ class BlogsDetailState extends BaseBlocState with _$BlogsDetailState {
     @Default(0) int totalLikes,
     @Default(0) int totalAmaiVotes,
     @Default(false) bool show,
+    @Default(false) bool isComment,
     @Default(0.0) double bottom,
     @Default(0.0) double padding,
   }) = _BlogsDetailState;

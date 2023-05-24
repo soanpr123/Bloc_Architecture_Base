@@ -64,6 +64,10 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
       _onChangeCmt,
       transformer: log(),
     );
+    on<ForcusComment>(
+      _forcusComment,
+      transformer: log(),
+    );
   }
 
   final BlogsDetailUseCase _blogsDetailUseCase;
@@ -84,11 +88,15 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   }
 
   FutureOr<void> _createRepplyComment(RepplyComment event, Emitter<BlogsDetailState> emit) async {
-    await createRepplyComment(id: event.id, slungs: event.slungs, comment: event.content, emit: emit,event: event);
+    await createRepplyComment(id: event.id, slungs: event.slungs, comment: event.content, emit: emit, event: event);
   }
 
   FutureOr<void> _selectCmt(SelectComent event, Emitter<BlogsDetailState> emit) async {
     emit(state.copyWith(cmtSelect: event.id, name: event.name));
+  }
+
+  FutureOr<void> _forcusComment(ForcusComment event, Emitter<BlogsDetailState> emit) async {
+    emit(state.copyWith(isComment: event.isComment));
   }
 
   FutureOr<void> _onChangeCmt(OnChangeCmt event, Emitter<BlogsDetailState> emit) async {
@@ -179,11 +187,12 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
     );
   }
 
-  Future<void> createComment(
-      {required String slungs,
-      required String comment,
-      required Emitter<BlogsDetailState> emit,
-      required CreateComment event,}) async {
+  Future<void> createComment({
+    required String slungs,
+    required String comment,
+    required Emitter<BlogsDetailState> emit,
+    required CreateComment event,
+  }) async {
     return runBlocCatching(
       doOnSubscribe: () async {
         emit(state.copyWith(buttonSendState: AppElevatedButtonState.loading));
@@ -227,11 +236,11 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
     );
   }
 
-  Future<void> createRepplyComment(
-      {required String id,
-      required String slungs,
-      required String comment,
-      required Emitter<BlogsDetailState> emit,
+  Future<void> createRepplyComment({
+    required String id,
+    required String slungs,
+    required String comment,
+    required Emitter<BlogsDetailState> emit,
     required RepplyComment event,
   }) async {
     return runBlocCatching(
@@ -243,7 +252,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
             .execute(CreateReppllyCommentInput(id: id, slugs: slungs, comment: comment));
         if (output.data['status_code'] == 200) {
           // emit(state.copyWith(comment: output));
-           event.textEdt.clear();
+          event.textEdt.clear();
           emit(state.copyWith(buttonSendState: AppElevatedButtonState.inactive));
           await getDetailBlogs(slungs: slungs, isLoading: true, emit: emit);
           await getComment(slungs: slungs, emit: emit);
@@ -410,7 +419,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
     pading += _last - current;
 
     if (botttom <= -70) {
-      botttom = -70;
+      botttom = -75;
       pading = 0;
     }
     if (botttom >= 0) {
@@ -419,7 +428,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
     }
 
     _last = current;
-    if (botttom <= 0 && botttom >= -70) {
+    if (botttom <= 0 && botttom >= -75) {
       emit(state.copyWith(bottom: botttom, padding: pading));
     }
   }

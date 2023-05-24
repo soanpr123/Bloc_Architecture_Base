@@ -71,13 +71,15 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: Dimens.d24.responsive(), vertical: Dimens.d8.responsive()),
+                            horizontal: Dimens.d40.responsive(),
+                            vertical: Dimens.d4.responsive(),
+                          ),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 Assets.png.icVongRank.path,
                               ),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                             ),
                           ),
                           child: Column(
@@ -96,7 +98,10 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                               Text(
                                 S.current.congratulations,
                                 style: typoInterNomal14.copyWith(
-                                    color: colorSupportWarning, fontWeight: FontWeight.w600, height: 1.5),
+                                  color: colorSupportWarning,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.5,
+                                ),
                               ),
                             ],
                           ),
@@ -107,11 +112,14 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                         state.leaderBroad.isNotEmpty
                             ? Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: Dimens.d18.responsive(), vertical: Dimens.d8.responsive()),
-                                decoration: const BoxDecoration(
+                                  horizontal: Dimens.d18.responsive(),
+                                  vertical: Dimens.d8.responsive(),
+                                ),
+                                decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                                  boxShadow: boxShadow,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
                                   ),
                                 ),
                                 child: Column(
@@ -144,7 +152,8 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                                     ),
                                     Text(
                                       '${state.leaderBroad.first.totalLikes ?? 0}',
-                                      style: typoInterNomal14.copyWith(
+                                      style: typoInterNomal16.copyWith(
+                                        fontSize: Dimens.d16.responsive(),
                                         color: colorBrandPrimary,
                                         fontWeight: FontWeight.w600,
                                         height: 1.5,
@@ -155,7 +164,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                               )
                             : Container(),
                         SizedBox(
-                          height: Dimens.d8.responsive(),
+                          height: Dimens.d4.responsive(),
                         ),
                         Container(
                           height: Dimens.d38.responsive(),
@@ -173,7 +182,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                     ),
                   ),
                   Positioned(
-                    top: Dimens.d272.responsive(),
+                    top: Dimens.d274.responsive(),
                     // bottom: 0,
                     right: 0,
                     left: 0,
@@ -192,7 +201,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                         color: Colors.white,
                         boxShadow: boxShadow,
                         borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(5),
                         ),
                       ),
                       child: ListView.builder(
@@ -216,6 +225,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                                             children: [
                                               Text(
                                                 '${i + 1}',
+                                                textAlign: TextAlign.left,
                                                 style: typoInterNomal14.copyWith(
                                                   color: colorTextMedium,
                                                   fontWeight: FontWeight.w600,
@@ -223,7 +233,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: Dimens.d4.responsive(),
+                                                width: Dimens.d8.responsive(),
                                               ),
                                               SizedBox(
                                                 height: Dimens.d32.responsive(),
@@ -243,6 +253,7 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                                                 child: Text(
                                                   item.name ?? '',
                                                   style: typoInterNomal14.copyWith(
+                                                    fontSize: Dimens.d14.responsive(),
                                                     color: colorTextMedium,
                                                     fontWeight: FontWeight.w600,
                                                     height: 1.5,
@@ -256,18 +267,39 @@ class _RankingPageState extends BasePageState<RankingPage, RankingPageBloc> {
                                           width: Dimens.d12.responsive(),
                                         ),
                                         Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${item.totalLikes ?? 0}',
-                                              style: typoInterNomal14.copyWith(
+                                              style: typoInterNomal16.copyWith(
+                                                fontSize: Dimens.d16.responsive(),
                                                 color: colorTextMedium,
                                                 fontWeight: FontWeight.w600,
                                                 height: 1.5,
                                               ),
                                             ),
-                                            Icon(
-                                              (item.direction ?? -1) < 0 ? Icons.arrow_downward : Icons.arrow_upward,
-                                              color: (item.direction ?? -1) < 0 ? colorRed500 : colorBrandPrimary,
+                                            // Padding(
+                                            //   padding: EdgeInsets.only(top: Dimens.d3.responsive()),
+                                            //   child: Icon(
+
+                                            //     size: Dimens.d20.responsive(),
+                                            //     color: (item.direction ?? -1) < 0 ? colorRed500 : colorBrandPrimary,
+                                            //   ),
+                                            // ),
+                                            Container(
+                                              width: Dimens.d20.responsive(),
+                                              height: Dimens.d20.responsive(),
+                                              padding: EdgeInsets.all(Dimens.d3.responsive()),
+                                              child: (item.direction ?? -1) < 0
+                                                  ? Assets.svg.arrowDown.svg(
+                                                      // width: Dimens.d20.responsive(),
+                                                      // height: Dimens.d20.responsive(),
+                                                      )
+                                                  : Assets.svg.arrowUp.svg(
+                                                      // width: Dimens.d20.responsive(),
+                                                      // height: Dimens.d20.responsive(),
+                                                      ),
                                             ),
                                           ],
                                         ),

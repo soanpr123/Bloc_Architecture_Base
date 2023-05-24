@@ -115,6 +115,7 @@ class ItemComent extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
+                                   bloc.add(const ForcusComment(isComment: true));
                                   bloc.add(SelectComent(id: cmt.id??-1,name: cmt.name??''));
                                 },
                                 style: ButtonStyle(
