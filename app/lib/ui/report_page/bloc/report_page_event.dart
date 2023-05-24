@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../base/bloc/base_event.dart';
@@ -57,6 +58,13 @@ class DeleteImage extends ReportPageEvent with _$DeleteImage {
   const factory DeleteImage({
     required int index,
   }) = _DeleteImage;
+}
+
+@freezed
+class ClosePopUp extends ReportPageEvent with _$ClosePopUp {
+  const factory ClosePopUp({
+    required bool closePopUp,
+  }) = _ClosePopUp;
 }
 
 @freezed

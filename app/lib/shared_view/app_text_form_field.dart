@@ -27,6 +27,7 @@ class AppTextFormField extends StatefulWidget {
   final Color? colorErr;
   final bool? expans;
   final InputCounterWidgetBuilder? counterInput;
+  final FocusNode? focusNode;
   // ignore: member-ordering
   const AppTextFormField({
     super.key,
@@ -54,6 +55,7 @@ class AppTextFormField extends StatefulWidget {
     this.colorErr,
     this.counterInput,
     this.expans = false,
+    this.focusNode,
   });
 
   @override
@@ -61,19 +63,16 @@ class AppTextFormField extends StatefulWidget {
 }
 
 class _AppTextFormFieldState extends State<AppTextFormField> {
-  late FocusNode _focusNode;
-
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: widget.readOnly ?? false,
-      focusNode: _focusNode,
+      focusNode: widget.focusNode,
       controller: widget.controller,
       style: styleTextField,
       obscureText: widget.obscureText ?? false,
@@ -91,7 +90,6 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       buildCounter: widget.counterInput,
       onFieldSubmitted: (text) {
         widget.onSubmitted ?? (text) {};
-        _focusNode.unfocus();
       },
       onTap: widget.onTap,
       decoration: decorTextField.copyWith(

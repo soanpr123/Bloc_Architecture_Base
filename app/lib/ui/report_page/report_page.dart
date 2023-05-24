@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:dotted_border/dotted_border.dart';
@@ -10,6 +9,7 @@ import '../../app.dart';
 import '../../shared_view/app_netword_image.dart';
 import '../../shared_view/loading_widget.dart';
 import '../../utils/max_word_text_input.dart';
+
 @RoutePage()
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -19,9 +19,8 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
-
   final _focus = FocusNode();
-
+  final textEditingController = TextEditingController();
   int idKeyboardListener = 0;
   @override
   void initState() {
@@ -48,9 +47,21 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
   }
 
   @override
+  Widget buildPageListeners({required Widget child}) {
+    return BlocListener<ReportPageBloc, ReportPageState>(
+      listener: (context, state) {
+        if (state.closePopUp) {
+          print("clear");
+          textEditingController.clear();
+          bloc.add(const ClosePopUp(closePopUp: false));
+        }
+      },
+      child: child,
+    );
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
-
-
     return CommonScaffold(
       hideKeyboardWhenTouchOutside: true,
       resizeToAvoidBottomInset: true,
@@ -106,7 +117,8 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                   RichText(
                     text: TextSpan(
                       text: S.current.report_lable_issure,
-                      style: typoInterNomal16.copyWith(color: colorTextMedium, fontWeight: FontWeight.w600),
+                      style:
+                          typoInterNomal16.copyWith(color: colorTextMedium, fontWeight: FontWeight.w600, height: 1.5),
                       children: <TextSpan>[
                         TextSpan(
                           text: '*',
@@ -114,13 +126,14 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                             color: colorSupportDanger,
+                            height: 1.5,
                           ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 8,
                   ),
                   Wrap(
                     spacing: 8,
@@ -202,12 +215,15 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                           border: Border.all(
                             color: stateC.focusInput ? colorBrandPrimary : colorBoder01,
                           ),
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
                         child: TextField(
                           // controller: _controller,
                           focusNode: _focus,
+                          controller: textEditingController,
                           maxLines: 4,
+
                           textInputAction: TextInputAction.done,
                           style: typoInterNomal14.copyWith(
                             fontSize: Dimens.d14.responsive(),
@@ -215,6 +231,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                             height: 1.5,
                             color: colorTextDark,
                           ),
+
                           strutStyle: const StrutStyle(
                             forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
                             height: 1.5, // Khoảng cách giữa các dòng
@@ -232,7 +249,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                           ],
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                             counter: BlocBuilder<ReportPageBloc, ReportPageState>(
                               buildWhen: (previous, current) => previous.count != current.count,
                               builder: (context, stater) {
@@ -291,32 +308,44 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                           InkWell(
                             borderRadius: const BorderRadius.all(Radius.circular(5)),
                             overlayColor: MaterialStateProperty.all(colorDisabled),
-                            onTap: stateimage.image.length == 3
+                            onTap: stateimage.image.length == 3 || stateimage.loadingImage == APIRequestStatus.loading
                                 ? null
                                 : () {
                                     bloc.add(const PickImage());
                                   },
-                            child: DottedBorder(
-                              borderType: BorderType.RRect,
-                              strokeCap: StrokeCap.butt,
-                              dashPattern: [8, 4],
-                              color: stateimage.image.length == 3 ? colorDisabled : colorUiBg02,
-                              radius: const Radius.circular(5),
-                              padding: const EdgeInsets.all(12),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Assets.svg.uploadCloud
-                                    .svg(color: stateimage.image.length == 3 ? colorDisabled : colorBrandPrimary),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  S.current.report_upload,
-                                  style: typoInterNomal14.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: stateimage.image.length == 3 ? colorDisabled : colorBrandPrimary,
+                            child: SizedBox(
+                              height: Dimens.d40.responsive(),
+                              child: DottedBorder(
+                                borderType: BorderType.RRect,
+                                strokeCap: StrokeCap.butt,
+                                dashPattern: [8, 4],
+                                color:
+                                    stateimage.image.length == 3 || stateimage.loadingImage == APIRequestStatus.loading
+                                        ? colorDisabled
+                                        : colorUiBg02,
+                                radius: const Radius.circular(5),
+                                padding: const EdgeInsets.all(12),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Assets.svg.uploadCloud.svg(
+                                      color: stateimage.image.length == 3 ||
+                                              stateimage.loadingImage == APIRequestStatus.loading
+                                          ? colorDisabled
+                                          : colorBrandPrimary),
+                                  const SizedBox(
+                                    width: 8,
                                   ),
-                                ),
-                              ]),
+                                  Text(
+                                    S.current.report_upload,
+                                    style: typoInterNomal14.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: stateimage.image.length == 3 ||
+                                              stateimage.loadingImage == APIRequestStatus.loading
+                                          ? colorDisabled
+                                          : colorBrandPrimary,
+                                    ),
+                                  ),
+                                ]),
+                              ),
                             ),
                           ),
                           stateimage.loadingImage != APIRequestStatus.loading && stateimage.image.isEmpty
@@ -326,47 +355,66 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                                   width: double.infinity,
                                   padding: EdgeInsets.only(top: Dimens.d24.responsive()),
                                   child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
                                         fit: FlexFit.loose,
                                         child: ListView.builder(
+                                          padding: const EdgeInsets.all(0),
                                           itemCount: stateimage.image.length,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.horizontal,
                                           clipBehavior: Clip.none,
                                           // physics: const NeverScrollableScrollPhysics(),
                                           itemBuilder: (ctx, i) {
-                                            return Stack(
+                                            return Row(
                                               children: [
-                                                badges.Badge(
-                                                  badgeStyle: badges.BadgeStyle(
-                                                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                                                    badgeColor: colorBrandSecondary,
-                                                  ),
-                                                  badgeAnimation: const badges.BadgeAnimation.fade(
-                                                    animationDuration: Duration(milliseconds: 200),
-                                                    loopAnimation: false,
-                                                  ),
-                                                  showBadge: true,
-                                                  ignorePointer: false,
-                                                  badgeContent: Assets.svg.bin.svg(),
-                                                  onTap: () {
-                                                    bloc.add(DeleteImage(index: i));
-                                                  },
-                                                  position: badges.BadgePosition.topEnd(top: -8, end: -8),
-                                                  child: Container(
-                                                    width: Dimens.d110.responsive(),
-                                                    height: Dimens.d110.responsive(),
-                                                    margin: const EdgeInsets.only(left: 12),
-                                                    decoration: const BoxDecoration(
-                                                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                    ),
-                                                    child: ClipRRect(
-                                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                      child: AppNetworkImage(
-                                                        source: stateimage.image[i].thumb,
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: i == 0 ? 0 : Dimens.d4.responsive()),
+                                                ),
+                                                SizedBox(
+                                                  width: Dimens.d110.responsive(),
+                                                  height: Dimens.d110.responsive(),
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        width: Dimens.d110.responsive(),
+                                                        height: Dimens.d110.responsive(),
+                                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                        decoration: const BoxDecoration(
+                                                          // color: Colors.amberAccent,
+                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                        ),
+                                                        child: ClipRRect(
+                                                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                          child: AppNetworkImage(
+                                                            source: stateimage.image[i].thumb,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                      Align(
+                                                        alignment: Alignment.center,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            bloc.add(DeleteImage(index: i));
+                                                          },
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                              color: colorBrandSecondary,
+                                                            ),
+                                                            height: Dimens.d24.responsive(),
+                                                            width: Dimens.d24.responsive(),
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              children: [Assets.svg.bin.svg()],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ],

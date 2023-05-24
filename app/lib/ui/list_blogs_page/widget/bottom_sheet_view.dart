@@ -17,16 +17,10 @@ class BottomSheetView extends StatelessWidget {
 
   final AppNavigator navigator;
   final ListBlogsBloc bloc;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10.0),
-          topRight: Radius.circular(10.0),
-        ),
-      ),
+    return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -43,14 +37,31 @@ class BottomSheetView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(mainAxisSize: MainAxisSize.min, children: [
-                  Assets.svg.filterFill.svg(width: 20, height: 20),
+                  Container(
+                    width: Dimens.d20.responsive(),
+                    height: Dimens.d20.responsive(),
+                    padding: EdgeInsets.symmetric(vertical: Dimens.d5.responsive(), horizontal: 2.5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Assets.svg.filterFill.svg(width: Dimens.d15.responsive(), height: Dimens.d10.responsive()),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    S.current.fillter,
-                    style:
-                        typoInterNomal16.copyWith(color: colorBrandPrimary, fontWeight: FontWeight.w700, height: 1.5),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: Dimens.d2.responsive()),
+                    child: Text(
+                      S.current.fillter,
+                      textAlign: TextAlign.center,
+                      style: typoInterNomal16.copyWith(
+                        color: colorBrandPrimary,
+                        fontWeight: FontWeight.w700,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                 ]),
                 GestureDetector(
@@ -90,33 +101,64 @@ class BottomSheetView extends StatelessWidget {
                       buildWhen: (previous, current) =>
                           previous.allPost != current.allPost || previous.newPost != current.newPost,
                       builder: (context, state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppCheckBox(
-                                    value: state.allPost,
-                                    onChanged: (v) {
-                                      bloc.add(const ListBlogsStatusSelect(allPost: true, newPost: false));
-                                    },
-                                    label: 'Mới nhất',
-                                  ),
-                                  AppCheckBox(
-                                    value: state.newPost,
-                                    onChanged: (v) {
-                                      bloc.add(const ListBlogsStatusSelect(allPost: false, newPost: true));
-                                    },
-                                    label: 'Nổi bật',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(flex: 1, child: Container())
-                          ],
+                        // return Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Expanded(
+                        //       flex: 3,
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           AppCheckBox(
+                        //             value: state.allPost,
+                        //             onChanged: (v) {
+                        //               bloc.add(const ListBlogsStatusSelect(allPost: true, newPost: false));
+                        //             },
+                        //             label: 'Mới nhất',
+                        //           ),
+                        //           AppCheckBox(
+                        //             value: state.newPost,
+                        //             onChanged: (v) {
+                        //               bloc.add(const ListBlogsStatusSelect(allPost: false, newPost: true));
+                        //             },
+                        //             label: 'Nổi bật',
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     Expanded(flex: 1, child: Container())
+                        //   ],
+                        // );
+                        return AlignedGridView.count(
+                          padding: EdgeInsets.zero,
+                          itemCount: 2,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 16,
+                          shrinkWrap: true,
+                          clipBehavior: Clip.antiAlias,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                index == 0
+                                    ? AppCheckBox(
+                                        value: state.allPost,
+                                        onChanged: (v) {
+                                          bloc.add(const ListBlogsStatusSelect(allPost: true, newPost: false));
+                                        },
+                                        label: 'Mới nhất',
+                                      )
+                                    : AppCheckBox(
+                                        value: state.newPost,
+                                        onChanged: (v) {
+                                          bloc.add(const ListBlogsStatusSelect(allPost: false, newPost: true));
+                                        },
+                                        label: 'Nổi bật',
+                                      ),
+                              ],
+                            );
+                          },
                         );
                       },
                     ),

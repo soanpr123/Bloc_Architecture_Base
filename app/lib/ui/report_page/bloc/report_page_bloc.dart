@@ -51,6 +51,10 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
       _onInputChange,
       transformer: log(),
     );
+    on<ClosePopUp>(
+      _onClosePopUp,
+      transformer: log(),
+    );
   }
   final CreateFeedBackUseCase _createFeedBackUseCase;
   final GetResourceUseCase _getResourceUseCase;
@@ -66,13 +70,38 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
     emit(state.copyWith(focusInput: event.focus));
   }
 
+  FutureOr<void> _onClosePopUp(ClosePopUp event, Emitter<ReportPageState> emit) async {
+    // emit(state.copyWith(focusInput: event.focus));
+    imageUpload.clear();
+    issueSelect.clear();
+
+    emit(state.copyWith(
+      issue: [],
+      closePopUp: event.closePopUp,
+      issueSelect: [...issueSelect],
+      buttonState: AppElevatedButtonState.inactive,
+      count: 0,
+      input: '',
+      image: [],
+      errIssue: '',
+      errNote: '',
+      focusInput: false,
+    ));
+  }
+
   FutureOr<void> _onInputChange(InputChange event, Emitter<ReportPageState> emit) async {
     if (issueSelect.isEmpty || event.input.isEmpty) {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.inactive, issueSelect: [...state.issueSelect], input: event.input,));
+        buttonState: AppElevatedButtonState.inactive,
+        issueSelect: [...state.issueSelect],
+        input: event.input,
+      ));
     } else {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.active, issueSelect: [...state.issueSelect], input: event.input,));
+        buttonState: AppElevatedButtonState.active,
+        issueSelect: [...state.issueSelect],
+        input: event.input,
+      ));
     }
   }
 
@@ -102,13 +131,17 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
     }
     if (issueSelect.isEmpty || state.input.isEmpty) {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.inactive, issueSelect: [...issueSelect], input: state.input,));
+        buttonState: AppElevatedButtonState.inactive,
+        issueSelect: [...issueSelect],
+        input: state.input,
+      ));
     } else {
       emit(state.copyWith(
-          buttonState: AppElevatedButtonState.active, issueSelect: [...issueSelect], input: state.input,));
+        buttonState: AppElevatedButtonState.active,
+        issueSelect: [...issueSelect],
+        input: state.input,
+      ));
     }
-
-
   }
 
   FutureOr<void> _onPickImage(PickImage event, Emitter<ReportPageState> emit) async {
@@ -209,7 +242,7 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
         }
         request.addAll({'error_type': type});
         request.addAll({'content': state.input});
-   
+
         // final List<ImageUpload> images = [];:
         final out = await _createFeedBackUseCase.execute(CreateFeedBackInput(request: request));
 
@@ -217,14 +250,20 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
           // await _updateAvt(emit: emit, avt: out.url);
 
           emit(state.copyWith(buttonState: AppElevatedButtonState.active));
-          await navigator.showDialog(
-              AppPopupInfo.bottomSheet(
-                child: SucessReportDialog(
-                  reportPageBloc: appBloc,
-                  appNavigator: navigator,
-                ),
+          await navigator
+              .showDialog(
+            AppPopupInfo.bottomSheet(
+              child: SucessReportDialog(
+                reportPageBloc: appBloc,
+                appNavigator: navigator,
+                reportPage: this,
               ),
-              barrierDismissible: true,);
+            ),
+            barrierDismissible: true,
+          )
+              .then((value) {
+            add(const ClosePopUp(closePopUp: true));
+          });
         } else {
           errorToast(msg: out.data['message']);
           emit(state.copyWith(buttonState: AppElevatedButtonState.active));

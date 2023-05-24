@@ -339,6 +339,7 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
       context: useRootNavigator ? _rootRouterContext : _currentTabContextOrRootContext,
       builder: (_) => _appPopupInfoMapper.map(appPopupInfo, this),
       isDismissible: isDismissible,
+      elevation: 0.0,
       enableDrag: enableDrag,
       useRootNavigator: useRootNavigator,
       backgroundColor: backgroundColor,
