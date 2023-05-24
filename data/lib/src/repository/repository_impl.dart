@@ -112,7 +112,7 @@ class RepositoryImpl implements Repository {
   @override
   Future<BaseEntryData> logout() async {
     final out = await _appApiService.logout();
-    // await _appPreferences.clearCurrentUserData();
+    await _appPreferences.clearCurrentUserData();
     // ignore: newline-before-return
     return _baseResponseDataMapper.mapToEntity(out);
   }
@@ -175,6 +175,11 @@ class RepositoryImpl implements Repository {
       if (authData != null && !authData.accessToken.isNullOrEmpty)
         _appPreferences.saveAccessToken(authData.accessToken ?? ''),
     ]);
+  }
+
+  Future<bool> _saveFcmToken(String? token) async {
+    print("Save token $token");
+    return _appPreferences.saveFcmToken(token ?? '');
   }
 
   @override
@@ -468,18 +473,37 @@ class RepositoryImpl implements Repository {
 
     return _baseResponseDataMapper.mapToEntity(response);
   }
-  
+
   @override
-  Future<BaseEntryData> createRepplyComent(String id, String slugs, String comment) async{
-    final response = await _appApiService.createRepplyComment(id,slugs, comment);
+  Future<BaseEntryData> createRepplyComent(String id, String slugs, String comment) async {
+    final response = await _appApiService.createRepplyComment(id, slugs, comment);
 
     return _baseResponseDataMapper.mapToEntity(response);
   }
-  
+
   @override
-  Future<List<RankingDataEntry>> getLeaderboard()async {
-     final response = await _appApiService.getLeaderboard();
+  Future<List<RankingDataEntry>> getLeaderboard() async {
+    final response = await _appApiService.getLeaderboard();
 
     return _rankingDataMapper.mapToListEntity(response.data);
+  }
+
+  @override
+  Future<BaseEntryData> updateFcmToken(String fcmToken, String deviceType) async {
+    final response = await _appApiService.updateFcm(fcmToken, deviceType);
+
+    return _baseResponseDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<bool> saveFcmToken(String token) {
+    return _saveFcmToken(token);
+  }
+
+  @override
+  Future<GetFcmTokenDataOutput> getFcmToken() async {
+    final token = await _appPreferences.fcmToken;
+
+    return GetFcmTokenDataOutput(token: token);
   }
 }

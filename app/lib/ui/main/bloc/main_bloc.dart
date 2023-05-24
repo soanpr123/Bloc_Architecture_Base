@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/config/firebase_message_config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,5 +19,7 @@ class MainBloc extends BaseBloc<MainEvent, MainState> {
   }
   FutureOr<void> _onMainPageInitiated(MainPageInitiated event, Emitter<MainState> emit) async {
     appBloc.add(const AppInitiated(handleErr: true));
+    await FirebaseMessageConfig().initFirebaseMessageConfig();
+    await FirebaseMessageConfig().handleMessage();
   }
 }

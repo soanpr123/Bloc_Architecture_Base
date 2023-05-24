@@ -28,8 +28,7 @@ class AppConfig extends ApplicationConfig {
       DeviceUtils.deviceType == DeviceType.mobile ? UiConstants.mobileOrientation : UiConstants.tabletOrientation,
     );
     ViewUtils.setsetEnabledSystemUIOverlays(SystemUiMode.immersive);
-    await FirebaseMessageConfig().initFirebaseMessageConfig();
-      await FirebaseMessageConfig().handleMessage();
+    
     // await LocalPushNotificationHelper.init();
   }
 }

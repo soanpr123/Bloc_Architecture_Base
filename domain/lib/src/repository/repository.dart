@@ -24,9 +24,10 @@ abstract class Repository {
     required String newPass,
     required String confirmPassword,
   });
-
+  Future<GetFcmTokenDataOutput> getFcmToken();
   Future<BaseEntryData> forgotPassword(String email);
   Future<BaseEntryData> updateMe(String avt, String about);
+  Future<BaseEntryData> updateFcmToken(String fcmToken, String deviceType);
   Future<BaseEntryData> updateMeName(String name);
   Future<void> register({
     required String username,
@@ -42,7 +43,7 @@ abstract class Repository {
   Future<bool> saveDeviceToken(String deviceToken);
 
   Future<bool> saveIsFirstLogin(bool isFirstLogin);
-
+  Future<bool> saveFcmToken(String token);
   Future<bool> saveIsFirstLaunchApp(bool isFirstLaunchApp);
   Future<PagedList<BlogsDataEntry>> getListPost({
     required int page,

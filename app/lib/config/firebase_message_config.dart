@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:domain/domain.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 @pragma('vm:entry-point')
@@ -19,6 +23,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
   }
 }
 
+@Injectable()
 class FirebaseMessageConfig {
   factory FirebaseMessageConfig() => _messageConfig;
   FirebaseMessageConfig._internal();
@@ -29,6 +34,7 @@ class FirebaseMessageConfig {
   static const String darwinNotificationCategoryPlain = 'plainCategory';
   static const String urlLaunchActionId = 'id_1';
   static const String navigationActionId = 'id_3';
+
   final AndroidNotificationChannel _androidNotificationChannel = const AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
@@ -290,28 +296,48 @@ class FirebaseMessageConfig {
     await _firebaseMessaging.getToken().then((String? token) async {
       Log.d('FIREBASE TOKEN: $token', name: 'FirebaseConfig');
       if (token != null) {
-        // firebaseToken = token;
-        // await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
-        await updateFcmToken(token);
+        await saveFcmToken(token);
       }
     });
     _firebaseMessaging.onTokenRefresh.listen((token) async {
       Log.d('TOKEN FIREBASE CHANGE: $token', name: 'FirebaseConfig');
-      // firebaseToken = token;
-      // await updateProfile(token);
-
-      await updateFcmToken(token);
+      await saveFcmToken(token);
     });
   }
 
-  Future<void> updateFcmToken(String tokenFcm) async {
-    // await Clipboard.setData(ClipboardData(text: tokenFcm));
-    // final response = await HomeProvider.instance.upLoadFcmToken(tokenFcm: tokenFcm);
-    // if (response.error.isEmpty) {
-    //   Get.log("Token upload to server successfully");
-    // } else {
-    //   Get.log("Token upload to server error", isError: true);
-    // }
+  Future saveFcmToken(String tokenFcm) async {
+    final result = await GetIt.instance.get<GetFcmTokenUseCase>().execute(const GetFcmTokenDataInput());
+    Log.d('token in data store local ${result.token}', name: 'UpdateFcmToLocal');
+
+    if (result.token.isEmpty || result.token != tokenFcm) {
+      // Token chưa được lưu hoặc khác với token lấy ra từ Firebase -> cập nhật token mới
+
+      final result = await updateFcmToken(tokenFcm);
+      if (result.data != null && result.data['status_code'] == 200) {
+        runCatching(
+          action: () => GetIt.instance.get<SaveTokenFcmUseCase>().execute(SaveTokenFcmInput(tokenFcm: tokenFcm)),
+        );
+      }
+    } else {
+      Log.d('token already exists store local ${result.token}', name: 'UpdateFcmToLocal');
+    }
+  }
+
+  Future<BaseEntryData> updateFcmToken(String tokenFcm) async {
+    final result = runCatching(
+      action: () => GetIt.instance
+          .get<UpdateFcmTokenUseCase>()
+          .execute(UpdateFcmTokenInput(fcmToken: tokenFcm, deviceType: Platform.isIOS ? 'ios' : 'android')),
+    );
+
+    return result.when(
+      success: (output) => output,
+      failure: (exception) {
+        Log.e('Token upload to server error $exception', name: 'updateFcmToken');
+
+        return const BaseEntryData();
+      },
+    );
   }
 }
 

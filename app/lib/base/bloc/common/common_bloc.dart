@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
@@ -13,6 +14,7 @@ import '../../../app.dart';
 class CommonBloc extends BaseBloc<CommonEvent, CommonState> {
   CommonBloc(
     this._clearCurrentUserDataUseCase,
+    this._saveTokenFcmUseCase,
   ) : super(const CommonState()) {
     on<LoadingVisibilityEmitted>(
       _onLoadingVisibilityEmitted,
@@ -39,6 +41,7 @@ class CommonBloc extends BaseBloc<CommonEvent, CommonState> {
   }
 
   final ClearCurrentUserDataUseCase _clearCurrentUserDataUseCase;
+  final SaveTokenFcmUseCase _saveTokenFcmUseCase;
 
   FutureOr<void> _onLoadingVisibilityEmitted(
     LoadingVisibilityEmitted event,
@@ -65,6 +68,7 @@ class CommonBloc extends BaseBloc<CommonEvent, CommonState> {
     return runBlocCatching(
       action: () async {
         await _clearCurrentUserDataUseCase.execute(const ClearCurrentUserDataInput());
+        // await _saveTokenFcmUseCase.execute(const SaveTokenFcmInput(tokenFcm: ''));
         await navigator.replace(const AppRouteInfo.login());
       },
     );
