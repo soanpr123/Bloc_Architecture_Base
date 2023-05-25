@@ -210,70 +210,47 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                   BlocBuilder<ReportPageBloc, ReportPageState>(
                     buildWhen: (previous, current) => previous.focusInput != current.focusInput,
                     builder: (context, stateC) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: stateC.focusInput ? colorBrandPrimary : colorBoder01,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      return TextField(
+                        focusNode: _focus,
+                        controller: textEditingController,
+                        maxLines: 5,
+                        textInputAction: TextInputAction.done,
+                        style: typoInterNomal14.copyWith(
+                          fontSize: Dimens.d14.responsive(),
+                          fontWeight: FontWeight.w400,
+                          height: 1.5,
+                          color: colorTextDark,
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-                        child: TextField(
-                          // controller: _controller,
-                          focusNode: _focus,
-                          controller: textEditingController,
-                          maxLines: 4,
-
-                          textInputAction: TextInputAction.done,
-                          style: typoInterNomal14.copyWith(
-                            fontSize: Dimens.d14.responsive(),
-                            fontWeight: FontWeight.w400,
-                            height: 1.5,
-                            color: colorTextDark,
+                        strutStyle: const StrutStyle(
+                          forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
+                          height: 1.5, // Khoảng cách giữa các dòng
+                        ),
+                        onChanged: (v) {
+                          bloc.add(InputChange(input: v));
+                        },
+                        inputFormatters: [
+                          MaxWordTextInputFormater(
+                            maxWords: 300,
+                            currentLength: (v) {
+                              // bloc.add(ChangeCount(count: v));
+                            },
                           ),
-
-                          strutStyle: const StrutStyle(
-                            forceStrutHeight: true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
-                            height: 1.5, // Khoảng cách giữa các dòng
-                          ),
-                          onChanged: (v) {
-                            bloc.add(InputChange(input: v));
-                          },
-                          inputFormatters: [
-                            MaxWordTextInputFormater(
-                              maxWords: 300,
-                              currentLength: (v) {
-                                bloc.add(ChangeCount(count: v));
-                              },
+                        ],
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: colorBrandPrimary),
+                            borderRadius: BorderRadius.circular(
+                              5,
                             ),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                            counter: BlocBuilder<ReportPageBloc, ReportPageState>(
-                              buildWhen: (previous, current) => previous.count != current.count,
-                              builder: (context, stater) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        style: typoInterNomal14.copyWith(color: colorTextBland, fontSize: 12),
-                                        children: [
-                                          const TextSpan(text: '('),
-                                          TextSpan(
-                                            text: stater.count.toString(),
-                                            style: typoInterNomal14.copyWith(color: colorTextBland, fontSize: 12),
-                                          ),
-                                          const TextSpan(
-                                            text: '/300)',
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorBoder01,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              5,
                             ),
                           ),
                         ),
@@ -326,11 +303,20 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                                 radius: const Radius.circular(5),
                                 padding: const EdgeInsets.all(12),
                                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                  Assets.svg.uploadCloud.svg(
-                                      color: stateimage.image.length == 3 ||
-                                              stateimage.loadingImage == APIRequestStatus.loading
-                                          ? colorDisabled
-                                          : colorBrandPrimary),
+                                  stateimage.loadingImage == APIRequestStatus.loading
+                                      ? SizedBox(
+                                          height: Dimens.d12.responsive(),
+                                          width: Dimens.d12.responsive(),
+                                          child: CircularProgressIndicator(
+                                            color: colorBrandPrimary,
+                                            strokeWidth: 2.0,
+                                          ),
+                                        )
+                                      : Assets.svg.uploadCloud.svg(
+                                          color: stateimage.image.length == 3 ||
+                                                  stateimage.loadingImage == APIRequestStatus.loading
+                                              ? colorDisabled
+                                              : colorBrandPrimary),
                                   const SizedBox(
                                     width: 8,
                                   ),
@@ -354,80 +340,140 @@ class _ReportPageState extends BasePageState<ReportPage, ReportPageBloc> {
                                   height: Dimens.d120.responsive(),
                                   width: double.infinity,
                                   padding: EdgeInsets.only(top: Dimens.d24.responsive()),
+                                  // child: Row(
+                                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                                  //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     Flexible(
+                                  //       fit: FlexFit.loose,
+                                  //       child: ListView.builder(
+                                  //         padding: const EdgeInsets.all(0),
+                                  //         itemCount: stateimage.image.length,
+                                  //         shrinkWrap: true,
+                                  //         scrollDirection: Axis.horizontal,
+                                  //         clipBehavior: Clip.none,
+                                  //         // physics: const NeverScrollableScrollPhysics(),
+                                  //         itemBuilder: (ctx, i) {
+                                  //           return Row(
+                                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //             children: [
+                                  //               SizedBox(
+                                  //                 width: i == 0 ? 0 : Dimens.d4.responsive(),
+                                  //               ),
+                                  //               SizedBox(
+                                  //                 width: Dimens.d110.responsive(),
+                                  //                 height: Dimens.d110.responsive(),
+                                  //                 child: Stack(
+                                  //                   children: [
+                                  //                     Container(
+                                  //                       width: Dimens.d110.responsive(),
+                                  //                       height: Dimens.d110.responsive(),
+                                  //                       clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  //                       decoration: const BoxDecoration(
+                                  //                         // color: Colors.amberAccent,
+                                  //                         borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  //                       ),
+                                  //                       child: ClipRRect(
+                                  //                         borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                  //                         child: AppNetworkImage(
+                                  //                           source: stateimage.image[i].thumb,
+                                  //                           fit: BoxFit.cover,
+                                  //                         ),
+                                  //                       ),
+                                  //                     ),
+                                  //                     Align(
+                                  //                       alignment: Alignment.center,
+                                  //                       child: GestureDetector(
+                                  //                         onTap: () {
+                                  //                           bloc.add(DeleteImage(index: i));
+                                  //                         },
+                                  //                         child: Container(
+                                  //                           decoration: BoxDecoration(
+                                  //                             borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                  //                             color: colorBrandSecondary,
+                                  //                           ),
+                                  //                           height: Dimens.d24.responsive(),
+                                  //                           width: Dimens.d24.responsive(),
+                                  //                           child: Column(
+                                  //                             mainAxisAlignment: MainAxisAlignment.center,
+                                  //                             children: [Assets.svg.bin.svg()],
+                                  //                           ),
+                                  //                         ),
+                                  //                       ),
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //             ],
+                                  //           );
+                                  //         },
+                                  //       ),
+                                  //     ),
+                                  //     stateimage.loadingImage == APIRequestStatus.loading
+                                  //         ? const LoadingWidget(
+                                  //             isLoadingNew: false,
+                                  //           )
+                                  //         : Container(),
+                                  //   ],
+                                  // ),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Flexible(
-                                        fit: FlexFit.loose,
-                                        child: ListView.builder(
-                                          padding: const EdgeInsets.all(0),
-                                          itemCount: stateimage.image.length,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          clipBehavior: Clip.none,
-                                          // physics: const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (ctx, i) {
-                                            return Row(
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(left: i == 0 ? 0 : Dimens.d4.responsive()),
-                                                ),
-                                                SizedBox(
-                                                  width: Dimens.d110.responsive(),
-                                                  height: Dimens.d110.responsive(),
-                                                  child: Stack(
-                                                    children: [
-                                                      Container(
-                                                        width: Dimens.d110.responsive(),
-                                                        height: Dimens.d110.responsive(),
-                                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                        decoration: const BoxDecoration(
-                                                          // color: Colors.amberAccent,
-                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                        ),
-                                                        child: ClipRRect(
-                                                          borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                          child: AppNetworkImage(
-                                                            source: stateimage.image[i].thumb,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
+                                    mainAxisAlignment: stateimage.image.length < 3
+                                        ? MainAxisAlignment.start
+                                        : MainAxisAlignment.spaceBetween,
+                                    children: stateimage.image
+                                        .map(
+                                          (e) => Padding(
+                                            padding: EdgeInsets.only(
+                                                left: stateimage.image.length == 2 ? Dimens.d4.responsive() : 0),
+                                            child: SizedBox(
+                                              width: (MediaQuery.of(context).size.width - Dimens.d40.responsive()) / 3,
+                                              height: Dimens.d110.responsive(),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    width:
+                                                        (MediaQuery.of(context).size.width - Dimens.d40.responsive()) /
+                                                            3,
+                                                    height: Dimens.d110.responsive(),
+                                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                    decoration: const BoxDecoration(
+                                                      // color: Colors.amberAccent,
+                                                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                      child: AppNetworkImage(
+                                                        source: stateimage.image[stateimage.image.indexOf(e)].thumb,
+                                                        fit: BoxFit.cover,
                                                       ),
-                                                      Align(
-                                                        alignment: Alignment.center,
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            bloc.add(DeleteImage(index: i));
-                                                          },
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                                              color: colorBrandSecondary,
-                                                            ),
-                                                            height: Dimens.d24.responsive(),
-                                                            width: Dimens.d24.responsive(),
-                                                            child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [Assets.svg.bin.svg()],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      stateimage.loadingImage == APIRequestStatus.loading
-                                          ? const LoadingWidget(
-                                              isLoadingNew: false,
-                                            )
-                                          : Container(),
-                                    ],
+                                                  Align(
+                                                    alignment: Alignment.center,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        bloc.add(DeleteImage(index: stateimage.image.indexOf(e)));
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                          color: colorBrandSecondary,
+                                                        ),
+                                                        height: Dimens.d24.responsive(),
+                                                        width: Dimens.d24.responsive(),
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [Assets.svg.bin.svg()],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
                                   ),
                                 ),
                         ],

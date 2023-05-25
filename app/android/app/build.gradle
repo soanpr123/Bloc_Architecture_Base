@@ -100,7 +100,7 @@ android {
         production {
             dimension "flavor-type"
             versionCode = 1
-            versionName = "1.0.1"
+            versionName = "1.0.2"
             applicationId "com.internal.app"
 //            manifestPlaceholders["host"] = "chatwork.com"
 //            manifestPlaceholders["applicationName"] = "Production"

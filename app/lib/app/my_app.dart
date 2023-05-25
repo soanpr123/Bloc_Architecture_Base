@@ -36,6 +36,7 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
       splitScreenMode: true,
       rebuildFactor: RebuildFactors.all,
       builder: (context, _) => MaterialApp.router(
+        
         // routerConfig: _appRouter.config(),
         theme: ThemeData(
           primaryColor: colorBrandPrimary,

@@ -78,6 +78,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   final CreateCommentUseCase _createCommentUseCase;
   final CreateRepplyCommentUseCase _createReppllyCommentInput;
   double _last = 0;
+  int lineCount = 0;
 
   FutureOr<void> _onMainPageInitiated(BlogsDetailPageInitiated event, Emitter<BlogsDetailState> emit) async {
     await getDetailBlogs(slungs: event.slungs, emit: emit);
@@ -100,6 +101,7 @@ class BlogsDetailBloc extends BaseBloc<BlogsDetailEvent, BlogsDetailState> {
   }
 
   FutureOr<void> _onChangeCmt(OnChangeCmt event, Emitter<BlogsDetailState> emit) async {
+    
     if (event.cmt.isNotEmpty) {
       emit(state.copyWith(buttonSendState: AppElevatedButtonState.active));
     } else {

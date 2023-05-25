@@ -5,6 +5,7 @@ import 'package:app/firebase_options.dart';
 import 'package:domain/domain.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:device_preview/device_preview.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -46,9 +47,11 @@ Future<LoadInitialResourceOutput> _loadInitialResource() async {
 
 Future<void> _runMyApp() async {
   final initialResource = await _loadInitialResource();
-  runApp(MyApp(
-    initialResource: initialResource,
-  ));
+  runApp(
+    MyApp(
+      initialResource: initialResource,
+    ),
+  );
 }
 
 void _reportError(Object error, StackTrace stackTrace) {
