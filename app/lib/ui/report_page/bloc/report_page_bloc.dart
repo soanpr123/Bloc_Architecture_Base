@@ -202,7 +202,7 @@ class ReportPageBloc extends BaseBloc<ReportPageEvent, ReportPageState> {
     return runBlocCatching(
       doOnSubscribe: () async => emit(state.copyWith(loadingImage: APIRequestStatus.loading)),
       action: () async {
-        final out = await _uploadImageuseCase.execute(UploadImageInput(file: avt, type: 'avatar'));
+        final out = await _uploadImageuseCase.execute(UploadImageInput(file: avt, type: 'feedback'));
 
         if (out.statusCode == 200) {
           // await _updateAvt(emit: emit, avt: out.url);

@@ -308,7 +308,7 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                         duration: const Duration(milliseconds: 100),
                         left: 0,
                         right: 0,
-                        bottom: stateb.bottom,
+                        bottom: stateb.isComment ? 0 : stateb.bottom,
                         child: Container(
                           // height: Dimens.d64.responsive(),
                           // height: stateb.bottom,
@@ -382,84 +382,118 @@ class _BlogsDetailPageState extends BasePageState<BlogsDetailPage, BlogsDetailBl
                                       padding: EdgeInsets.only(bottom: Dimens.d12.responsive()),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Expanded(
-                                            child: AppTextFormField(
+                                            child: TextField(
+                                              // cursorHeight: Dimens.d16.responsive(),
                                               focusNode: _focus,
                                               controller: textComentEditor,
-                                              onChanged: (p0) => bloc.add(OnChangeCmt(cmt: p0)),
-                                              borderRadius: 5,
-                                              textInputAction: TextInputAction.newline,
                                               minLines: 1,
                                               maxLines: 5,
+                                              textInputAction: TextInputAction.newline,
                                               keyboardType: TextInputType.multiline,
+                                              style: typoInterNomal14.copyWith(
+                                                fontSize: Dimens.d14.responsive(),
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.5,
+                                                color: colorTextDark,
+                                              ),
+                                              // strutStyle: const StrutStyle(
+                                              //   forceStrutHeight:
+                                              //       true, // Đảm bảo tất cả các dòng có chiều cao giống nhau
+                                              //   // height: 1.5, // Khoảng cách giữa các dòng
+                                              // ),
+                                              onChanged: (v) {
+                                                bloc.add(OnChangeCmt(cmt: v));
+                                              },
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.symmetric(
+                                                  horizontal: Dimens.d8.responsive(),
+                                                  vertical: Dimens.d8.responsive(),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: colorBrandPrimary),
+                                                  borderRadius: BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                ),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: colorBoder01,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
                                             width: Dimens.d12.responsive(),
                                           ),
-                                          InkWell(
-                                            onTap: stateb.buttonSendState == AppElevatedButtonState.inactive
-                                                ? null
-                                                : () {
-                                                    if (stateb.cmtSelect == -1) {
-                                                      bloc.add(
-                                                        CreateComment(
-                                                          slungs: widget.slungs,
-                                                          comment: textComentEditor.text.trim(),
-                                                          scrollController: _scrollController,
-                                                          textEdt: textComentEditor,
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      bloc.add(
-                                                        RepplyComment(
-                                                          id: stateb.cmtSelect.toString(),
-                                                          slungs: widget.slungs,
-                                                          content: textComentEditor.text.trim(),
-                                                          textEdt: textComentEditor,
-                                                        ),
-                                                      );
-                                                      bloc.add(
-                                                        const DeleteSelectCmt(),
-                                                      );
-                                                    }
-                                                    ViewUtils.hideKeyboard(context);
-                                                  },
-                                            child: Container(
-                                              height: Dimens.d45.responsive(),
-                                              width: Dimens.d45.responsive(),
-                                              decoration: BoxDecoration(
-                                                color: stateb.buttonSendState == AppElevatedButtonState.inactive
-                                                    ? colorDisabled
-                                                    : colorBrandPrimary,
-                                                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                              ),
-                                              child: stateb.buttonSendState == AppElevatedButtonState.loading
-                                                  ? Stack(
-                                                      children: [
-                                                        Align(
-                                                          alignment: Alignment.center,
-                                                          child: SizedBox(
-                                                            width: Dimens.d16.responsive(),
-                                                            height: Dimens.d16.responsive(),
-                                                            child: CircularProgressIndicator(
-                                                              strokeWidth: 2.0,
-                                                              color: colorDisabled,
+                                          Container(
+                                            height: Dimens.d45.responsive(),
+                                            // color: colorGray800,
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                InkWell(
+                                                  onTap: stateb.buttonSendState == AppElevatedButtonState.inactive
+                                                      ? null
+                                                      : () {
+                                                          if (stateb.cmtSelect == -1) {
+                                                            bloc.add(
+                                                              CreateComment(
+                                                                slungs: widget.slungs,
+                                                                comment: textComentEditor.text.trim(),
+                                                                scrollController: _scrollController,
+                                                                textEdt: textComentEditor,
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            bloc.add(
+                                                              RepplyComment(
+                                                                id: stateb.cmtSelect.toString(),
+                                                                slungs: widget.slungs,
+                                                                content: textComentEditor.text.trim(),
+                                                                textEdt: textComentEditor,
+                                                              ),
+                                                            );
+                                                            bloc.add(
+                                                              const DeleteSelectCmt(),
+                                                            );
+                                                          }
+                                                          ViewUtils.hideKeyboard(context);
+                                                        },
+                                                  child: stateb.buttonSendState == AppElevatedButtonState.loading
+                                                      ? Stack(
+                                                          children: [
+                                                            Align(
+                                                              alignment: Alignment.center,
+                                                              child: SizedBox(
+                                                                width: Dimens.d16.responsive(),
+                                                                height: Dimens.d16.responsive(),
+                                                                child: CircularProgressIndicator(
+                                                                  strokeWidth: 2.0,
+                                                                  color: colorDisabled,
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
+                                                          ],
+                                                        )
+                                                      : Assets.svg.send.svg(
+                                                          color:
+                                                              stateb.buttonSendState == AppElevatedButtonState.inactive
+                                                                  ? colorDisabled
+                                                                  : colorBrandPrimary,
+                                                          width: Dimens.d20.responsive(),
+                                                          height: Dimens.d20.responsive(),
                                                         ),
-                                                      ],
-                                                    )
-                                                  : const Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.arrow_forward,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ],
-                                                    ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
