@@ -1,20 +1,17 @@
 import 'dart:async';
 
-import 'package:app/config/firebase_message_config.dart';
-import 'package:app/firebase_options.dart';
 import 'package:domain/domain.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:device_preview/device_preview.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
 import 'package:initializer/initializer.dart';
 import 'package:shared/shared.dart';
 
 import 'app/my_app.dart';
 import 'config/app_config.dart';
+import 'config/firebase_message_config.dart';
+import 'firebase_options.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

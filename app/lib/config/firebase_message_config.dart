@@ -5,11 +5,14 @@ import 'dart:io';
 import 'package:domain/domain.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
+
+import '../app.dart';
+import '../app/bloc/app_bloc.dart';
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
@@ -146,6 +149,8 @@ class FirebaseMessageConfig {
           //     payload: payload,
           //   ),
           // );
+          Log.d('Callback for handling when a notification is triggered while the app is in the foreground. ${title}',
+              name: 'onDidReceiveLocalNotification');
         },
         notificationCategories: darwinNotificationCategories,
       );
@@ -159,18 +164,19 @@ class FirebaseMessageConfig {
           switch (notificationResponse.notificationResponseType) {
             case NotificationResponseType.selectedNotification:
               Log.d(
-                'selectNotificationStream.add(notificationResponse.payload) ${notificationResponse.payload}',
+                'selectNotificationStream.add(notificationResponse.payload)1 ${notificationResponse.payload}',
                 name: 'FirebaseMessageConfig',
               );
+              navigateNotificationAndroid(notificationResponse);
               // selectNotificationStream.add(notificationResponse.payload);
               break;
             case NotificationResponseType.selectedNotificationAction:
               if (notificationResponse.actionId == navigationActionId) {
                 Log.d(
-                  'selectNotificationStream.add(notificationResponse.payload) action ${notificationResponse.payload}',
+                  'selectNotificationStream.add(notificationResponse.payload)2 action ${notificationResponse.payload}',
                   name: 'FirebaseMessageConfig',
                 );
-
+                navigateNotificationAndroid(notificationResponse);
                 // selectNotificationStream.add(notificationResponse.payload);
               }
               break;
@@ -204,9 +210,12 @@ class FirebaseMessageConfig {
       /// Tương tác với thông báo khi ứng dụng đang ở terminated
       final initialMessage = await _firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {
-        Log.d('click open app ${initialMessage.data} ', name: 'initialMessage FirebaseCongig');
+        Log.d('click open app terminated không data ', name: 'initialMessage FirebaseCongig');
         if (initialMessage.data.isNotEmpty) {
-          Log.d('click open app ${initialMessage.data}', name: 'initialMessage.data.isNotEmpty FirebaseCongig');
+          Log.d('click open app terminated có data ${initialMessage.data}',
+              name: 'initialMessage.data.isNotEmpty FirebaseCongig');
+
+          await navigateNotification(initialMessage);
 
           /// ['id']: Key json chứa ID của thông báo server trả về.
           /// Dùng để điều hướng vào màn chi tiết thông báo
@@ -235,17 +244,71 @@ class FirebaseMessageConfig {
           /// Dùng để điều hướng vào màn chi tiết thông báo
           /// Mặc định đang là ['id']
           if (message.data.isNotEmpty) {
-            // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-            //   DetailNotificationScreen.routeName,
-            //   arguments: int.tryParse(
-            //     message?.data['id']?.toString(),
-            //   ),
-            // );
+            navigateNotification(message);
           }
         },
       );
     } catch (e) {
       Log.e(' handle message error $e', name: 'HandleMessengerErr');
+    }
+  }
+
+  Future navigateNotification(RemoteMessage message) async {
+    // GetIt.instance.get<AppNavigator>().push(AppRouteInfo.blogsDetail(message.data['slug']));
+    if (message.data['id'] != null) {
+      await runCatching(
+        action: () =>
+            GetIt.instance.get<ReadNotificationUseCase>().execute(ReadNotificationInput(id: message.data['id'])),
+      ).when(
+        success: (data) => data,
+        failure: (exception) {
+          Log.e('notification click error $exception', name: 'ClickNotification');
+        },
+      );
+    }
+
+    if (message.data['type'] == FirebaseMessagingConstants.ANNOUNCEMENT) {
+      await GetIt.instance.get<AppNavigator>().push(AppRouteInfo.announcementDetail(message.data['slug']));
+    } else if (message.data['type'] == FirebaseMessagingConstants.LUNCH_MENU) {
+      await GetIt.instance.get<AppNavigator>().push(const AppRouteInfo.amaiStore());
+    } else if (message.data['type'] == FirebaseMessagingConstants.POST) {
+      await GetIt.instance.get<AppNavigator>().push(AppRouteInfo.blogsDetail(message.data['slug']));
+      // await navigator.push(AppRouteInfo.blogsDetail('test002'));
+    } else if (message.data['type'] == FirebaseMessagingConstants.TYPE_AMAI_TRANSACTION) {
+      GetIt.instance.get<AppNavigator>().popUntilRoot(useRootNavigator: true);
+
+      GetIt.instance.get<AppNavigator>().navigateToBottomTab(1);
+      GetIt.instance.get<AppBloc>().add(AppReloadHistory(reloadHis: GetIt.instance.get<AppBloc>().state.reloadHis));
+    }
+  }
+
+  Future navigateNotificationAndroid(NotificationResponse notificationResponse) async {
+    final message = json.decode(notificationResponse.payload ?? '');
+    // GetIt.instance.get<AppNavigator>().push(AppRouteInfo.blogsDetail(message.data['slug']));
+    if (message.data['id'] != null) {
+      await runCatching(
+        action: () =>
+            GetIt.instance.get<ReadNotificationUseCase>().execute(ReadNotificationInput(id: message.data['id'])),
+      ).when(
+        success: (data) => data,
+        failure: (exception) {
+          Log.e('notification click error $exception', name: 'ClickNotification');
+        },
+      );
+    }
+
+    if (message.data['type'] == FirebaseMessagingConstants.ANNOUNCEMENT) {
+      await GetIt.instance.get<AppNavigator>().push(AppRouteInfo.announcementDetail(message.data['slug']));
+    } else if (message.data['type'] == FirebaseMessagingConstants.LUNCH_MENU) {
+      await GetIt.instance.get<AppNavigator>().push(const AppRouteInfo.amaiStore());
+    } else if (message.data['type'] == FirebaseMessagingConstants.POST) {
+      await GetIt.instance.get<AppNavigator>().push(AppRouteInfo.blogsDetail(message.data['slug']));
+      // await navigator.push(AppRouteInfo.blogsDetail('test002'));
+    } else if (message.data['type'] == FirebaseMessagingConstants.TYPE_AMAI_TRANSACTION) {
+      GetIt.instance.get<AppNavigator>().popUntilRoot(useRootNavigator: true);
+
+      GetIt.instance.get<AppNavigator>().navigateToBottomTab(1);
+      GetIt.instance.get<AppBloc>().add(AppReloadHistory(reloadHis: GetIt.instance.get<AppBloc>().state.reloadHis));
     }
   }
 

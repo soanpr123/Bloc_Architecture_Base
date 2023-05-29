@@ -1,5 +1,5 @@
 import 'package:domain/domain.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../base/bloc/base_event.dart';

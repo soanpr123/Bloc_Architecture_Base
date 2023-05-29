@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:badges/badges.dart' as badges;
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,7 @@ import 'package:resources/resources.dart';
 
 import '../../app.dart';
 import '../../shared_view/app_netword_image.dart';
-import '../../shared_view/loading_widget.dart';
+
 import '../../utils/max_word_text_input.dart';
 
 @RoutePage()
